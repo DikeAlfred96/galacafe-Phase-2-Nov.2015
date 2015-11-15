@@ -1,0 +1,715 @@
+/* Main Css Stylesheet for Gala Cafe Online Ordering System - Created by Alfred
+	=== July 2015 ===
+*/
+
+/* body {
+	background: url('../images/loginbackground.jpg') top center no-repeat;
+	color: #fff;
+} */
+
+/* ====== KAY FRAME ====== */
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ====== Global Style ====== */
+#header {
+	text-align: center;
+}
+#header .main_title {
+	margin: 10px auto 10px;
+	width: 200px;
+}
+#header .sub_nav {
+	/* max-width: 1024px; */
+	text-align: center;
+	margin: 0 auto 10px;
+	padding: 0 3%;
+}
+#header .sub_nav ul {
+	padding: 0;
+}
+#header .sub_nav ul li {
+	display: inline-block;
+	width: 50%;
+}
+#header .sub_nav ul li a {
+	width: 100%;
+	display: block;
+	text-align: center;
+	padding: 5px 0;
+	background: #222;
+	color: #fff;
+	border: 1px solid #aaa;
+	font-size: 20px;
+}
+#header .sub_nav ul li a:hover {
+	text-decoration: none;
+	background: #555;
+}
+#header .main_nav {
+	margin: 0 auto;
+	max-width: 1024px;
+	text-align: center;
+	white-space: nowrap; /* IMPORTANT CSS TRICK to prevent block wrapping */
+	display: none;
+}
+#header .main_nav li {
+	width: 100px;
+	display: inline-block;
+	overflow : hidden;
+}
+#header .main_nav li a {
+	padding-left: 0;
+	padding-right: 0;
+}
+.wrapper { /* MODIFY for responsive looking */
+	/* max-width: 1024px; */
+	margin: 0 auto;
+	padding: 0 3%;
+}
+.wrapper > #back_end_control_panel > ul {
+	padding: 0;
+}
+.wrapper h1 {
+	text-align: center;
+}
+#footer {
+	text-align: center;
+	padding: 20px 0;
+}
+/* ====== Index Page（Add Dishes Page） ====== */
+/*  -------------  Main Dishes  -------------  */
+.dishes_wrap {
+	width: 100%;
+	vertical-align: top;
+	display: block;
+}
+.dishes_wrap ul.nav.nav-tabs {
+	background: #333;
+	margin-top: 10px;
+	border-top: 1px solid #ddd;
+}
+.dishes_wrap ul.nav.nav-tabs li.active a {
+	border-radius: 0;
+	border: 1px solid #ccc;
+	color: #000;
+}
+.dishes_wrap ul.nav.nav-tabs li a {
+	color: #fff;
+}
+.dishes_wrap ul.nav.nav-tabs li a:hover,
+.dishes_wrap ul.nav.nav-tabs li a:active {
+	border-radius: 0;
+	color: #000;
+}
+.dishes_wrap .category_wrap {
+	padding-left: 0;
+}
+.dishes_wrap .category_wrap li.single_dish {
+	display: block;
+	word-wrap: break-word;
+	position: relative;
+}
+.dishes_wrap .category_wrap li.single_dish h3,
+.dishes_wrap .category_wrap li.single_dish h6 {
+	display: inline-block;
+}
+.dishes_wrap .category_wrap li.single_dish form {
+	position: absolute;
+	right: 20%;
+	top: 30%;
+}
+/*  --------------  Cart  --------------  */
+.shopping_cart {
+	width: 100%;
+	vertical-align: top;
+    background: #f0f0f0;
+    z-index: 9999;
+    padding: 5px 10px 1px;
+}
+.shopping_cart.fixed {
+	position: fixed;
+    left: 0;
+    top: 0;
+    clear: both;
+    padding: 0 10px;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 1s; /* Firefox < 16 */
+        -ms-animation: fadein 1s; /* Internet Explorer */
+         -o-animation: fadein 1s; /* Opera < 12.1 */
+            animation: fadein 1s;
+}
+.shopping_cart h3 {
+	margin: 5px 0;
+}
+.cart_wrapper tr.taxes {
+	border-top: 1px solid #ccc;
+	padding: 10px 0;
+	margin: 10px 0;
+	height: 30px;
+	font-weight: bold;
+}
+.cart_wrapper tr.total {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+	margin: 10px 0;
+	height: 30px;
+	width: 100%;
+	font-weight: bold;
+}
+.shopping_cart .submit_form {
+	margin-top: 10px;
+}
+/* ====== Order Submit Page ====== */
+#user_info_submit {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#user_info_submit .additional_info {
+	margin-bottom: 20px;
+	height: 100px;
+}
+#cart_on_submit {
+	width: 500px;
+	margin: 20px auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+#cart_on_submit .taxes {
+	border-top: 1px solid #ccc;
+}
+#cart_on_submit .total {
+	border-bottom: none;
+}
+#cart_on_submit .submit_form,
+#cart_on_submit .remove {
+	display: none;
+}
+/* ====== User Login Page ====== */
+.login_form .sign_up {
+	margin-left: 20px;
+}
+.login_form .forgot_pass,
+.login_form .back_btn {
+	padding-left: 20px;
+	text-decoration: underline;
+}
+/* =====  User Profile Page ===== */
+/*#back_end_profile #order_history .one_third {
+	width: 20%;
+}*/
+#back_end_profile ul.nav li {
+	display: inline-block;
+	width: 50%;
+	text-align: center;
+	border-bottom: 3px solid #777;
+	border-radius: 0;
+}
+#back_end_profile ul.nav li a:hover {
+	background: #ccc;
+}
+#back_end_profile ul.nav li.active {
+	border-bottom: 3px solid transparent;
+	border-top: 3px solid #777;
+	border-left: 3px solid #777;
+	border-right: 3px solid #777;
+	border-radius: 5px 5px 0 0;
+	background: #777;
+}
+#back_end_profile ul.nav li.active a {
+	color: #fff;
+}
+#back_end_profile ul.nav li.active a:hover {
+	color: #fff;
+	background: #777;
+}
+#back_end_profile #order_history {
+	width: 100%;
+	overflow: auto;
+}
+#back_end_profile #order_history table {
+	width: 100%;
+	min-width: 600px;
+	overflow: scroll-x;
+	text-align: center;
+}
+#back_end_profile #order_history table th {
+	text-align: center;
+	height: 50px;
+	background: #ccc;
+	border-bottom: 3px solid #aaa;
+}
+#back_end_profile #order_history table .order_single {
+	border-top: 5px solid transparent;
+	padding-bottom: 5px;
+}
+#back_end_profile #order_history table .details th {
+	background: #fff;
+	border-top: 5px double #333;
+	border-bottom: 1px solid #333;
+}
+#back_end_profile #order_history table .details {
+	background: #f0f0f0;
+}
+#back_end_profile #order_history table td {
+	width: 20%;
+}
+#back_end_profile #order_history table tr.odd {
+	background: #ddd;
+}
+#back_end_profile ul.nav.nav-tabs {
+	background: #f0f0f0;
+	padding-top: -10px;
+	border-radius: 8px 8px 0 0;
+	-ms-border-radius: 8px 8px 0 0;
+	-moz-border-radius: 8px 8px 0 0;
+	-webkit-border-radius: 8px 8px 0 0;
+}
+#back_end_profile ul.nav.nav-tabs li:first-child {
+	margin-left: 2%;
+}
+#back_end_profile ul.nav.nav-tabs li {
+	width: 16%;
+	text-align: center;
+}
+/* ====== Admin Login Page ====== */
+.login_form {
+	width: 600px;
+	background: #f0f0f0;
+	border: 1px solid white;
+	margin: 50px auto;
+	padding: 40px 20px;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	text-align: center;
+}
+.login_form h1 {
+	margin-top: 0;
+	margin-bottom: 40px;
+	font-size: 24px;
+}
+.login_form .form-group {
+	max-width: 300px;
+	width: 100%;
+	margin: 0 auto;
+}
+.login_form input[type="text"],
+.login_form input[type="password"] {
+	display: block;
+	width: 100%;
+	max-width: 300px;
+	margin: 0 auto 15px;
+}
+.login_form .login_error {
+	color: #9e0404;
+	font-size: 16px;
+	margin-top: 10px;
+}
+.login_form .signup_error {
+	color: #9e0404;
+	font-size: 16px;
+}
+/* ====== Admin Control Panel Page ====== */
+/*  --------------  Menu  --------------  */
+#back_end_control_panel ul.nav.nav-tab {
+	margin-bottom: 10px;
+}
+#back_end_control_panel ul.nav li {
+	width: 14.28%;
+	text-align: center;
+	background: #fafafa;
+}
+/*  ---------- Put Order Page ----------  */
+#put_order {
+	margin-top: 10px;
+	min-height: 400px;
+	padding-bottom: 20px;
+}
+#put_order #basic_info {
+	width: 550px;
+	margin: 0 auto 10px;
+}
+#put_order #basic_info label {
+	margin: 0 10px;
+}
+#put_order #dishes_order {
+	padding-top: 10px;
+	border-top: 1px solid #ccc;
+}
+#put_order #dishes_order_title {
+	padding: 10px 0;
+}
+#put_order .put_order_input_a {
+	max-width: 100px;
+	display: inline-block;
+	margin: 0 auto;
+}
+#put_order .put_order_input_b {
+	min-width: 80px;
+	margin: 0 auto;
+	display: inline-block;
+	text-align: center;
+	width: 20%;
+}
+#put_order #dishes_order .dishes_row {
+	padding-bottom: 15px;
+}
+#put_order #dishes_order .dishes_row_6,
+#put_order #dishes_order .dishes_row_7,
+#put_order #dishes_order .dishes_row_8,
+#put_order #dishes_order .dishes_row_9,
+#put_order #dishes_order .dishes_row_10,
+#put_order #dishes_order .dishes_row_11,
+#put_order #dishes_order .dishes_row_12,
+#put_order #dishes_order .dishes_row_13,
+#put_order #dishes_order .dishes_row_14,
+#put_order #dishes_order .dishes_row_15,
+#put_order #dishes_order .dishes_row_16,
+#put_order #dishes_order .dishes_row_17,
+#put_order #dishes_order .dishes_row_18,
+#put_order #dishes_order .dishes_row_19,
+#put_order #dishes_order .dishes_row_20,
+#put_order #dishes_order .dishes_row_21,
+#put_order #dishes_order .dishes_row_22,
+#put_order #dishes_order .dishes_row_23,
+#put_order #dishes_order .dishes_row_24,
+#put_order #dishes_order .dishes_row_25 {
+	display: none;
+}
+#put_order #dishes_order_submit {
+	text-align: center;
+}
+#put_order #dishes_order_submit input[type="submit"] {
+	margin-right: 20px;
+}
+#put_order .error {
+	color: #ff0000;
+}
+/*  ---------- Order History page ----------  */
+#back_end_control_panel #orderhistory ul.nav li {
+	background: #fff;
+	width: 33.33%;
+	border-bottom: 3px solid #777;
+	border-radius: 0;
+	display: inline-block;
+}
+#back_end_control_panel #orderhistory ul.nav li a:hover {
+	background: #ccc;
+}
+#back_end_control_panel #orderhistory ul.nav li.active {
+	border-bottom: 3px solid transparent;
+	border-top: 3px solid #777;
+	border-left: 3px solid #777;
+	border-right: 3px solid #777;
+	border-radius: 5px 5px 0 0;
+	background: #777;
+}
+#back_end_control_panel #orderhistory ul.nav li.active a {
+	color: #fff;
+	background: #777;
+	border: none;
+}
+#back_end_control_panel #orderhistory ul.nav li.active a:hover {
+	color: #fff;
+	background: #777;
+}
+#back_end_control_panel #orderhistory {
+	width: 100%;
+	overflow: auto;
+}
+#back_end_control_panel #orderhistory div.tab-pane {
+	overflow: scroll;
+}
+#back_end_control_panel #orderhistory table {
+	width: 100%;
+	min-width: 800px;
+	overflow: scroll-x;
+	text-align: center;
+	border-bottom: 5px double #000;
+}
+#back_end_control_panel #orderhistory table th {
+	text-align: center;
+	height: 50px;
+	border-bottom: 5px double #aaa;
+}
+#back_end_control_panel #orderhistory table thead th {
+	background: #ffffbc;
+}
+#back_end_control_panel #orderhistory table .order_single {
+	border-top: 5px solid transparent;
+	padding-bottom: 5px;
+}
+#back_end_control_panel #orderhistory table .details th {
+	background: #fff;
+	border-top: 5px double #333;
+	border-bottom: 1px solid #333;
+}
+#back_end_control_panel #orderhistory table .details {
+	background: #f0f0f0;
+}
+#back_end_control_panel #orderhistory table td {
+	width: 16.66%;
+	padding: 5px 0;
+}
+#back_end_control_panel #orderhistory table tr.odd {
+	background: #ddd;
+}
+/*  ---------- Order Details page ----------  */
+#back_end_control_panel .tab-content {
+	overflow-x: scroll;
+	width: 100%;
+}
+#back_end_control_panel #orderdetail {
+	background: #eee;
+	width: 1800px;
+	overflow-x: scroll;
+}
+#back_end_control_panel #orderdetail .single_takeout_dish,
+#back_end_control_panel #orderdetail .single_dish {
+	margin-bottom: 0;
+	cursor: pointer;
+	text-align: center;
+}
+#back_end_control_panel #orderdetail .single_takeout_dish {
+	padding: 2px 0;
+}
+#back_end_control_panel #orderdetail .single_dish {
+	padding: 5px 0;
+}	
+#back_end_control_panel #orderdetail .single_takeout_dish .dish_alpha,
+#back_end_control_panel #orderdetail .single_dish .dish_alpha {
+	margin-right: 5px;
+}
+#back_end_control_panel #orderdetail .single_takeout_dish .dish_qty,
+#back_end_control_panel #orderdetail .single_dish .dish_qty {
+	margin-left: 5px;
+}
+#back_end_control_panel #orderdetail #take_out,
+#back_end_control_panel #orderdetail #eat_in {
+	display: inline-block;
+	vertical-align: top;
+	padding: 10px 5px;
+}
+#back_end_control_panel #orderdetail #take_out {
+	width: 200px;
+	display: inline-block;
+}
+#back_end_control_panel #orderdetail #eat_in {
+	
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending {
+	background: #fff369;
+	border: 1px solid #d5c737;
+	padding: 10px;
+	margin-bottom: 10px;
+	max-height: 800px;
+	overflow: scroll;
+}
+#back_end_control_panel #orderdetail #table_0 {
+	margin: 10px 5px;
+	display: inline-block;
+	padding: 0 10px;
+	min-height: 600px;
+	background: #fff;
+	width: 1500px;
+	max-height: 800px;
+    overflow: scroll;
+}
+#back_end_control_panel #orderdetail #table_0 .kitchen_process {
+	background: #dbedfb;
+}
+#back_end_control_panel #orderdetail #table_0 h5,
+#back_end_control_panel #orderdetail #table_0_pending h5 {
+	font-weight: bold;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #000;
+	padding-bottom: 10px;
+}
+#back_end_control_panel #orderdetail #table_0 .single_takeout {
+	width: 190px;
+	margin: 0 3px 10px 3px;
+	display: inline-block;
+	vertical-align: top;
+	border-bottom: 1px dotted #999;
+}
+#back_end_control_panel #orderdetail #table_0 .single_takeout .finish_order,
+#back_end_control_panel #orderdetail #table_0 .single_takeout .remove_order,
+#back_end_control_panel #orderdetail .finish_all {
+	float: right;
+	padding: 0 5px;
+	background: #f0f0f0;
+	border: 1px solid #aaa;
+	cursor: pointer;
+	font-weight: normal;
+	line-height: 18px;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending,
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_takeout {
+	width: 100%;
+	display: inline-block;
+	border: 1px solid #777;
+	margin-bottom: 3px;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p {
+	margin-bottom: 1px;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form input.order_approve {
+	margin-left: 5px;
+	padding: 3px 4px;
+	margin-right: 2px;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p.user_detail {
+	text-align: center;
+	width: 100%;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p.user_detail .user_name,
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p.user_detail .user_tel {
+	display: inline-block;
+	text-decoration: underline;
+	font-weight: bold;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p.user_detail .user_tel {
+	padding-left: 5px;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p.user_detail .remarks {
+	background: #f0f0f0;
+	padding: 1px;
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	display: inline-block;
+	width: 100%;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form .cancel_order {
+	color: #d61111;
+	text-decoration: underline;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish {
+	margin: 1px 0;
+	border: 1px solid transparent;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_qty,
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_alpha,
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_name {
+	vertical-align: top;
+	display: inline-block;
+	text-align: center;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_qty {
+	width: 10%;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_alpha {
+	width: 10%;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_name {
+	width: 80%;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_price,
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.eng_name {
+	display: none !important;
+}
+#back_end_control_panel #orderdetail #eat_in .table_1,
+#back_end_control_panel #orderdetail #eat_in .table_2,
+#back_end_control_panel #orderdetail #eat_in .table_3,
+#back_end_control_panel #orderdetail #eat_in .table_4,
+#back_end_control_panel #orderdetail #eat_in .table_5,
+#back_end_control_panel #orderdetail #eat_in .table_6,
+#back_end_control_panel #orderdetail #eat_in .table_7,
+#back_end_control_panel #orderdetail #eat_in .table_8 {
+	width: 200px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 10px;
+}
+#back_end_control_panel #orderdetail #eat_in h5 {
+	font-weight: bold;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #000;
+	padding-bottom: 10px;
+}
+#back_end_control_panel #orderdetail .single_dish.done {
+	background: #00ee00;
+}
+/*  ---------- Kitchen Status page ----------  */
+#back_end_control_panel #kitchen {
+	background: #111;
+	min-height: 600px;
+	color: #fff;
+	min-width: 1600px;
+}
+#back_end_control_panel #kitchen .catagory {
+	width: 24%;
+	display: inline-block;
+	vertical-align: top;
+}
+#back_end_control_panel #kitchen .single_dish:nth-child(2) {
+	border-top: 1px solid #aaa !important;
+}
+#back_end_control_panel #kitchen .single_dish {
+	width: 100%;
+	display: inline-block;
+	font-size: 20pt;
+	padding: 2px 0px;
+	border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+#back_end_control_panel #kitchen .single_dish .left_dish,
+#back_end_control_panel #kitchen .single_dish .right_dish {
+	vertical-align: middle;
+	line-height: 36px;
+}
+#back_end_control_panel #kitchen .single_dish .left_dish {
+	width: 177px;
+	display: inline-block;
+}
+
+#back_end_control_panel #kitchen .single_dish .left_dish .totalnum {
+	float: right;
+	color: #ffff00;
+	font-size: 36px;
+}
+#back_end_control_panel #kitchen .single_dish .right_dish {
+	display: inline-block;
+	width: 240px;
+}
+#back_end_control_panel #kitchen .single_dish .right_dish .unit {
+	width: 75px;
+	display: inline-block;
+	text-align: right;
+}
+#back_end_control_panel #kitchen .single_dish .qty {
+	background: #f0f0f0;
+	color: #000;
+	padding: 0 10px;
+	width: 49.5px;
+	display: inline-block;
+	text-align: center;
+}
+
+
