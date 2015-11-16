@@ -69,4 +69,9 @@ date_default_timezone_set('America/Vancouver');
 		    });
 		});
 	});
+
+	function myrefresh() {
+		window.location.reload();
+	}
+	setTimeout('myrefresh()',900000); // refresh page every 15 min, Prevent Crash */
 </script>

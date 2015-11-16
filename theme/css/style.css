@@ -244,6 +244,7 @@
 }
 #back_end_profile ul.nav li.active a {
 	color: #fff;
+	background: #777;
 }
 #back_end_profile ul.nav li.active a:hover {
 	color: #fff;
@@ -557,7 +558,6 @@
 	margin: 0 3px 10px 3px;
 	display: inline-block;
 	vertical-align: top;
-	border-bottom: 1px dotted #999;
 }
 #back_end_control_panel #orderdetail #table_0 .single_takeout .finish_order,
 #back_end_control_panel #orderdetail #table_0 .single_takeout .remove_order,
@@ -616,19 +616,26 @@
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_qty,
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_alpha,
-#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_name {
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_name,
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish a.erase_dish {
 	vertical-align: top;
 	display: inline-block;
 	text-align: center;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_qty {
-	width: 10%;
+	width: 20%;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_alpha {
-	width: 10%;
+	width: 25%;
+}
+#back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish a.erase_dish {
+    width: 10%;
+    color: #fff;
+    background: #d61111;
+    border: 1px solid #999;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_name {
-	width: 80%;
+	width: 45%;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_price,
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.eng_name {

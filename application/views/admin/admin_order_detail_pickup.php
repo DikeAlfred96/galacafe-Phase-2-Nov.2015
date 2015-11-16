@@ -29,7 +29,7 @@ date_default_timezone_set('America/Vancouver');
 		    		$order_remarks = $t_zero_pending->orderRemarks; ?>
 	    		<div class="single_pending">
 		    		<form action="admin_approve_order" method="post" class="pending_form">
-			    		<p>订单号: <?php echo $currentId_pending; ?><input type="submit" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
+			    		<p>订单号: <?php echo $currentId_pending; ?><input type="button" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
 			    		<p class="user_detail"><span class="user_name"><?php echo $t_zero_pending->userName; ?></span><span class="user_tel"><?php echo $t_zero_pending->userTel; ?></span><?php if ($order_remarks != '') { ?><br><span class="remarks"><?php echo $t_zero_pending->orderRemarks; ?></span><?php } ?></p>
 			    		<input type="hidden" id="orderId_<?php echo $i; ?>" value="<?php echo $currentId_pending; ?>">
 			    		<input type="hidden" id="tableId_<?php echo $i; ?>" value="外卖">
@@ -46,7 +46,7 @@ date_default_timezone_set('America/Vancouver');
 		    		foreach ($result_pending->result() as $item_pending):
 		    		$status = $item_pending->dishStatus; ?>
 		    		<p class="extra_<?php echo $i; ?> single_pending_dish single_pending <?php if ($status != '1') {}else{echo 'done';} ?>">
-			    		<span class="dish_alpha onefourth"><?php echo $item_pending->dishAlphaId; ?></span><span class="dish_name onethird"><?php echo $item_pending->dishChiName; ?><br><span class="eng_name"><?php echo $item_pending->dishEngName; ?></span></span><span class="dish_qty onefourth"><?php echo $item_pending->dishQuantity; ?></span><span class="dish_price onefourth"><?php echo '$ '.$item_pending->dishPrice; ?></span><input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>">
+			    		<span class="dish_alpha one"><?php echo $item_pending->dishAlphaId; ?></span><span class="dish_name two"><?php echo $item_pending->dishChiName; ?><br><span class="eng_name two"><?php echo $item_pending->dishEngName; ?></span></span><span class="dish_qty three"><?php echo $item_pending->dishQuantity; ?></span><span class="dish_price four"><?php echo '$ '.$item_pending->dishPrice; ?></span><input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>"><a href="#" class="erase_dish">X<input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>"></a>
 			    	</p>
 		    		<?php endforeach; ?>
 				</div>
@@ -54,10 +54,10 @@ date_default_timezone_set('America/Vancouver');
 					endforeach; ?>
 	    	</div>
 	    </div><div id="table_0">
-		    <div class="kitchen_process waterfall">
+		    <div class="kitchen_process">
 			    <h5>外卖</h5>
 	    		<?php foreach ($table_0->result() as $t_zero): ?>
-	    		<div class="single_takeout waterfall-item">
+	    		<div class="single_takeout">
 	    			<?php $currentId = $t_zero->orderId; ?>
 	    			<p>订单号: <?php echo $currentId; ?><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
 	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}';";
@@ -99,41 +99,42 @@ date_default_timezone_set('America/Vancouver');
 						}
 					});
 				});
+
+				$('.erase_dish').each(function() {
+					var save_status = $(this);
+					var dish_serial = $(this).children('.serial').val();
+					$(this).click(function() {
+						if (confirm('确认删除该餐点？')) {
+							$.ajax({
+								url: 'erase_single_dish',
+						        data: {"data" : dish_serial},
+						        type: "POST",
+						        success: function(data) {
+						        	location.reload();
+						        }
+							});
+						} else {
+							return false;
+						}
+					});
+				});
 		    }
 		});
 	}
 	ajax();
 	setInterval(ajax, 1000000); // After 10 sec re-fetch data
-
-	$('.cancel_order').each(function() {
-		var save_status = $(this);
-		var order_id = $(this).children('.order_id').val();
-		$(this).click(function() {
-			if (confirm('确认取消订单？')) {
-				$.ajax({
-			        url: 'user_order_cancel',
-			        data: {"data" : order_id},
-			        type: "POST",
-			        success: function(data) {
-						location.reload();
-			        }
-			    });
-			} else {
-				return false;
-			}
-		});
-	});
 	
 	$('.finish_order').each(function() {
 		var save_status = $(this);
-		var table_id = $(this).children('.table_id').val();
+		var order_id = $(this).children('.order_id').val();
 		$(this).click(function() {
 			$.ajax({
-		        url: 'dish_status_change_all',
-		        data: {"data" : table_id},
+		        url: 'dish_status_change_all_z',
+		        data: {"data" : order_id},
 		        type: "POST",
 		        success: function(data) {
 					$(save_status).parent().parent().children('.single_dish').addClass('done');
+					location.reload();
 		        }
 		    });
 		});
@@ -187,7 +188,7 @@ date_default_timezone_set('America/Vancouver');
 		var orderTotal = document.getElementById('orderTotal_'+index).value;
 		var orderTax = document.getElementById('orderTax_'+index).value;
 	    var print_count = document.getElementsByClassName('extra_'+index);
-	    var printContents = '<style>body{font-family: "Arial", sans-serif;}div#main{position:relative; width: 320px;}p.center{text-align:center; margin-bottom: 0; padding-bottom: 5px;}p em{width:150px; position:absolute; right:0;}table{width:320px; text-align:center; margin-top:10px; border-top:2px solid #333;}table tr{width:33.33%; font-family: "黑体", Arial, sans-serif; font-size: 15px;}table td.low{line-height:10px;vertical-align:center;}p.footer{font-size: 16px; line-height:18px;}p.footer.special{text-align:right; font-size: 16px;}p.footer.first{border-top:3px solid #333; padding-top:10px;}p.footer{width:320px; margin: 0; position: relative; padding-right:5px;}p.footer.small{font-size:14px;}p.footer.large{font-size:22px; font-weight:bold;}p.footer em{font-size: 16px; font-weight: normal; position: absolute; right: 0; width: 100px; text-align: right; padding-right: 5px;}</style>'
+	    var printContents = '<style>body{font-family: "Arial", sans-serif;} div#main{position:relative; width: 320px;} p.center{text-align:center; margin-bottom: 0; padding-bottom: 5px;} p em{width:150px; position:absolute; right:0;} #table{width:320px; text-align:center; margin-top:10px; border-top:2px solid #333; padding-bottom: 4px;} #table .details_older.tr{font-weight: bold; margin-top: 2px;} #table .tr .onefourth, #table .tr .onethird{display:inline-block;} span.one,span.two,span.three,span.four {vertical-align: middle;font-family: "黑体", Arial, sans-serif; font-size: 15px; display: inline-block;} span.one{width:45px;} span.two{width:191px;} span.three{width:28px;} span.four{width:46px;} #table .tr.low{line-height:10px;} div#table a.erase_dish{display:none;} p.footer{font-size: 16px; line-height:18px;} p.footer.special{text-align:right; font-size: 16px;} p.footer.first{border-top:3px solid #333; padding-top:10px;} p.footer{width:320px; margin: 0; position: relative; padding-right:5px;} p.footer.small{font-size:14px;} p.footer.large{font-size:22px; font-weight:bold;} p.footer em{font-size: 16px; font-weight: normal; position: absolute; right: 0; width: 100px; text-align: right; padding-right: 5px;}</style>';
 	    printContents += '<div id="main"><p class="center">www.galacafe.ca<br>';
 	    printContents += 'galacafemanager@gmail.com<br>';
 	    printContents += '(GST 829982370RT0001)</p>';
@@ -206,10 +207,10 @@ date_default_timezone_set('America/Vancouver');
 		  	printContents += '<p>Client: ' + userName + '<em>' + userTel + '</em><br>Notes: ' + orderRemark + '</p>';
 	  	}
 	    printContents += '<div id="table">';
-	    printContents += '<div class="details_older tr"><span class="onefourth">ID</span><span class="onethird">Name</span><span class="onefourth">Qty</span><span class="onefourth">Price</span></div>';
+	    printContents += '<div class="details_older tr"><span class="one">ID</span><span class="two">Name</span><span class="three">Qty</span><span class="four">Price</span></div>';
 	    var i;
 	    for (i = 0; i < print_count.length; i++) {
-		    printContents += '<div class="tr"><span class="low onefourth">--</span><span class="low onethird">--</span><span class="low onefourth">--</span><span class="low onefourth">--</span></div>';
+		    printContents += '<div class="tr"><span class="low one">--</span><span class="low two">--</span><span class="low three">--</span><span class="low four">--</span></div>';
 		    printContents += '<div class="tr">';
 			printContents += document.getElementsByClassName('extra_'+index)[i].innerHTML;
 			printContents += '</div>';
@@ -224,7 +225,7 @@ date_default_timezone_set('America/Vancouver');
 		if(!w)alert('Please enable pop-ups');
 		w.document.write(printContents);
 		w.print();
-		w.close(); // Comment this for testing
+//		w.close(); // Comment this for testing
 	}
 	function myrefresh() {
 		window.location.reload();

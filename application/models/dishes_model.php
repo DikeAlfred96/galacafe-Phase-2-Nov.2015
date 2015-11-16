@@ -95,6 +95,7 @@ class Dishes_model extends CI_Model {
 				'orderId' => $current_dish_id,
 		    	'dishId' => $items['id'],
 		    	'dishQuantity' => $items['qty'], 
+		    	'dishQtyAdj' => $items['qty'],
 		    	'dishStatus' => '0'
 		    );
 	    $insert_order_items = $this->db->insert('order_items', $new_order_items_insert_data);

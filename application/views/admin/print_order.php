@@ -34,14 +34,13 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		text-align: center !important;
 	}
 	table tr {
-		width: 33.33%;
 		font-family: "黑体", Arial, sans-serif;
 		font-size: 15px;
 		text-align: center;
 	}
 	table td.low {
 		line-height: 10px;
-		vertical-align: center
+		vertical-align: center;
 	}
 	p.footer {
 		font-size: 16px;

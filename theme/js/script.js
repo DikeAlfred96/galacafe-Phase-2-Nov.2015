@@ -165,7 +165,7 @@ $("a.empty").on("click", "a", function(){
 // User - Add to cart
 $(document).ready(function() { 
 	/*place jQuery actions here*/ 
-	var link = "/galacafe/index.php/"; // Url to your application (including index.php/) MODIFY!!!
+	var link = "/galacafe-Phase-2-Nov.2015/"; // Url to your application (including index.php/) MODIFY!!!
 
 	$(".dishes_wrap ul.category_wrap .single_dish form").submit(function() {
 		// Get the product ID and the quantity 

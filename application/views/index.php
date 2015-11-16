@@ -23,9 +23,11 @@
 	
 		<!-- Tab panes -->
 		<div class="tab-content">	
-		    <div role="tabpanel" class="tab-pane active" id="appetizer">
+			<?php $category = array('appetizer','main_course','kebab','noodle_rice_congee','dessert','combo','','');
+				for ($cat=1; $cat<= 6; $cat++) { ?>
+		    <div role="tabpanel" class="tab-pane active" id="<?php echo $category[$cat-1]; ?>">
 				<ul class="category_wrap">
-					<?php foreach($dishes as $d): if ($d['catId'] == 1) {?>
+					<?php foreach($dishes as $d): if ($d['catId'] == $cat) {?>
 				    <li class="single_dish">
 				    	<h3><?php echo $d['dishChiName']; ?></h3>
 				    	<h6><?php echo $d['dishEngName']; ?></h6>
@@ -42,101 +44,7 @@
 				    <?php } endforeach;?>
 				</ul>
 			</div>
-		    
-		    <div role="tabpanel" class="tab-pane" id="main_course">
-				<ul class="category_wrap">
-					<?php foreach($dishes as $d): if ($d['catId'] == 2) {?>
-				    <li class="single_dish">
-				    	<h3><?php echo $d['dishChiName']; ?></h3>
-<!--				        <img src="<?php echo base_url(); ?>assets/img/products/<?php echo $d['imagePath']; ?>" alt="" /> -->
-				        <small>&dollar;<?php echo $d['dishPrice']; ?></small>
-				        <?php echo form_open('cart/add_cart_dishes'); ?>
-				            <fieldset>
-				                <?php echo form_hidden('quantity', '1'); ?>
-				                <?php echo form_hidden('product_id', $d['dishId']); ?>
-				                <?php echo form_submit('add', '+'); ?>
-				            </fieldset>
-				        <?php echo form_close();?>
-				    </li>
-				    <?php } endforeach;?>
-				</ul>
-		    </div>
-		    
-		    <div role="tabpanel" class="tab-pane" id="kebab">
-				<ul class="category_wrap">
-					<?php foreach($dishes as $d): if ($d['catId'] == 3) {?>
-				    <li class="single_dish">
-				    	<h3><?php echo $d['dishChiName']; ?></h3>
-<!-- 				        <img src="<?php echo base_url(); ?>assets/img/products/<?php echo $d['imagePath']; ?>" alt="" /> -->
-				        <small>&dollar;<?php echo $d['dishPrice']; ?></small>
-				        <?php echo form_open('cart/add_cart_dishes'); ?>
-				            <fieldset>
-				                <?php echo form_hidden('quantity', '1'); ?>
-				                <?php echo form_hidden('product_id', $d['dishId']); ?>
-				                <?php echo form_submit('add', '+'); ?>
-				            </fieldset>
-				        <?php echo form_close();?>
-				    </li>
-				    <?php } endforeach;?>
-				</ul>
-		    </div>
-		    
-		    <div role="tabpanel" class="tab-pane" id="noodle_rice_congee">
-				<ul class="category_wrap">
-					<?php foreach($dishes as $d): if ($d['catId'] == 4) {?>
-				    <li class="single_dish">
-				    	<h3><?php echo $d['dishChiName']; ?></h3>
-<!--				        <img src="<?php echo base_url(); ?>assets/img/products/<?php echo $d['imagePath']; ?>" alt="" /> -->
-				        <small>&dollar;<?php echo $d['dishPrice']; ?></small>
-				        <?php echo form_open('cart/add_cart_dishes'); ?>
-				            <fieldset>
-				                <?php echo form_hidden('quantity', '1'); ?>
-				                <?php echo form_hidden('product_id', $d['dishId']); ?>
-				                <?php echo form_submit('add', '+'); ?>
-				            </fieldset>
-				        <?php echo form_close(); ?>
-				    </li>
-				    <?php } endforeach;?>
-				</ul>
-		    </div>
-		    
-		    <div role="tabpanel" class="tab-pane" id="dessert">
-				<ul class="category_wrap">
-					<?php foreach($dishes as $d): if ($d['catId'] == 5) {?>
-				    <li class="single_dish">
-				    	<h3><?php echo $d['dishChiName']; ?></h3>
-<!-- 				        <img src="<?php echo base_url(); ?>assets/img/products/<?php echo $d['imagePath']; ?>" alt="" /> -->
-				        <small>&dollar;<?php echo $d['dishPrice']; ?></small>
-				        <?php echo form_open('cart/add_cart_dishes'); ?>
-				            <fieldset>
-				                <?php echo form_hidden('quantity', '1'); ?>
-				                <?php echo form_hidden('product_id', $d['dishId']); ?>
-				                <?php echo form_submit('add', '+'); ?>
-				            </fieldset>
-				        <?php echo form_close();?>
-				    </li>
-				    <?php } endforeach;?>
-				</ul>
-		    </div>
-		    
-		    <div role="tabpanel" class="tab-pane" id="combo">
-				<ul class="category_wrap">
-					<?php foreach($dishes as $d): if ($d['catId'] == 6) {?>
-				    <li class="single_dish">
-				    	<h3><?php echo $d['dishChiName']; ?></h3>
-<!-- 				        <img src="<?php echo base_url(); ?>assets/img/products/<?php echo $d['imagePath']; ?>" alt="" /> -->
-				        <small>&dollar;<?php echo $d['dishPrice']; ?></small>
-				        <?php echo form_open('cart/add_cart_dishes'); ?>
-				            <fieldset>
-				                <?php echo form_hidden('quantity', '1'); ?>
-				                <?php echo form_hidden('product_id', $d['dishId']); ?>
-				                <?php echo form_submit('add', '+'); ?>
-				            </fieldset>
-				        <?php echo form_close();?>
-				    </li>
-				    <?php } endforeach;?>
-				</ul>
-		    </div>
+			<?php } ?>
 		</div>
 	</div>
 </div>

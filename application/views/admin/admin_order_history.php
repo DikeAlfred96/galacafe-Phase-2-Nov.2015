@@ -37,7 +37,7 @@ date_default_timezone_set('America/Vancouver');
 				    			<th>打印订单</th>
 				    		</tr>
 				    	</thead>
-				    	<?php if ($today_history != Null ) {
+				    	<?php if ($today_history) {
 					    	$i=1; $x=1; ?>
 				    	<tbody>
 					    <?php foreach ($today_history->result() as $item):
@@ -105,7 +105,7 @@ date_default_timezone_set('America/Vancouver');
 				    			<th>打印订单</th>
 				    		</tr>
 				    	</thead>
-				    	<?php if ($one_day_history == TRUE) {
+				    	<?php if ($one_day_history) {
 					    	$i=1; $x=1; ?>
 				    	<tbody>
 					    <?php foreach ($one_day_history->result() as $item):
@@ -156,7 +156,7 @@ date_default_timezone_set('America/Vancouver');
 				    	</tbody>
 				    	<?php } else { ?>
 						<tbody>
-							没有查询到订单记录...
+							<tr><th col="6">没有查询到订单记录...</th></tr>
 						</tbody>
 					    <?php } ?>
 				    </table>
@@ -246,7 +246,7 @@ date_default_timezone_set('America/Vancouver');
 		  	var orderTotal = document.getElementById(section).getElementsByClassName('orderTotal_'+index)[0].innerHTML;
 		  	var orderTax = document.getElementById(section).getElementsByClassName('orderTax_'+index)[0].value;
 		    var print_count = document.getElementById(section).getElementsByClassName('extra_'+index);
-		    var printContents = '<style>body{font-family: "Arial", sans-serif;}div#main{position:relative; width: 320px;}p.center{text-align:center; margin-bottom: 0; padding-bottom: 5px;}p em{width:150px; position:absolute; right:0;}table{width:320px; text-align:center; margin-top:10px; border-top:2px solid #333;}table tr{width:33.33%; font-family: "黑体", Arial, sans-serif; font-size: 15px;}table td.low{line-height:10px;vertical-align:center;}p.footer{font-size: 16px; line-height:18px;}p.footer.special{text-align:right; font-size: 16px;}p.footer.first{border-top:3px solid #333; padding-top:10px;}p.footer{width:320px; margin: 0; position: relative; padding-right:5px;}p.footer.small{font-size:14px;}p.footer.large{font-size:22px; font-weight:bold;}p.footer em{font-size: 16px; font-weight: normal; position: absolute; right: 0; width: 100px; text-align: right; padding-right: 5px;}</style>'
+		    var printContents = '<style>body{font-family: "Arial", sans-serif;}div#main{position:relative; width: 320px;}p.center{text-align:center; margin-bottom: 0; padding-bottom: 5px;}p em{width:150px; position:absolute; right:0;}table{width:320px; text-align:center; margin-top:10px; border-top:2px solid #333;}table tr{font-family: "黑体", Arial, sans-serif; font-size: 15px;}table td.low{line-height:10px;vertical-align:center;}p.footer{font-size: 16px; line-height:18px;}p.footer.special{text-align:right; font-size: 16px;}p.footer.first{border-top:3px solid #333; padding-top:10px;}p.footer{width:320px; margin: 0; position: relative; padding-right:5px;}p.footer.small{font-size:14px;}p.footer.large{font-size:22px; font-weight:bold;}p.footer em{font-size: 16px; font-weight: normal; position: absolute; right: 0; width: 100px; text-align: right; padding-right: 5px;}</style>'
 		    printContents += '<div id="main"><p class="center">www.galacafe.ca<br>';
 		    printContents += 'galacafemanager@gmail.com<br>';
 		    printContents += '(GST 829982370RT0001)</p>';
@@ -283,7 +283,7 @@ date_default_timezone_set('America/Vancouver');
 	  		if(!w)alert('Please enable pop-ups');
 			w.document.write(printContents);
 			w.print();
-			w.close(); // Comment this for testing
+//			w.close(); // Comment this for testing
 		}
   	</script>
 </div>

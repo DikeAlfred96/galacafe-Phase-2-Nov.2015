@@ -76,7 +76,8 @@ class Admin_user_model extends CI_Model {
 				$new_order_items_insert_data = array(
 					'orderId' => $current_order_id,
 			    	'dishId' => $this->input->post('dishes_id_'.$i),
-			    	'dishQuantity' => $this->input->post('item_quantity_'.$i), 
+			    	'dishQuantity' => $this->input->post('item_quantity_'.$i),
+			    	'dishQtyAdj' => $this->input->post('item_quantity_'.$i), 
 			    	'dishStatus' => '0'
 			    );
 			    $insert_order_items = $this->db->insert('order_items', $new_order_items_insert_data);
@@ -123,13 +124,13 @@ class Admin_user_model extends CI_Model {
 	}
 	
 	function order_status_table_0() {
-		$sql = "SELECT orderId, tableId, orderStatus, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '1' ORDER BY orderTime, orderStatus DESC";
+		$sql = "SELECT orderId, tableId, orderStatus, orderTime, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '1' OR orderStatus = '2' ORDER BY orderId DESC, orderTime, orderStatus DESC LIMIT 7";
 		$result = $this->db->query($sql);
 		
 		return $result;
 	}
 	
-	function order_status_table_0_final() {
+	function order_status_table_0_final() { // ABANDON
 		$sql = "SELECT orderId, tableId, orderStatus, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '2' ORDER BY orderTime, orderStatus DESC";
 		$result = $this->db->query($sql);
 		

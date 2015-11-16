@@ -147,7 +147,7 @@ class Control_panel extends CI_Controller {
 		$this->db->where('orderId', $order_id);
 		$this->db->update('orders', $sql_order);
 		
-		redirect('/control_panel/view_orderdetail', 'refresh');
+		redirect('/control_panel/view_orderdetail_pickup', 'refresh');
 	}
 	
 	function dish_status_change() {
@@ -175,6 +175,17 @@ class Control_panel extends CI_Controller {
 			endforeach;
 		}
 	}
+	function dish_status_change_all_z() {
+		header("Content-type:text/html;charset=utf-8");
+		
+		$orderId = $_POST['data'];
+		$sql_dish_all = array('dishStatus' => 1);
+		$this->db->where('orderId', $orderId);
+		$this->db->update('view_order_items', $sql_dish_all);
+		
+		echo 'success change all zero table';
+	}
+
 	function dish_status_change_all() {
 		header("Content-type:text/html;charset=utf-8");
 		
@@ -185,7 +196,7 @@ class Control_panel extends CI_Controller {
 		
 		echo 'success change all';
 	}
-	
+
 	function user_order_cancel() {
 		header("Content-type:text/html;charset=utf-8");
 		
@@ -197,7 +208,17 @@ class Control_panel extends CI_Controller {
 		$this->db->where('orderId', $orderId);
 		$this->db->update('orders', $sql_order);
 	}
-	
+
+	function erase_single_dish() {
+		header("Content-type:text/html;charset=utf-8");
+		
+		$serialId = $_POST['data'];
+		$this->db->where('serialId', $serialId);
+		$this->db->delete('order_items');
+
+		echo 'success delete single dish';
+	}
+
 	function order_status_change() {
 		header("Content-type:text/html;charset=utf-8");
 		
@@ -212,7 +233,7 @@ class Control_panel extends CI_Controller {
 		
 		echo 'success';
 	}
-	
+
 	function order_status_change_finish() {
 		header("Content-type:text/html;charset=utf-8");
 		
