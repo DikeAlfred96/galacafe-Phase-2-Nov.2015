@@ -497,6 +497,12 @@
 	margin-bottom: 0;
 	cursor: pointer;
 	text-align: center;
+	color: #000;
+	display: inline-block;
+	width: 100%;
+}
+#back_end_control_panel #orderdetail .single_dish:hover {
+	text-decoration: none;
 }
 #back_end_control_panel #orderdetail .single_takeout_dish {
 	padding: 2px 0;

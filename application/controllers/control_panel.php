@@ -182,6 +182,11 @@ class Control_panel extends CI_Controller {
 		$sql_dish_all = array('dishStatus' => 1);
 		$this->db->where('orderId', $orderId);
 		$this->db->update('view_order_items', $sql_dish_all);
+
+		$orderId = $_POST['data'];
+		$sql_order = array('orderStatus' => 3);
+		$this->db->where('orderId', $orderId);
+		$this->db->update('orders', $sql_order);
 		
 		echo 'success change all zero table';
 	}
@@ -219,7 +224,7 @@ class Control_panel extends CI_Controller {
 		echo 'success delete single dish';
 	}
 
-	function order_status_change() {
+	function order_status_change() { // ****** ABANDON ******
 		header("Content-type:text/html;charset=utf-8");
 		
 		$orderId = $_POST['data'];

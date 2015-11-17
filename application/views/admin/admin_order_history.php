@@ -202,7 +202,7 @@ date_default_timezone_set('America/Vancouver');
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
 				    			<td class="orderTotal_<?php echo $i; ?>"><?php echo $item->orderTotal; ?></td>
 				    			<td><button class="admin_show_details_older show_details_<?php echo $i; ?>">查看</button></td>
-				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '2') { ?>等待取餐<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
+				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
 				    			<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'older')"></td>
 				    		</tr>
 				    		<tr class="details_older extra_<?php echo $i; ?>">
@@ -283,7 +283,7 @@ date_default_timezone_set('America/Vancouver');
 	  		if(!w)alert('Please enable pop-ups');
 			w.document.write(printContents);
 			w.print();
-//			w.close(); // Comment this for testing
+			w.close(); // Comment this for testing
 		}
   	</script>
 </div>

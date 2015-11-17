@@ -22,11 +22,21 @@ date_default_timezone_set('America/Vancouver');
 	    	<?php for ($tid=1; $tid<=8; $tid++) {
 				echo '<div class="table_'.$tid.'">'; ?>
 			<h5><?php echo $tid;?>号桌<span class="finish_all">全部完成<input type="hidden" value="<?php echo $tid; ?>" class="table_id"></span></h5>	
-			<?php $sql_e="SELECT orderId, dishId, serialId, dishQuantity, dishStatus, dishChiName, dishAlphaId FROM view_last_order WHERE tableId = '{$tid}';";
+			<?php $sql_e="SELECT orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_last_order WHERE tableId = '{$tid}';";
 				$result_e = $this->db->query($sql_e);
 				foreach ($result_e->result() as $item_e):
 				$status = $item_e->dishStatus; ?>
-    			<p class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>"><span class="dish_alpha"><?php echo $item_e->dishAlphaId; ?></span><span class="dish_name"><?php echo $item_e->dishChiName; ?></span><span class="dish_qty"><?php echo $item_e->dishQuantity; ?></span><input class="serial" type="hidden" value="<?php echo $item_e->serialId; ?>"></p>
+    			<a class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>">
+    				<span class="dish_alpha"><?php echo $item_e->dishAlphaId; ?></span>
+    				<span class="dish_name"><?php echo $item_e->dishChiName; ?></span>
+    				<span class="dish_qty"><?php echo $item_e->dishQtyAdj; ?></span>
+    				<select class="dish_qty_adj">
+    					<?php for ($option=0; $option<=$item_e->dishQuantity; $option++) {
+    					echo '<option>'.$option.'</option>';
+    					} ?>
+    				</select>
+    				<input class="serial" type="hidden" value="<?php echo $item_e->serialId; ?>">
+    			</a>
 			<?php endforeach; ?>
 			</div>
 		<?php } ?>

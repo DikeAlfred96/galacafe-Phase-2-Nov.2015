@@ -124,13 +124,13 @@ class Admin_user_model extends CI_Model {
 	}
 	
 	function order_status_table_0() {
-		$sql = "SELECT orderId, tableId, orderStatus, orderTime, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '1' OR orderStatus = '2' ORDER BY orderId DESC, orderTime, orderStatus DESC LIMIT 7";
+		$sql = "SELECT orderId, tableId, orderStatus, orderTime, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '1' OR orderStatus = '2' OR orderStatus = '3' ORDER BY orderStatus ASC, orderId DESC, orderTime DESC LIMIT 7";
 		$result = $this->db->query($sql);
 		
 		return $result;
 	}
 	
-	function order_status_table_0_final() { // ABANDON
+	function order_status_table_0_final() { // ****** ABANDON ******
 		$sql = "SELECT orderId, tableId, orderStatus, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '2' ORDER BY orderTime, orderStatus DESC";
 		$result = $this->db->query($sql);
 		

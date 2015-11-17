@@ -29,7 +29,7 @@ date_default_timezone_set('America/Vancouver');
 		    		$order_remarks = $t_zero_pending->orderRemarks; ?>
 	    		<div class="single_pending">
 		    		<form action="admin_approve_order" method="post" class="pending_form">
-			    		<p>订单号: <?php echo $currentId_pending; ?><input type="button" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
+			    		<p>订单号: <?php echo $currentId_pending; ?><input type="submit" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
 			    		<p class="user_detail"><span class="user_name"><?php echo $t_zero_pending->userName; ?></span><span class="user_tel"><?php echo $t_zero_pending->userTel; ?></span><?php if ($order_remarks != '') { ?><br><span class="remarks"><?php echo $t_zero_pending->orderRemarks; ?></span><?php } ?></p>
 			    		<input type="hidden" id="orderId_<?php echo $i; ?>" value="<?php echo $currentId_pending; ?>">
 			    		<input type="hidden" id="tableId_<?php echo $i; ?>" value="外卖">
@@ -60,7 +60,7 @@ date_default_timezone_set('America/Vancouver');
 	    		<div class="single_takeout">
 	    			<?php $currentId = $t_zero->orderId; ?>
 	    			<p>订单号: <?php echo $currentId; ?><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
-	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}';";
+	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}';";
 		    		$result_takeout = $this->db->query($sql_takeout); 
 		    		foreach ($result_takeout->result() as $item_out): 
 		    		$status = $item_out->dishStatus; ?>
@@ -122,7 +122,7 @@ date_default_timezone_set('America/Vancouver');
 		});
 	}
 	ajax();
-	setInterval(ajax, 1000000); // After 10 sec re-fetch data
+	setInterval(ajax, 10000); // After 10 sec re-fetch data
 	
 	$('.finish_order').each(function() {
 		var save_status = $(this);
@@ -159,6 +159,7 @@ date_default_timezone_set('America/Vancouver');
 		var save_status = $(this);
 		var dish_serial = $(this).children('.serial').val();
 		$(this).click(function() {
+			event.stopPropagation();
 			$.ajax({
 		        url: 'dish_status_change',
 		        data: {"data" : dish_serial},
@@ -225,7 +226,7 @@ date_default_timezone_set('America/Vancouver');
 		if(!w)alert('Please enable pop-ups');
 		w.document.write(printContents);
 		w.print();
-//		w.close(); // Comment this for testing
+		w.close(); // Comment this for testing
 	}
 	function myrefresh() {
 		window.location.reload();

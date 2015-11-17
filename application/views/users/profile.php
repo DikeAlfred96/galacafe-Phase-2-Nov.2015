@@ -36,7 +36,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 			    			<td><?php echo $item->orderTime; ?></td>
 			    			<td><?php echo $item->orderTotal; ?></td>
 			    			<td><button class="show_details show_details_<?php echo $i; ?>">查看</button></td>
-			    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '2') { ?>等待取餐<?php } else if ($order_status == '3') { ?>已完成<?php } else if ($order_status == '4') { ?>已取消<?php } else { ?>订单错误<?php } ?></td>
+			    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else if ($order_status == '4') { ?>已取消<?php } else { ?>订单错误<?php } ?></td>
 			    		</tr>
 			    		<tr class="details extra_<?php echo $i; ?>">
 				    		<th class="one_third">菜品编号</th>
