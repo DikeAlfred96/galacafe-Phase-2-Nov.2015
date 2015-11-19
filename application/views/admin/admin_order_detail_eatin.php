@@ -29,13 +29,16 @@ date_default_timezone_set('America/Vancouver');
     			<a class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>">
     				<span class="dish_alpha"><?php echo $item_e->dishAlphaId; ?></span>
     				<span class="dish_name"><?php echo $item_e->dishChiName; ?></span>
-    				<span class="dish_qty"><?php echo $item_e->dishQtyAdj; ?> / <?php echo $item_e->dishQuantity; ?></span>
+    				<span class="dish_qty"><?php echo $item_e->dishQtyAdj; ?>/<span class="total"><?php echo $item_e->dishQuantity; ?></span></span>
     				<select class="dish_qty_adj" onclick="event.stopPropagation();">
-    					<option>-</option>
+    					<option value="default">-</option>
     					<?php for ($option=0; $option<=$item_e->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
-    					echo '<option>'.$option.'</option>';
+    					echo '<option value="'.$option.'">'.$option.'</option>';
     					} ?>
+    					<option value="reset">复位</option>
     				</select>
+    				<span class="undo" onclick="event.stopPropagation();"><img src="<?php echo base_url(); ?>theme/images/undo.png" width="14px"></span>
+    				<input class="qty_cache" type="hidden" value="<?php echo $item_e->dishQuantity; ?>">
     				<input class="serial" type="hidden" value="<?php echo $item_e->serialId; ?>">
     			</a>
 			<?php endforeach; ?>
@@ -83,19 +86,42 @@ date_default_timezone_set('America/Vancouver');
 
 	$('.dish_qty_adj').each(function() {
 		var save_status = $(this);
+		var order_qty = $(this).parent().children('.dish_qty').children('.total').html();
 		var dish_serial = $(this).parent().children('.serial').val();
 		$(this).change(function() {
-			var qty = $(this).children('option:selected').html();
-			var original_qty = $(this).children('option:last-child').html();
-			var final_qty = original_qty - qty;
-			$.ajax({
-		        url: 'dish_qty_change',
-		        data: {"qty" : final_qty, "data" : dish_serial},
-		        type: "POST",
-		        success: function(data) {
-		        	location.reload();
-		        }
-		    });
+			var current_value = $(this).children('option:selected').val();
+			if (current_value === 'reset') {
+				$.ajax({
+					url: 'dish_qty_reset',
+			        data: {"data" : dish_serial},
+			        type: "POST",
+			        success: function(data) {
+			        	location.reload();
+			        	// save_status.parent().children('.dish_qty').html(data);
+			        	// $('select').prop('selectedIndex', 0);
+			        }
+				});
+				/* $(document).ready(function() {
+					$('.qty_cache').val('kakak');
+				}); */
+			} else if (!isNaN(current_value)) {
+				var qty = $(this).children('option:selected').html();
+				var original_qty = $(this).children('option:nth-last-child(2)').html();
+				var final_qty = original_qty - qty;
+				$.ajax({
+			        url: 'dish_qty_change',
+			        data: {
+			        	"data" : dish_serial,
+			        	"qty" : final_qty,
+			        	"original" : order_qty
+			        },
+			        type: "POST",
+			        success: function(data) {
+			        	location.reload();
+			        	// save_status.parent().children('.dish_qty').html(data);
+			        }
+			    });
+			} else {}
 		});
 	});
 

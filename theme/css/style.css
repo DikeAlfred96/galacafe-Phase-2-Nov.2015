@@ -496,15 +496,14 @@
 #back_end_control_panel #orderdetail .single_dish {
 	margin-bottom: 0;
 	cursor: pointer;
-	text-align: center;
+	/* text-align: center; */
 	color: #000;
 	display: inline-block;
 	width: 100%;
 }
 #back_end_control_panel #orderdetail .single_dish .dish_qty_adj {
-	float: right;
 	width: 40px;
-	margin-right: 5px;
+	margin-right: 1px;
 }
 #back_end_control_panel #orderdetail .single_dish:hover {
 	text-decoration: none;
@@ -514,14 +513,35 @@
 }
 #back_end_control_panel #orderdetail .single_dish {
 	padding: 5px 0;
-}	
+}
+#back_end_control_panel #orderdetail .single_takeout_dish .dish_qty,
+#back_end_control_panel #orderdetail .single_dish .dish_qty,
+#back_end_control_panel #orderdetail .single_takeout_dish .dish_alpha,
+#back_end_control_panel #orderdetail .single_dish .dish_alpha,
+#back_end_control_panel #orderdetail .single_takeout_dish .dish_name,
+#back_end_control_panel #orderdetail .single_dish .dish_name {
+	vertical-align: middle;
+	text-align: center;
+	display: inline-block;
+}
 #back_end_control_panel #orderdetail .single_takeout_dish .dish_alpha,
 #back_end_control_panel #orderdetail .single_dish .dish_alpha {
-	margin-right: 5px;
+/* 	margin-right: 5px; */
+	width: 43px;
+}
+#back_end_control_panel #orderdetail .single_takeout_dish .dish_name,
+#back_end_control_panel #orderdetail .single_dish .dish_name {
+	width: 43px;
 }
 #back_end_control_panel #orderdetail .single_takeout_dish .dish_qty,
 #back_end_control_panel #orderdetail .single_dish .dish_qty {
-	margin-left: 5px;
+	/* margin-left: 5px; */
+	width: 40px;
+}
+#back_end_control_panel #orderdetail .single_dish .dish_qty .total {
+	font-weight: bold;
+	text-decoration: underline;
+	display: inline-block;
 }
 #back_end_control_panel #orderdetail #take_out,
 #back_end_control_panel #orderdetail #eat_in {
@@ -565,7 +585,7 @@
 	padding-bottom: 10px;
 }
 #back_end_control_panel #orderdetail #table_0 .single_takeout {
-	width: 190px;
+	width: 200px;
 	margin: 0 3px 10px 3px;
 	display: inline-block;
 	vertical-align: top;

@@ -67,7 +67,7 @@ date_default_timezone_set('America/Vancouver');
 	    				<a class="single_takeout_dish single_dish <?php if ($status != '1') {}else{echo 'done';} ?>">
 	    					<span class="dish_alpha"><?php echo $item_out->dishAlphaId; ?></span>
 	    					<span class="dish_name"><?php echo $item_out->dishChiName; ?></span>
-	    					<span class="dish_qty"><?php echo $item_out->dishQuantity; ?> / <?php echo $item_out->dishQuantity; ?></span>
+	    					<span class="dish_qty"><?php echo $item_out->dishQuantity; ?>/<span class="total"><?php echo $item_out->dishQuantity; ?></span></span>
 	    					<select class="dish_qty_adj" onclick="event.stopPropagation();">
 		    					<option>-</option>
 		    					<?php for ($option=0; $option<=$item_e->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
@@ -151,7 +151,7 @@ date_default_timezone_set('America/Vancouver');
 		});
 	});
 	
-	$('.remove_order').each(function() {
+	/* $('.remove_order').each(function() {
 		var save_status = $(this);
 		var order_id = $(this).children('.order_id').val();
 		$(this).click(function() {
@@ -164,7 +164,7 @@ date_default_timezone_set('America/Vancouver');
 		        }
 		    });
 		});
-	});
+	}); */
 
 	$('.dish_qty_adj').each(function() {
 		var save_status = $(this);

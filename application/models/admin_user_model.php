@@ -130,12 +130,12 @@ class Admin_user_model extends CI_Model {
 		return $result;
 	}
 	
-	function order_status_table_0_final() { // ****** ABANDON ******
+	/* function order_status_table_0_final() { // ****** ABANDON ******
 		$sql = "SELECT orderId, tableId, orderStatus, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '2' ORDER BY orderTime, orderStatus DESC";
 		$result = $this->db->query($sql);
 		
 		return $result;
-	}
+	} */
 	
 	function order_status_table_0_pending() {
 		$sql = "SELECT orderId, tableId, userName, userTel, orderStatus, orderTime, orderRemarks, orderTotal, orderSubtotal, orderTax FROM orders WHERE tableId = '0' AND orderStatus = '0' ORDER BY orderTime, orderStatus DESC";

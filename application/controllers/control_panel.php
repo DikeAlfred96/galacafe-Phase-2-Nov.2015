@@ -28,7 +28,7 @@ class Control_panel extends CI_Controller {
 	
 	function view_orderdetail_pickup() {
 		$data['table_0_pending'] = $this->admin_user_model->order_status_table_0_pending();
-		$data['table_0_final'] = $this->admin_user_model->order_status_table_0_final();
+		// $data['table_0_final'] = $this->admin_user_model->order_status_table_0_final();
 		$data['table_0'] = $this->admin_user_model->order_status_table_0();
 		$data['main_content'] = 'admin/admin_order_detail_pickup';
 		$this->load->view('includes/template', $data);
@@ -181,11 +181,30 @@ class Control_panel extends CI_Controller {
 
 		$serialId = $_POST['data'];
 		$qty = $_POST['qty'];
+		$original = $_POST['original'];
 		$sel_dish_qty = array('dishQtyAdj' => $qty);
 		$this->db->where('serialId', $serialId);
 		$this->db->update('view_order_items', $sel_dish_qty);
 
-		echo 'change temporary number done';
+		echo $qty.'/<span class="total">'.$original.'</span>';
+	}
+
+	function dish_qty_reset() {
+		header("Content-type:text/html;charset=utf-8");
+
+		$serialId = $_POST['data'];
+
+		$sql = "SELECT dishQuantity FROM view_order_items WHERE serialId = '{$serialId}' LIMIT 1";
+		$result_fetch = $this->db->query($sql);
+		foreach ($result_fetch->result() as $item):
+			$original_quantity = $item->dishQuantity;
+		endforeach;
+
+		$sel_dish_qty = array('dishQtyAdj' => $original_quantity);
+		$this->db->where('serialId', $serialId);
+		$this->db->update('view_order_items', $sel_dish_qty);
+
+		echo $original_quantity.'/<span class="total">'.$original_quantity.'</span>';
 	}
 
 	function dish_status_change_all_z() {
@@ -196,12 +215,12 @@ class Control_panel extends CI_Controller {
 		$this->db->where('orderId', $orderId);
 		$this->db->update('view_order_items', $sql_dish_all);
 
-		$sql_order = array(
+		/* $sql_order = array(
 			'orderStatus' => 3,
 			'orderFinishTime' => date('Y-m-d H:i:s'
 		));
 		$this->db->where('orderId', $orderId);
-		$this->db->update('orders', $sql_order);
+		$this->db->update('orders', $sql_order); */
 		
 		echo 'success change all zero table';
 	}
@@ -243,7 +262,7 @@ class Control_panel extends CI_Controller {
 		echo 'success delete single dish';
 	}
 
-	function order_status_change() { // ****** ABANDON ******
+	/* function order_status_change() { // ****** ABANDON ******
 		header("Content-type:text/html;charset=utf-8");
 		
 		$orderId = $_POST['data'];
@@ -256,9 +275,9 @@ class Control_panel extends CI_Controller {
 		$this->db->update('view_order_items', $sql_dish);
 		
 		echo 'success';
-	}
+	} */
 
-	function order_status_change_finish() {
+	/* function order_status_change_finish() {
 		header("Content-type:text/html;charset=utf-8");
 		
 		$orderId = $_POST['data'];
@@ -270,7 +289,7 @@ class Control_panel extends CI_Controller {
 		$this->db->update('orders', $sql_order);
 		
 		echo 'success';
-	}
+	} */
 }
 
 ?>
