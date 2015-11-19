@@ -64,7 +64,18 @@ date_default_timezone_set('America/Vancouver');
 		    		$result_takeout = $this->db->query($sql_takeout); 
 		    		foreach ($result_takeout->result() as $item_out): 
 		    		$status = $item_out->dishStatus; ?>
-	    				<p class="single_takeout_dish single_dish <?php if ($status != '1') {}else{echo 'done';} ?>"><span class="dish_alpha"><?php echo $item_out->dishAlphaId; ?></span><span class="dish_name"><?php echo $item_out->dishChiName; ?></span><span class="dish_qty"><?php echo $item_out->dishQuantity; ?></span><input class="serial" type="hidden" value="<?php echo $item_out->serialId; ?>"></p>
+	    				<a class="single_takeout_dish single_dish <?php if ($status != '1') {}else{echo 'done';} ?>">
+	    					<span class="dish_alpha"><?php echo $item_out->dishAlphaId; ?></span>
+	    					<span class="dish_name"><?php echo $item_out->dishChiName; ?></span>
+	    					<span class="dish_qty"><?php echo $item_out->dishQuantity; ?> / <?php echo $item_out->dishQuantity; ?></span>
+	    					<select class="dish_qty_adj" onclick="event.stopPropagation();">
+		    					<option>-</option>
+		    					<?php for ($option=0; $option<=$item_e->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
+		    					echo '<option>'.$option.'</option>';
+		    					} ?>
+		    				</select>
+	    					<input class="serial" type="hidden" value="<?php echo $item_out->serialId; ?>">
+	    				</a>
 	    			<?php endforeach; ?>
 	    		</div>
 	    		<?php endforeach; ?>
@@ -155,11 +166,28 @@ date_default_timezone_set('America/Vancouver');
 		});
 	});
 
+	$('.dish_qty_adj').each(function() {
+		var save_status = $(this);
+		var dish_serial = $(this).parent().children('.serial').val();
+		$(this).change(function() {
+			var qty = $(this).children('option:selected').html();
+			var original_qty = $(this).children('option:last-child').html();
+			var final_qty = original_qty - qty;
+			$.ajax({
+		        url: 'dish_qty_change',
+		        data: {"qty" : final_qty, "data" : dish_serial},
+		        type: "POST",
+		        success: function(data) {
+		        	location.reload();
+		        }
+		    });
+		});
+	});
+
 	$('.single_dish').each(function() { // Change singel dish status.
 		var save_status = $(this);
 		var dish_serial = $(this).children('.serial').val();
 		$(this).click(function() {
-			event.stopPropagation();
 			$.ajax({
 		        url: 'dish_status_change',
 		        data: {"data" : dish_serial},

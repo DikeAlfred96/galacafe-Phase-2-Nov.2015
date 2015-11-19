@@ -29,9 +29,10 @@ date_default_timezone_set('America/Vancouver');
     			<a class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>">
     				<span class="dish_alpha"><?php echo $item_e->dishAlphaId; ?></span>
     				<span class="dish_name"><?php echo $item_e->dishChiName; ?></span>
-    				<span class="dish_qty"><?php echo $item_e->dishQtyAdj; ?></span>
-    				<select class="dish_qty_adj">
-    					<?php for ($option=0; $option<=$item_e->dishQuantity; $option++) {
+    				<span class="dish_qty"><?php echo $item_e->dishQtyAdj; ?> / <?php echo $item_e->dishQuantity; ?></span>
+    				<select class="dish_qty_adj" onclick="event.stopPropagation();">
+    					<option>-</option>
+    					<?php for ($option=0; $option<=$item_e->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
     					echo '<option>'.$option.'</option>';
     					} ?>
     				</select>
@@ -75,6 +76,24 @@ date_default_timezone_set('America/Vancouver');
 					} else {
 						$(save_status).addClass(data);
 					}
+		        }
+		    });
+		});
+	});
+
+	$('.dish_qty_adj').each(function() {
+		var save_status = $(this);
+		var dish_serial = $(this).parent().children('.serial').val();
+		$(this).change(function() {
+			var qty = $(this).children('option:selected').html();
+			var original_qty = $(this).children('option:last-child').html();
+			var final_qty = original_qty - qty;
+			$.ajax({
+		        url: 'dish_qty_change',
+		        data: {"qty" : final_qty, "data" : dish_serial},
+		        type: "POST",
+		        success: function(data) {
+		        	location.reload();
 		        }
 		    });
 		});

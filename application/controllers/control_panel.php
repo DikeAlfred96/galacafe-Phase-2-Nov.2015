@@ -175,6 +175,19 @@ class Control_panel extends CI_Controller {
 			endforeach;
 		}
 	}
+
+	function dish_qty_change() {
+		header("Content-type:text/html;charset=utf-8");
+
+		$serialId = $_POST['data'];
+		$qty = $_POST['qty'];
+		$sel_dish_qty = array('dishQtyAdj' => $qty);
+		$this->db->where('serialId', $serialId);
+		$this->db->update('view_order_items', $sel_dish_qty);
+
+		echo 'change temporary number done';
+	}
+
 	function dish_status_change_all_z() {
 		header("Content-type:text/html;charset=utf-8");
 		
@@ -183,8 +196,10 @@ class Control_panel extends CI_Controller {
 		$this->db->where('orderId', $orderId);
 		$this->db->update('view_order_items', $sql_dish_all);
 
-		$orderId = $_POST['data'];
-		$sql_order = array('orderStatus' => 3);
+		$sql_order = array(
+			'orderStatus' => 3,
+			'orderFinishTime' => date('Y-m-d H:i:s'
+		));
 		$this->db->where('orderId', $orderId);
 		$this->db->update('orders', $sql_order);
 		
@@ -199,6 +214,10 @@ class Control_panel extends CI_Controller {
 		$this->db->where('tableId', $tableId);
 		$this->db->update('view_order_items', $sql_dish_all);
 		
+		$sql_order = array('orderStatus' => 3);
+		$this->db->where('orderId', $orderId);
+		$this->db->update('orders', $sql_order);
+
 		echo 'success change all';
 	}
 

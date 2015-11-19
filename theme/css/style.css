@@ -501,6 +501,11 @@
 	display: inline-block;
 	width: 100%;
 }
+#back_end_control_panel #orderdetail .single_dish .dish_qty_adj {
+	float: right;
+	width: 40px;
+	margin-right: 5px;
+}
 #back_end_control_panel #orderdetail .single_dish:hover {
 	text-decoration: none;
 }
