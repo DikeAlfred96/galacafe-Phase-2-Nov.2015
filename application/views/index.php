@@ -23,9 +23,10 @@
 	
 		<!-- Tab panes -->
 		<div class="tab-content">	
-			<?php $category = array('appetizer','main_course','kebab','noodle_rice_congee','dessert','combo','','');
+<?php 		$category = array('appetizer','main_course','kebab','noodle_rice_congee','dessert','combo','','');
+			$active = array('active', '', '', '', '', '', '', '');
 				for ($cat=1; $cat<= 6; $cat++) { ?>
-		    <div role="tabpanel" class="tab-pane active" id="<?php echo $category[$cat-1]; ?>">
+		    <div role="tabpanel" class="tab-pane <?php echo $active[$cat-1]; ?>" id="<?php echo $category[$cat-1]; ?>">
 				<ul class="category_wrap">
 					<?php foreach($dishes as $d): if ($d['catId'] == $cat) {?>
 				    <li class="single_dish">

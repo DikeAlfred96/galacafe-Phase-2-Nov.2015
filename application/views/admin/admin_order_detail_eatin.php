@@ -21,7 +21,17 @@ date_default_timezone_set('America/Vancouver');
 		<div id="eat_in">
 	    	<?php for ($tid=1; $tid<=8; $tid++) {
 				echo '<div class="table_'.$tid.'">'; ?>
-			<h5><?php echo $tid;?>号桌<span class="finish_all">全部完成<input type="hidden" value="<?php echo $tid; ?>" class="table_id"></span></h5>	
+			<h5>
+				<?php echo $tid;?>号桌
+				<select class="change_table">
+					<option class="change_none">-</option>
+					<?php for ($cid=1; $cid<=8; $cid++) {
+					if ($cid == $tid) {} else { ?>
+					<option class="change_to" value="<?php echo $cid; ?>"><?php echo $cid; ?></option>
+					<?php } } ?>
+				</select>
+				<span class="finish_all">全部完成<input type="hidden" value="<?php echo $tid; ?>" class="table_id"></span>
+			</h5>	
 			<?php $sql_e="SELECT orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_last_order WHERE tableId = '{$tid}';";
 				$result_e = $this->db->query($sql_e);
 				foreach ($result_e->result() as $item_e):
@@ -29,33 +39,38 @@ date_default_timezone_set('America/Vancouver');
     			<a class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>">
     				<span class="dish_alpha"><?php echo $item_e->dishAlphaId; ?></span>
     				<span class="dish_name"><?php echo $item_e->dishChiName; ?></span>
-    				<span class="dish_qty"><?php echo $item_e->dishQtyAdj; ?>/<span class="total"><?php echo $item_e->dishQuantity; ?></span></span>
-    				<select class="dish_qty_adj" onclick="event.stopPropagation();">
-    					<option value="default">-</option>
-    					<?php for ($option=0; $option<=$item_e->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
-    					echo '<option value="'.$option.'">'.$option.'</option>';
-    					} ?>
-    					<option value="reset">复位</option>
-    				</select>
-    				<span class="undo" onclick="event.stopPropagation();"><img src="<?php echo base_url(); ?>theme/images/undo.png" width="14px"></span>
+    				<span class="dish_qty"><span class="adj"><?php echo $item_e->dishQtyAdj; ?></span>/<span class="total"><?php echo $item_e->dishQuantity; ?></span></span>
+    				<input type="text" onclick="event.stopPropagation(); this.select();" class="dish_qty_adj" maxlength="3">
     				<input class="qty_cache" type="hidden" value="<?php echo $item_e->dishQuantity; ?>">
     				<input class="serial" type="hidden" value="<?php echo $item_e->serialId; ?>">
+    				<input class="order_id" type="hidden" value="<?php echo $item_e->orderId; ?>">
     			</a>
 			<?php endforeach; ?>
 			</div>
 		<?php } ?>
-			</div>
-		</div>
-	</div>
-</div>
-<script>
+<script type="text/javascript">
+	function partialRefresh() {
+		$.ajax({
+		    url: 'view_orderdetail_eatin',
+		    data: {},
+		    type: 'post',
+		    success: function(data) {
+				$("div#eat_in").html($(data).find('#eat_in').html());
+		    }
+		});
+	}
+
 	$('.finish_all').each(function() { // Finish all button besides table number
 		var save_status = $(this);
 		var table_id = $(this).children('.table_id').val();
+		var order_id = $(this).parent().parent().children('.single_dish').children('.order_id').val();
 		$(this).click(function() {
 			$.ajax({
 		        url: 'dish_status_change_all',
-		        data: {"data" : table_id},
+		        data: {
+		        	"data" : table_id,
+		        	"order_id" : order_id
+		        },
 		        type: "POST",
 		        success: function(data) {
 					$(save_status).parent().parent().children('.single_dish').addClass('done');
@@ -67,66 +82,108 @@ date_default_timezone_set('America/Vancouver');
 	$('.single_dish').each(function() { // Change singel dish status.
 		var save_status = $(this);
 		var dish_serial = $(this).children('.serial').val();
+		var order_id = $(this).children('.order_id').val();
 		$(this).click(function() {
 			$.ajax({
 		        url: 'dish_status_change',
-		        data: {"data" : dish_serial},
+		        data: {
+		        	"data" : dish_serial,
+		        	"order_id" : order_id
+		        },
 		        type: "POST",
 		        success: function(data) {
-			       					       
-			        if ($(save_status).hasClass('done')) {
+					partialRefresh(); // location.reload();
+			        /* if ($(save_status).hasClass('done')) {
 				        $(save_status).removeClass('done');
 					} else {
 						$(save_status).addClass(data);
-					}
+					} */
 		        }
 		    });
 		});
 	});
-
+	
 	$('.dish_qty_adj').each(function() {
-		var save_status = $(this);
+		var t = $(this);
 		var order_qty = $(this).parent().children('.dish_qty').children('.total').html();
 		var dish_serial = $(this).parent().children('.serial').val();
-		$(this).change(function() {
-			var current_value = $(this).children('option:selected').val();
-			if (current_value === 'reset') {
-				$.ajax({
-					url: 'dish_qty_reset',
-			        data: {"data" : dish_serial},
-			        type: "POST",
-			        success: function(data) {
-			        	location.reload();
-			        	// save_status.parent().children('.dish_qty').html(data);
-			        	// $('select').prop('selectedIndex', 0);
-			        }
-				});
-				/* $(document).ready(function() {
-					$('.qty_cache').val('kakak');
-				}); */
-			} else if (!isNaN(current_value)) {
-				var qty = $(this).children('option:selected').html();
-				var original_qty = $(this).children('option:nth-last-child(2)').html();
-				var final_qty = original_qty - qty;
-				$.ajax({
-			        url: 'dish_qty_change',
-			        data: {
-			        	"data" : dish_serial,
-			        	"qty" : final_qty,
-			        	"original" : order_qty
-			        },
-			        type: "POST",
-			        success: function(data) {
-			        	location.reload();
-			        	// save_status.parent().children('.dish_qty').html(data);
-			        }
-			    });
-			} else {}
+		var order_id = $(this).parent().children('.order_id').val();
+		$(this).keypress(function(e) {
+
+		    if (e.which == 13) {
+		    	var input_val = t.val();
+		    	var original_qty = $(this).parent().children('.dish_qty').children('.adj').html();
+				var final_qty = original_qty - input_val;
+				if ($.trim(input_val) === "0") {
+					$.ajax({
+						url: 'dish_qty_reset',
+				        data: {
+				        	"data" : dish_serial,
+				        	"order_id" : order_id
+				        },
+				        type: "POST",
+				        success: function(data) {
+				        	partialRefresh(); // location.reload();
+				        	// save_status.parent().children('.dish_qty').html(data);
+				        	// $('select').prop('selectedIndex', 0);
+				        }
+					});
+				} else if ($.trim(input_val) !== '') {
+					if (final_qty > order_qty || final_qty < 0 || isNaN(input_val)) {
+						return false;
+					} else {
+				    	$.ajax({
+					        url: 'dish_qty_change',
+					        data: {
+					        	"data" : dish_serial,
+					        	"qty" : final_qty,
+					        	"original" : order_qty,
+					        	"order_id" : order_id
+					        },
+					        type: "POST",
+					        success: function(data) {
+					        	partialRefresh(); // location.reload();
+					        	// save_status.parent().children('.dish_qty').html(data);
+					        }
+					    });
+					}
+			    	t.val('');
+					t.blur();
+				} else {
+					return false;
+				}
+		    }
 		});
 	});
 
+	$('.change_table').each(function() { // Finish all button besides table number
+		var save_status = $(this);
+		var table_id = $(this).parent().children('.finish_all').children('.table_id').val();
+		var order_id = $(this).parent().parent().children('.single_dish').children('.order_id').val();
+		$(this).change(function() {
+			var change_id = $(this).find(':selected').val();
+			$.ajax({
+		        url: 'eatin_change_table',
+		        data: {
+		        	"data" : table_id,
+		        	"change_id" : change_id,
+		        	"order_id" : order_id
+		        },
+		        type: "POST",
+		        success: function(data) {
+					partialRefresh();
+		        }
+		    });
+		});
+	});
+</script>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
 	function myrefresh() {
 		window.location.reload();
 	}
-	setTimeout('myrefresh()',900000); // refresh page every 15 min, Prevent Crash */
+	setInterval('myrefresh()',600000); // refresh page every 10 min, Prevent Crash */
 </script>

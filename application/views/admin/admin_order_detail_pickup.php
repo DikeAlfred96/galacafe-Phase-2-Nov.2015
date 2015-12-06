@@ -21,8 +21,9 @@ date_default_timezone_set('America/Vancouver');
 	    <div id="take_out">
 		    <div id="table_0_pending">
 			    <h5>网上订单</h5>
-	    		<?php foreach ($table_0_pending->result() as $t_zero_pending):
-		    		$i=1;
+	    		<?php
+	    			$i=1;
+	    			foreach ($table_0_pending->result() as $t_zero_pending):
 		    		$currentId_pending = $t_zero_pending->orderId;
 		    		$user_tel = $t_zero_pending->userTel;
 		    		$user_name = $t_zero_pending->userName;
@@ -67,74 +68,54 @@ date_default_timezone_set('America/Vancouver');
 	    				<a class="single_takeout_dish single_dish <?php if ($status != '1') {}else{echo 'done';} ?>">
 	    					<span class="dish_alpha"><?php echo $item_out->dishAlphaId; ?></span>
 	    					<span class="dish_name"><?php echo $item_out->dishChiName; ?></span>
-	    					<span class="dish_qty"><?php echo $item_out->dishQuantity; ?>/<span class="total"><?php echo $item_out->dishQuantity; ?></span></span>
-	    					<select class="dish_qty_adj" onclick="event.stopPropagation();">
+	    					<span class="dish_qty"><span class="adj"><?php echo $item_out->dishQtyAdj; ?></span>/<span class="total"><?php echo $item_out->dishQuantity; ?></span></span>
+	    					<input type="text" onclick="event.stopPropagation(); this.select();" class="dish_qty_adj" maxlength="3">
+	    					<!-- <select class="dish_qty_adj">
 		    					<option>-</option>
-		    					<?php for ($option=0; $option<=$item_e->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
+		    					<?php for ($option=1; $option<=$item_out->dishQtyAdj; $option++) { // dishQuantity / dishQtyAdj;
 		    					echo '<option>'.$option.'</option>';
 		    					} ?>
-		    				</select>
+		    					<option value="reset">复位</option>
+		    				</select> -->
 	    					<input class="serial" type="hidden" value="<?php echo $item_out->serialId; ?>">
 	    				</a>
 	    			<?php endforeach; ?>
 	    		</div>
 	    		<?php endforeach; ?>
-	    	</div>			    	
-	    </div>
-    </div>
-  </div>
-</div>
-<script>
-	var ajax = function ajax() {
+<script type="text/javascript">
+   	function partialRefresh() {
 		$.ajax({
 		    url: 'view_orderdetail_pickup',
 		    data: {},
 		    type: 'post',
 		    success: function(data) {
-				$("div#take_out").html($(data).find('div#take_out').html());
-				$('.cancel_order').each(function() {
-					var save_status = $(this);
-					var order_id = $(this).children('.order_id').val();
-					$(this).click(function() {
-						if (confirm('确认取消订单？')) {
-							$.ajax({
-						        url: 'user_order_cancel',
-						        data: {"data" : order_id},
-						        type: "POST",
-						        success: function(data) {
-									location.reload();
-						        }
-						    });
-						} else {
-							return false;
-						}
-					});
-				});
-
-				$('.erase_dish').each(function() {
-					var save_status = $(this);
-					var dish_serial = $(this).children('.serial').val();
-					$(this).click(function() {
-						if (confirm('确认删除该餐点？')) {
-							$.ajax({
-								url: 'erase_single_dish',
-						        data: {"data" : dish_serial},
-						        type: "POST",
-						        success: function(data) {
-						        	location.reload();
-						        }
-							});
-						} else {
-							return false;
-						}
-					});
-				});
+				$("div.kitchen_process").html($(data).find('.kitchen_process').html());
 		    }
 		});
 	}
-	ajax();
-	setInterval(ajax, 10000); // After 10 sec re-fetch data
-	
+	$('.single_dish').each(function() { // Change singel dish status.
+		var save_status = $(this);
+		var dish_serial = $(this).children('.serial').val();
+		var order_id = $(this).parent().children('p').children('.finish_order').children('.order_id').val();
+		$(this).click(function() {
+			$.ajax({
+		        url: 'dish_status_change',
+		        data: {
+		        	"data" : dish_serial,
+		        	"order_id" : order_id
+		        },
+		        type: "POST",
+		        success: function(data) {
+		        	partialRefresh();
+			        /* if ($(save_status).hasClass('done')) {
+				        $(save_status).removeClass('done');
+					} else {
+						$(save_status).addClass(data);
+					} */
+		        }
+		    });
+		});
+	});
 	$('.finish_order').each(function() {
 		var save_status = $(this);
 		var order_id = $(this).children('.order_id').val();
@@ -145,13 +126,122 @@ date_default_timezone_set('America/Vancouver');
 		        type: "POST",
 		        success: function(data) {
 					$(save_status).parent().parent().children('.single_dish').addClass('done');
-					location.reload();
+					partialRefresh();
 		        }
 		    });
 		});
 	});
+	$('.dish_qty_adj').each(function() {
+		var t = $(this);
+		var order_qty = $(this).parent().children('.dish_qty').children('.total').html();
+		var dish_serial = $(this).parent().children('.serial').val();
+		var order_id = $(this).parent().parent().children('p').children('.finish_order').children('.order_id').val();
+		$(this).keypress(function(e) {
+
+		    if (e.which == 13) {
+		    	var input_val = t.val();
+		    	var original_qty = $(this).parent().children('.dish_qty').children('.adj').html();
+				var final_qty = original_qty - input_val;
+				if ($.trim(input_val) === "0") {
+					$.ajax({
+						url: 'dish_qty_reset',
+				        data: {
+				        	"data" : dish_serial,
+				        	"order_id" : order_id
+				        },
+				        type: "POST",
+				        success: function(data) {
+				        	partialRefresh();
+				        	// save_status.parent().children('.dish_qty').html(data);
+				        	// $('select').prop('selectedIndex', 0);
+				        }
+					});
+				} else if ($.trim(input_val) !== '') {
+					if (final_qty > order_qty || final_qty < 0 || isNaN(input_val)) {
+						return false;
+					} else {
+				    	$.ajax({
+					        url: 'dish_qty_change',
+					        data: {
+					        	"data" : dish_serial,
+					        	"qty" : final_qty,
+					        	"original" : order_qty,
+					        	"order_id" : order_id
+					        },
+					        type: "POST",
+					        success: function(data) {
+					        	partialRefresh();
+					        	// save_status.parent().children('.dish_qty').html(data);
+					        }
+					    });
+					}
+			    	t.val('');
+					t.blur();
+				} else {
+					return false;
+				}
+		    }
+		});
+	});
+</script>
+	    	</div>   	
+	    </div>
+    </div>
+  </div>
+</div>
+<script>
+	function fetchTakeout() {
+		$.ajax({
+		    url: 'view_orderdetail_pickup',
+		    data: {},
+		    type: 'post',
+		    success: function(data) {
+				$("div#take_out").html($(data).find('div#take_out').html());
+		    }
+		});
+	}
+	fetchTakeout(); // Bug on initialize this function...Disable for now...
+	setInterval('fetchTakeout()',10000); // After 10 sec re-fetch data
 	
-	/* $('.remove_order').each(function() {
+	$('.cancel_order').each(function() {
+		var save_status = $(this);
+		var order_id = $(this).children('.order_id').val();
+		$(this).click(function() {
+			if (confirm('确认取消订单？')) {
+				$.ajax({
+			        url: 'user_order_cancel',
+			        data: {"data" : order_id},
+			        type: "POST",
+			        success: function(data) {
+						location.reload();
+			        }
+			    });
+			} else {
+				return false;
+			}
+		});
+	});
+
+	$('.erase_dish').each(function() {
+		var save_status = $(this);
+		var dish_serial = $(this).children('.serial').val();
+		$(this).click(function() {
+			if (confirm('确认删除该餐点？')) {
+				$.ajax({
+					url: 'erase_single_dish',
+			        data: {"data" : dish_serial},
+			        type: "POST",
+			        success: function(data) {
+			        	location.reload();
+			        }
+				});
+			} else {
+				return false;
+			}
+		});
+	});
+	
+	/* $('.remove_order').each(function() { // ABANDON
 		var save_status = $(this);
 		var order_id = $(this).children('.order_id').val();
 		$(this).click(function() {
@@ -166,44 +256,43 @@ date_default_timezone_set('America/Vancouver');
 		});
 	}); */
 
-	$('.dish_qty_adj').each(function() {
+	/* $('.dish_qty_adj').each(function() {
 		var save_status = $(this);
+		var order_qty = $(this).parent().children('.dish_qty').children('.total').html();
 		var dish_serial = $(this).parent().children('.serial').val();
 		$(this).change(function() {
-			var qty = $(this).children('option:selected').html();
-			var original_qty = $(this).children('option:last-child').html();
-			var final_qty = original_qty - qty;
-			$.ajax({
-		        url: 'dish_qty_change',
-		        data: {"qty" : final_qty, "data" : dish_serial},
-		        type: "POST",
-		        success: function(data) {
-		        	location.reload();
-		        }
-		    });
+			var current_value = $(this).children('option:selected').val();
+			if (current_value === 'reset') {
+				$.ajax({
+					url: 'dish_qty_reset',
+			        data: {"data" : dish_serial},
+			        type: "POST",
+			        success: function(data) {
+			        	location.reload();
+			        	// save_status.parent().children('.dish_qty').html(data);
+			        	// $('select').prop('selectedIndex', 0);
+			        }
+				});
+			} else if (!isNaN(current_value)) {
+				var qty = $(this).children('option:selected').html();
+				var original_qty = $(this).children('option:nth-last-child(2)').html();
+				var final_qty = original_qty - qty;
+				$.ajax({
+			        url: 'dish_qty_change',
+			        data: {
+			        	"data" : dish_serial,
+			        	"qty" : final_qty,
+			        	"original" : order_qty
+			        },
+			        type: "POST",
+			        success: function(data) {
+			        	location.reload();
+			        	// save_status.parent().children('.dish_qty').html(data);
+			        }
+			    });
+			} else {}
 		});
-	});
-
-	$('.single_dish').each(function() { // Change singel dish status.
-		var save_status = $(this);
-		var dish_serial = $(this).children('.serial').val();
-		$(this).click(function() {
-			$.ajax({
-		        url: 'dish_status_change',
-		        data: {"data" : dish_serial},
-		        type: "POST",
-		        success: function(data) {
-			       					       
-			        if ($(save_status).hasClass('done')) {
-				        $(save_status).removeClass('done');
-					} else {
-						$(save_status).addClass(data);
-					}
-		        }
-		    });
-		});
-	});
-	
+	}); */
 	function printDiv(index) {
 		var orderId = document.getElementById('orderId_'+index).value;
 		var tableId = document.getElementById('tableId_'+index).value;
@@ -259,5 +348,5 @@ date_default_timezone_set('America/Vancouver');
 	function myrefresh() {
 		window.location.reload();
 	}
-	setTimeout('myrefresh()',900000); // refresh page every 15 min, Prevent Crash */
+	setInterval('myrefresh()',600000); // refresh page every 10 min, Prevent Crash */
 </script>

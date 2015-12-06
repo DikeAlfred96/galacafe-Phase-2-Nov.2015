@@ -22,7 +22,7 @@ $config['salt'] = '~Hf@FuCkOffLol';
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/galacafe-Phase-2-Nov.2015/';
+$config['base_url'] = 'http://localhost:8888/galacafe-Phase-2-Nov.2015/';
 
 /*
 |--------------------------------------------------------------------------

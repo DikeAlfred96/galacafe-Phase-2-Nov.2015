@@ -43,7 +43,7 @@ class Control_panel extends CI_Controller {
 		$data['table_6'] = $this->admin_user_model->order_status_table_6();
 		$data['table_7'] = $this->admin_user_model->order_status_table_7();
 		$data['table_8'] = $this->admin_user_model->order_status_table_8();
-		$data['main_content'] = 'admin/admin_order_detail_eatin';
+		$data['main_content'] = 'admin/admin_order_detail_eatin_test';
 		$this->load->view('includes/template', $data);
 	}
 	
@@ -154,73 +154,135 @@ class Control_panel extends CI_Controller {
 		header("Content-type:text/html;charset=utf-8");
 		
 		$serialId = $_POST['data'];
-		$sql_fetch = "SELECT dishStatus FROM order_items WHERE serialId = '{$serialId}' LIMIT 1";
+		$sql_fetch = "SELECT dishStatus, dishQuantity FROM order_items WHERE serialId = '{$serialId}' LIMIT 1";
 		$result_fetch = $this->db->query($sql_fetch);
-		if ($result_fetch->num_rows() > 0) {
-			foreach ($result_fetch->result() as $items):
-				if ($items->dishStatus == "0") {
-					$sql_order = array('dishStatus' => 1);
-					$this->db->where('serialId', $serialId);
-					$result_order = $this->db->update('order_items', $sql_order);
-					
-					echo 'done';
-					
-				} else if ($items->dishStatus == "1") {
-					$sql_order = array('dishStatus' => 0);
-					$this->db->where('serialId', $serialId);
-					$result_order = $this->db->update('order_items', $sql_order);
-					
-					echo 'cancel';
-				}
-			endforeach;
+		foreach ($result_fetch->result() as $items):
+			if ($items->dishStatus == "0") {
+				$sql_order = array(
+					'dishStatus' => 1,
+					'dishQtyAdj' => 0
+				);
+				$this->db->where('serialId', $serialId);
+				$this->db->update('order_items', $sql_order);
+				
+				echo 'done';
+				
+			} else if ($items->dishStatus == "1") {
+				$sql_order = array(
+					'dishStatus' => 0,
+					'dishQtyAdj' => $items->dishQuantity
+				);
+				$this->db->where('serialId', $serialId);
+				$this->db->update('order_items', $sql_order);
+				
+				echo 'cancel';
+			}
+		endforeach;
+
+		$orderId = $_POST['order_id'];
+		$sql_status_change = "SELECT dishStatus FROM order_items WHERE orderId = '{$orderId}' AND dishStatus = '0'";
+		$result_status_change = $this->db->query($sql_status_change);
+		if ($result_status_change->num_rows() == 0) {
+			$sql_order = array('orderStatus' => 3);
+			$this->db->where('orderId', $orderId);
+			$this->db->update('orders', $sql_order);
+		} else {
+			$sql_order = array('orderStatus' => 1);
+			$this->db->where('orderId', $orderId);
+			$this->db->update('orders', $sql_order);
 		}
 	}
 
 	function dish_qty_change() {
 		header("Content-type:text/html;charset=utf-8");
 
-		$serialId = $_POST['data'];
 		$qty = $_POST['qty'];
+		$serialId = $_POST['data'];
 		$original = $_POST['original'];
-		$sel_dish_qty = array('dishQtyAdj' => $qty);
+		$sql_fetch = "SELECT dishStatus, dishQuantity FROM order_items WHERE serialId = '{$serialId}' LIMIT 1";
+		$result_fetch = $this->db->query($sql_fetch);
+		foreach ($result_fetch->result() as $items):
+			if ($qty == "0") {
+				$sel_dish_qty = array(
+					'dishQtyAdj' => $qty,
+					'dishStatus' => '1'
+				);
+			} else {
+				$sel_dish_qty = array(
+					'dishQtyAdj' => $qty,
+					'dishStatus' => '0'
+				);
+			}
+		endforeach;
 		$this->db->where('serialId', $serialId);
 		$this->db->update('view_order_items', $sel_dish_qty);
 
-		echo $qty.'/<span class="total">'.$original.'</span>';
+		$orderId = $_POST['order_id'];
+		$sql_status_change = "SELECT dishStatus FROM order_items WHERE orderId = '{$orderId}' AND dishStatus = '0'";
+		$result_status_change = $this->db->query($sql_status_change);
+		if ($result_status_change->num_rows() == 0) {
+			$sql_order = array('orderStatus' => 3);
+			$this->db->where('orderId', $orderId);
+			$this->db->update('orders', $sql_order);
+		} else {
+			$sql_order = array('orderStatus' => 1);
+			$this->db->where('orderId', $orderId);
+			$this->db->update('orders', $sql_order);
+		}
+
+		echo '<span class="adj">'.$qty.'</span>/<span class="total">'.$original.'</span>';
 	}
 
 	function dish_qty_reset() {
 		header("Content-type:text/html;charset=utf-8");
 
 		$serialId = $_POST['data'];
-
-		$sql = "SELECT dishQuantity FROM view_order_items WHERE serialId = '{$serialId}' LIMIT 1";
+		$sql = "SELECT dishQuantity, dishStatus FROM view_order_items WHERE serialId = '{$serialId}' LIMIT 1";
 		$result_fetch = $this->db->query($sql);
 		foreach ($result_fetch->result() as $item):
 			$original_quantity = $item->dishQuantity;
 		endforeach;
 
-		$sel_dish_qty = array('dishQtyAdj' => $original_quantity);
+		$sel_dish_qty = array(
+			'dishQtyAdj' => $original_quantity,
+			'dishStatus' => 0
+		);
 		$this->db->where('serialId', $serialId);
 		$this->db->update('view_order_items', $sel_dish_qty);
 
-		echo $original_quantity.'/<span class="total">'.$original_quantity.'</span>';
+		$orderId = $_POST['order_id'];
+		$sql_status_change = "SELECT dishStatus FROM order_items WHERE orderId = '{$orderId}' AND dishStatus = '0'";
+		$result_status_change = $this->db->query($sql_status_change);
+		if ($result_status_change->num_rows() == 0) {
+			$sql_order = array('orderStatus' => 3);
+			$this->db->where('orderId', $orderId);
+			$this->db->update('orders', $sql_order);
+		} else {
+			$sql_order = array('orderStatus' => 1);
+			$this->db->where('orderId', $orderId);
+			$this->db->update('orders', $sql_order);
+		}
+
+		echo '<span class="adj">'.$original_quantity.'</span>/<span class="total">'.$original_quantity.'</span>';
 	}
 
-	function dish_status_change_all_z() {
+	function dish_status_change_all_z() { // Pick-up order page only
 		header("Content-type:text/html;charset=utf-8");
 		
 		$orderId = $_POST['data'];
-		$sql_dish_all = array('dishStatus' => 1);
+		$sql_dish_all = array(
+			'dishStatus' => 1,
+			'dishQtyAdj' => 0
+		);
 		$this->db->where('orderId', $orderId);
 		$this->db->update('view_order_items', $sql_dish_all);
 
-		/* $sql_order = array(
+		$sql_order = array(
 			'orderStatus' => 3,
 			'orderFinishTime' => date('Y-m-d H:i:s'
 		));
 		$this->db->where('orderId', $orderId);
-		$this->db->update('orders', $sql_order); */
+		$this->db->update('orders', $sql_order);
 		
 		echo 'success change all zero table';
 	}
@@ -229,6 +291,7 @@ class Control_panel extends CI_Controller {
 		header("Content-type:text/html;charset=utf-8");
 		
 		$tableId = $_POST['data'];
+		$orderId = $_POST['order_id'];
 		$sql_dish_all = array('dishStatus' => 1);
 		$this->db->where('tableId', $tableId);
 		$this->db->update('view_order_items', $sql_dish_all);
@@ -240,7 +303,7 @@ class Control_panel extends CI_Controller {
 		echo 'success change all';
 	}
 
-	function user_order_cancel() {
+	function user_order_cancel() { // Approve order part
 		header("Content-type:text/html;charset=utf-8");
 		
 		$orderId = $_POST['data'];
@@ -252,7 +315,7 @@ class Control_panel extends CI_Controller {
 		$this->db->update('orders', $sql_order);
 	}
 
-	function erase_single_dish() {
+	function erase_single_dish() { // Approve order part
 		header("Content-type:text/html;charset=utf-8");
 		
 		$serialId = $_POST['data'];
@@ -260,6 +323,28 @@ class Control_panel extends CI_Controller {
 		$this->db->delete('order_items');
 
 		echo 'success delete single dish';
+	}
+
+	function eatin_change_table() {
+		header("Content-type:text/html;charset=utf-8");
+
+		$tableId = $_POST['data'];
+		$changeId = $_POST['change_id'];
+		$orderId = $_POST['order_id'];
+		$sql_change_table = array(
+			'tableId' => $changeId,
+			'orderTime' => date('Y-m-d H:i:s')
+		);
+		$this->db->where('tableId', $tableId);
+		$this->db->where('orderId', $orderId);
+		$this->db->update('orders', $sql_change_table);
+
+		echo 'tableid: ';
+		echo $tableId;
+		echo 'changeid: ';
+		echo $changeId;
+		echo 'orderid: ';
+		echo $orderId;
 	}
 
 	/* function order_status_change() { // ****** ABANDON ******

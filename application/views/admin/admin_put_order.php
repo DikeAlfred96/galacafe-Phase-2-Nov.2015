@@ -65,7 +65,8 @@ date_default_timezone_set('America/Vancouver');
 					'name' => 'item_quantity_'.$i,
 					'id' => 'item_quantity_'.$i,
 					'class' => 'form-control quantities put_order_input_b',
-					'value' => '1'
+					'value' => '1',
+					'onClick' => 'this.select();'
 				));
 				echo form_label('$','', array('class' => 'put_order_input_b reset_d sub_total_price_'.$i));
 				echo '<input type="hidden" class="put_order_input_b dish_input_subtotal item_sub_'.$i.'" name="dish_subtotal_'.$i.'" id="dish_subtotal_'.$i.'" value="">';
