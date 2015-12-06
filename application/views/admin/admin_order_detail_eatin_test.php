@@ -25,23 +25,54 @@ date_default_timezone_set('America/Vancouver');
 					<?php echo $tid;?>号桌
 					<select class="change_table">
 						<option class="change_none">-</option>
-						<?php for ($cid=1; $cid<=8; $cid++) {
-						if ($cid == $tid) {} else { ?>
-						<option class="change_to" value="<?php echo $cid; ?>"><?php echo $cid; ?></option>
+						<?php for ($change=1; $change<=8; $change++) {
+						if ($change == $tid) {} else { ?>
+						<option class="change_to" value="<?php echo $change; ?>"><?php echo $change; ?></option>
 						<?php } } ?>
 					</select>
 					<span class="finish_all">全部完成<input type="hidden" value="<?php echo $tid; ?>" class="table_id"></span>
 				</h5>
-				<ul class="nav nav-tabs" role="tablist">
+				<ul class="nav nav-tabs" role="tablist" id="tab_<?php echo $tid; ?>">
+					<?php 
+					$sql = "SELECT orderId FROM view_unfinished_order WHERE tableId = '{$tid}' ORDER BY orderId DESC"; 
+					$result = $this->db->query($sql);
+if ($result->num_rows() > 1) {
+					$a = 0;
+	foreach ($result->result() as $item):
+					if ($a == 0) { $active = 'active'; } else { $active = ''; }
+					$a++;
+					$current_id = $item->orderId;
+					$unfinish = "" ?>
+					<li role="presentation" class="<?php echo $active; ?>">
+						<a href="#order_<?php echo $current_id; ?>" role="tab" data-toggle="tab"><?php echo $current_id; ?></a>
+					</li>
+	<?php endforeach; 
+} else {
+					$sql_2 = "SELECT orderId FROM orders WHERE tableId = '{$tid}' ORDER BY orderId DESC LIMIT 2";
+					$result_2 = $this->db->query($sql_2); 
+					$b = 0;
+		foreach ($result_2->result() as $item_2):
+					if ($b == 0) { $active = 'active'; } else { $active = ''; }
+					$b++;
+					$current_id = $item_2->orderId; ?>
+					<li role="presentation" class="<?php echo $active; ?>">
+						<a href="#order_<?php echo $current_id; ?>" role="tab" data-toggle="tab"><?php echo $current_id; ?></a>
+					</li>
+		<?php endforeach;
+} ?>
 				</ul>
 				<div class="tab-content">
-					<?php $sql_e = "SELECT orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_unfinished_order_item WHERE tableId = '{$tid}';";
+<?php if ($result->num_rows() > 1) {
+					$c = 0;
+	foreach ($result->result() as $item):
+					if ($c == 0) { $active = 'active'; } else { $active = ''; }
+					$current_id_2 = $item->orderId; ?>
+					<div role="tabpanel" class="tab-pane <?php echo $active; ?>" id="order_<?php echo $current_id_2; ?>">
+					<?php $sql_e = "SELECT tableId, orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_unfinished_order_item WHERE tableId = '{$tid}' AND orderId = '{$current_id_2}';";
+					$c++;
 					$result_e = $this->db->query($sql_e);
-					if ($result_e->num_rows() > 1) {
-					foreach ($result_e->result() as $item_e):
-					$status = $item_e->dishStatus;
-					$current_order_id = $item_e->orderId; ?>
-					<div role="tabpanel" class="tab-pane active" id="order_<?php echo $tid; ?>_<?php echo $current_order_id; ?>">
+		foreach ($result_e->result() as $item_e):
+					$status = $item_e->dishStatus; ?>
 		    			<a class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>">
 		    				<span class="dish_alpha"><?php echo $item_e->dishAlphaId; ?></span>
 		    				<span class="dish_name"><?php echo $item_e->dishChiName; ?></span>
@@ -50,17 +81,23 @@ date_default_timezone_set('America/Vancouver');
 		    				<input class="qty_cache" type="hidden" value="<?php echo $item_e->dishQuantity; ?>">
 		    				<input class="serial" type="hidden" value="<?php echo $item_e->serialId; ?>">
 		    				<input class="order_id" type="hidden" value="<?php echo $item_e->orderId; ?>">
+		    				<input class="table_id" type="hidden" value="<?php echo $item_e->tableId; ?>">
 		    			</a>
+		<?php endforeach; ?> 
 		    		</div>
-					<?php endforeach; 
-					} else {
+	<?php endforeach;
+} else {
 						$sql_e2 = "SELECT orderId FROM orders WHERE tableId = '{$tid}' ORDER BY orderId DESC LIMIT 2";
 						$result_e2 = $this->db->query($sql_e2);
-						foreach ($result_e2->result() as $item_e2):
-							$c_order_id = $item_e2->orderId;
-							$sql_e2_item = "SELECT orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId = '{$c_order_id}'";
+						$d = 0;
+	foreach ($result_e2->result() as $item_e2):
+							if ($d == 0) { $active = 'active'; } else { $active = ''; }
+							$current_id_2 = $item_e2->orderId; ?>
+							<div role="tabpanel" class="tab-pane <?php echo $active; ?>" id="order_<?php echo $current_id_2; ?>">
+							<?php $sql_e2_item = "SELECT tableId, orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId = '{$current_id_2}'";
+							$d++;
 							$result_e2_item = $this->db->query($sql_e2_item);
-							foreach ($result_e2_item->result() as $item_e2_i): 
+		foreach ($result_e2_item->result() as $item_e2_i): 
 							$status = $item_e2_i->dishStatus; ?>
 								<a class="single_dish <?php if ($status != '1') {} else {echo 'done';} ?>">
 									<span class="dish_alpha"><?php echo $item_e2_i->dishAlphaId; ?></span>
@@ -70,58 +107,66 @@ date_default_timezone_set('America/Vancouver');
 									<input class="qty_cache" type="hidden" value="<?php echo $item_e2_i->dishQuantity; ?>">
 									<input class="serial" type="hidden" value="<?php echo $item_e2_i->serialId; ?>">
 									<input class="order_id" type="hidden" value="<?php echo $item_e2_i->orderId; ?>">
+									<input class="table_id" type="hidden" value="<?php echo $item_e2_i->tableId; ?>">
 								</a>
-							<?php endforeach;
-						endforeach;
-					} ?>
+		<?php endforeach; ?>
+							</div>
+	<?php endforeach;
+} ?>
 				</div>
 			</div>
 		<?php } ?>
 <script type="text/javascript">
-	function partialRefresh() {
+	function partialRefresh(id, td) {
 		$.ajax({
 		    url: 'view_orderdetail_eatin',
-		    data: {},
 		    type: 'post',
 		    success: function(data) {
 				$("div#eat_in").html($(data).find('#eat_in').html());
+				$(document).find('#tab_'+id).children('li').removeClass('active');
+				$(document).find('.table_'+td).children('.tab-content').children('.tab-pane.active').removeClass('active');
+				$(document).find('#order_'+id).addClass('active');
+				$(document).find('#tab_'+id).children('li').children('a[href*="order_'+id+'"]').parent().addClass('active');
 		    }
 		});
 	}
 
 	$('.finish_all').each(function() { // Finish all button besides table number
-		var save_status = $(this);
-		var table_id = $(this).children('.table_id').val();
-		var order_id = $(this).parent().parent().children('.single_dish').children('.order_id').val();
 		$(this).click(function() {
+			var save_status = $(this);
+			var table_id = $(this).children('.table_id').val();
+			var order_id = $(this).parent().parent().children('.tab-content').children('.tab-pane.active').children('.single_dish').children('.order_id').val();
 			$.ajax({
 		        url: 'dish_status_change_all',
 		        data: {
 		        	"data" : table_id,
-		        	"order_id" : order_id
+		        	"order_id" : order_id,
+				    "table_id" : table_id
 		        },
 		        type: "POST",
 		        success: function(data) {
-					$(save_status).parent().parent().children('.single_dish').addClass('done');
+					partialRefresh(order_id, table_id);
 		        }
 		    });
 		});
 	});
 
 	$('.single_dish').each(function() { // Change singel dish status.
+		$(this).click(function() {
 		var save_status = $(this);
 		var dish_serial = $(this).children('.serial').val();
 		var order_id = $(this).children('.order_id').val();
-		$(this).click(function() {
+		var table_id = $(this).children('.table_id').val();
 			$.ajax({
 		        url: 'dish_status_change',
 		        data: {
 		        	"data" : dish_serial,
-		        	"order_id" : order_id
+		        	"order_id" : order_id,
+				    "table_id" : table_id
 		        },
 		        type: "POST",
 		        success: function(data) {
-					partialRefresh(); // location.reload();
+					partialRefresh(order_id, table_id); // location.reload();
 			        /* if ($(save_status).hasClass('done')) {
 				        $(save_status).removeClass('done');
 					} else {
@@ -133,12 +178,12 @@ date_default_timezone_set('America/Vancouver');
 	});
 	
 	$('.dish_qty_adj').each(function() {
+		$(this).keypress(function(e) {
 		var t = $(this);
 		var order_qty = $(this).parent().children('.dish_qty').children('.total').html();
 		var dish_serial = $(this).parent().children('.serial').val();
 		var order_id = $(this).parent().children('.order_id').val();
-		$(this).keypress(function(e) {
-
+		var table_id = $(this).parent().children('table_id').val();
 		    if (e.which == 13) {
 		    	var input_val = t.val();
 		    	var original_qty = $(this).parent().children('.dish_qty').children('.adj').html();
@@ -148,11 +193,12 @@ date_default_timezone_set('America/Vancouver');
 						url: 'dish_qty_reset',
 				        data: {
 				        	"data" : dish_serial,
-				        	"order_id" : order_id
+				        	"order_id" : order_id,
+				        	"table_id" : table_id
 				        },
 				        type: "POST",
 				        success: function(data) {
-				        	partialRefresh(); // location.reload();
+				        	partialRefresh(order_id, table_id); // location.reload();
 				        	// save_status.parent().children('.dish_qty').html(data);
 				        	// $('select').prop('selectedIndex', 0);
 				        }
@@ -167,11 +213,12 @@ date_default_timezone_set('America/Vancouver');
 					        	"data" : dish_serial,
 					        	"qty" : final_qty,
 					        	"original" : order_qty,
-					        	"order_id" : order_id
+					        	"order_id" : order_id,
+				        		"table_id" : table_id
 					        },
 					        type: "POST",
 					        success: function(data) {
-					        	partialRefresh(); // location.reload();
+					        	partialRefresh(order_id, table_id); // location.reload();
 					        	// save_status.parent().children('.dish_qty').html(data);
 					        }
 					    });
@@ -186,10 +233,10 @@ date_default_timezone_set('America/Vancouver');
 	});
 
 	$('.change_table').each(function() { // Finish all button besides table number
-		var save_status = $(this);
-		var table_id = $(this).parent().children('.finish_all').children('.table_id').val();
-		var order_id = $(this).parent().parent().children('.single_dish').children('.order_id').val();
 		$(this).change(function() {
+			var save_status = $(this);
+			var table_id = $(this).parent().children('.finish_all').children('.table_id').val();
+			var order_id = $(this).parent().parent().children('.tab-content').children('.tab-pane.active').children('.single_dish').children('.order_id').val();
 			var change_id = $(this).find(':selected').val();
 			$.ajax({
 		        url: 'eatin_change_table',
@@ -200,7 +247,7 @@ date_default_timezone_set('America/Vancouver');
 		        },
 		        type: "POST",
 		        success: function(data) {
-					partialRefresh();
+					partialRefresh(order_id, table_id);
 		        }
 		    });
 		});

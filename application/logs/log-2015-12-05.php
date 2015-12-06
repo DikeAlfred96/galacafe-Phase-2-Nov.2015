@@ -259,3 +259,4 @@ ERROR - 2015-12-05 21:51:02 --> Severity: Notice  --> Undefined variable: status
 ERROR - 2015-12-05 21:51:02 --> Severity: Notice  --> Undefined variable: status /Applications/MAMP/htdocs/galacafe-Phase-2-Nov.2015/application/views/admin/admin_order_detail_eatin_test.php 63
 ERROR - 2015-12-05 21:51:02 --> Severity: Notice  --> Undefined variable: status /Applications/MAMP/htdocs/galacafe-Phase-2-Nov.2015/application/views/admin/admin_order_detail_eatin_test.php 63
 ERROR - 2015-12-05 21:51:02 --> Severity: Notice  --> ob_end_clean(): failed to delete buffer. No buffer to delete /Applications/MAMP/htdocs/galacafe-Phase-2-Nov.2015/system/core/Loader.php 864
+ERROR - 2015-12-05 23:43:11 --> Severity: Notice  --> Undefined variable: result_e /Applications/MAMP/htdocs/galacafe-Phase-2-Nov.2015/application/views/admin/admin_order_detail_eatin_test.php 42
