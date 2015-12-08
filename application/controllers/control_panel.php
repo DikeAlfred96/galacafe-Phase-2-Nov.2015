@@ -43,7 +43,7 @@ class Control_panel extends CI_Controller {
 		$data['table_6'] = $this->admin_user_model->order_status_table_6();
 		$data['table_7'] = $this->admin_user_model->order_status_table_7();
 		$data['table_8'] = $this->admin_user_model->order_status_table_8();
-		$data['main_content'] = 'admin/admin_order_detail_eatin_test';
+		$data['main_content'] = 'admin/admin_order_detail_eatin';
 		$this->load->view('includes/template', $data);
 	}
 	

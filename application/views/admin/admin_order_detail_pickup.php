@@ -53,14 +53,59 @@ date_default_timezone_set('America/Vancouver');
 				</div>
 	    		<?php $i++;
 					endforeach; ?>
+				<script type="text/javascript">
+					$('.cancel_order').each(function() {
+						var save_status = $(this);
+						var order_id = $(this).children('.order_id').val();
+						$(this).click(function() {
+							if (confirm('确认取消订单？')) {
+								$.ajax({
+							        url: 'user_order_cancel',
+							        data: {"data" : order_id},
+							        type: "POST",
+							        success: function(data) {
+										location.reload();
+							        }
+							    });
+							} else {
+								return false;
+							}
+						});
+					});
+
+					$('.erase_dish').each(function() {
+						var save_status = $(this);
+						var dish_serial = $(this).children('.serial').val();
+						$(this).click(function() {
+							if (confirm('确认删除该餐点？')) {
+								$.ajax({
+									url: 'erase_single_dish',
+							        data: {"data" : dish_serial},
+							        type: "POST",
+							        success: function(data) {
+							        	location.reload();
+							        }
+								});
+							} else {
+								return false;
+							}
+						});
+					});
+				</script>
 	    	</div>
 	    </div><div id="table_0">
 		    <div class="kitchen_process">
 			    <h5>外卖</h5>
-	    		<?php foreach ($table_0->result() as $t_zero): ?>
+	    		<?php foreach ($table_0->result() as $t_zero):
+	    		$order_status = $t_zero->orderStatus;
+	    		if ($order_status != 3) {
+	    			$unfinish = 'red';
+	    		} else {
+	    			$unfinish = '';
+	    		} ?>
 	    		<div class="single_takeout">
 	    			<?php $currentId = $t_zero->orderId; ?>
-	    			<p>订单号: <?php echo $currentId; ?><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
+	    			<p class="<?php echo $unfinish; ?>">订单号: <?php echo $currentId; ?><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
 	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}';";
 		    		$result_takeout = $this->db->query($sql_takeout); 
 		    		foreach ($result_takeout->result() as $item_out): 
@@ -93,14 +138,15 @@ date_default_timezone_set('America/Vancouver');
 		    }
 		});
 	}
+
 	$('.single_dish').each(function() { // Change singel dish status.
 		var save_status = $(this);
 		var dish_serial = $(this).children('.serial').val();
 		var order_id = $(this).parent().children('p').children('.finish_order').children('.order_id').val();
 		$(this).click(function() {
 			$.ajax({
-		        url: 'dish_status_change',
-		        data: {
+				url: 'dish_status_change',
+				data: {
 		        	"data" : dish_serial,
 		        	"order_id" : order_id
 		        },
@@ -202,44 +248,6 @@ date_default_timezone_set('America/Vancouver');
 	}
 	fetchTakeout(); // Bug on initialize this function...Disable for now...
 	setInterval('fetchTakeout()',10000); // After 10 sec re-fetch data
-	
-	$('.cancel_order').each(function() {
-		var save_status = $(this);
-		var order_id = $(this).children('.order_id').val();
-		$(this).click(function() {
-			if (confirm('确认取消订单？')) {
-				$.ajax({
-			        url: 'user_order_cancel',
-			        data: {"data" : order_id},
-			        type: "POST",
-			        success: function(data) {
-						location.reload();
-			        }
-			    });
-			} else {
-				return false;
-			}
-		});
-	});
-
-	$('.erase_dish').each(function() {
-		var save_status = $(this);
-		var dish_serial = $(this).children('.serial').val();
-		$(this).click(function() {
-			if (confirm('确认删除该餐点？')) {
-				$.ajax({
-					url: 'erase_single_dish',
-			        data: {"data" : dish_serial},
-			        type: "POST",
-			        success: function(data) {
-			        	location.reload();
-			        }
-				});
-			} else {
-				return false;
-			}
-		});
-	});
 	
 	/* $('.remove_order').each(function() { // ABANDON
 		var save_status = $(this);

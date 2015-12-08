@@ -35,8 +35,9 @@ class Admin_user_model extends CI_Model {
 	    if($this->input->post('user_name') != '') { $user_name = $this->input->post('user_name');
 	    } else { $user_name = ''; }
 	    
+	    if($this->input->post('link_table') == 'default') { $order_link = ''; } else { $order_link = $this->input->post('link_table'); }
 	    $table_id = $this->input->post('table_id');
-	    if (in_array($table_id, array('1','2','3','4','5','6','7','8'), true)) {
+		/* if (in_array($table_id, array('1','2','3','4','5','6','7','8'), true)) {
 		    $sql_dish_stat = array('dishStatus' => 1);
 			$sql_order_stat = array('orderStatus' => 3);
 			
@@ -45,7 +46,8 @@ class Admin_user_model extends CI_Model {
 			
 			$this->db->where('tableId', $table_id);
 			$this->db->update('orders', $sql_order_stat);
-	    }
+	    } 
+	    === ABANDON for now because new function that allows client to see all unfinished order */
 	    $subtotal = '';
 	    for ($i=1; $i<=25; $i++) {
 		    if ($this->input->post('dish_subtotal_'.$i) != '') {
@@ -55,6 +57,7 @@ class Admin_user_model extends CI_Model {
 	    $current_time = date('Y-m-d H:i:s');
 	    
 	    $new_order_insert_data = array( // Insert all the info to orders table in database
+	    	'orderLinkId' => $order_link,
 			'tableId' => $table_id,
 			'userTel' => $user_tel,
 			'userName' => $user_name,
@@ -89,8 +92,6 @@ class Admin_user_model extends CI_Model {
 	    } else {
 		    return FALSE;
 	    }
-
-//		return $insert_order;
     }
     
     function admin_print_order() {

@@ -29,6 +29,30 @@ date_default_timezone_set('America/Vancouver');
 					'class' => 'form-control put_order_input_a',
 					'maxlength' => "2"
 				));
+				$options = array(
+				    'default' => '链接',
+				    '1' => '1',
+				    '2' => '2',
+				    '3' => '3',
+				    '4' => '4',
+				    '5' => '5',
+				    '6' => '6',
+				    '7' => '7',
+				    '8' => '8',
+				    'A' => 'A',
+				    'B' => 'B',
+				    'C' => 'C',
+				    'D' => 'D',
+				    'E' => 'E',
+				    'F' => 'F',
+				    'G' => 'G',
+				    'H' => 'H',
+				    'I' => 'I',
+				    'J' => 'J',
+				    'K' => 'K',
+				    'L' => 'L'
+				);
+				echo form_dropdown('link_table', $options, 'default');
 				echo form_label('顾客姓名','user_name');
 				echo form_input(array(
 					'name' => 'user_name',

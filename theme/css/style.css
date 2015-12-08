@@ -354,11 +354,14 @@
 	padding-bottom: 20px;
 }
 #put_order #basic_info {
-	width: 550px;
+	width: 600px;
 	margin: 0 auto 10px;
 }
 #put_order #basic_info label {
 	margin: 0 10px;
+}
+#put_order #basic_info select {
+	margin-left: 10px;
 }
 #put_order #dishes_order {
 	padding-top: 10px;
@@ -592,6 +595,13 @@
 	display: inline-block;
 	vertical-align: top;
 }
+#back_end_control_panel #orderdetail #table_0 .single_takeout p.red {
+	color: #ff0000;
+	font-weight: bold;
+}
+#back_end_control_panel #orderdetail #table_0 .single_takeout p.red .finish_order {
+	color: #000;
+}
 #back_end_control_panel #orderdetail #table_0 .single_takeout .finish_order,
 #back_end_control_panel #orderdetail #table_0 .single_takeout .remove_order,
 #back_end_control_panel #orderdetail .finish_all {
@@ -698,12 +708,23 @@
 	padding-top: 1px;
 	padding-bottom: 2px;
 }
+#back_end_control_panel #orderdetail #eat_in .nav-tabs > li {
+	margin-right: 1px;
+}
+#back_end_control_panel #orderdetail #eat_in .nav-tabs > li > a {
+	border-radius: 0;
+	border-width: 2px;
+}
 #back_end_control_panel #orderdetail #eat_in .nav-tabs > li.active > a,
 #back_end_control_panel #orderdetail #eat_in .nav-tabs > li.active > a:focus,
 #back_end_control_panel #orderdetail #eat_in .nav-tabs > li.active > a:hover {
-	border: 1px solid #999;
+	border: 2px solid #333;
 	border-radius: 0;
 	margin-bottom: 0;
+}
+#back_end_control_panel #orderdetail #eat_in .nav-tabs > li > a.red {
+	color: #fff;
+	background: #ff0000;
 }
 #back_end_control_panel #orderdetail #eat_in .nav-tabs li {
 	width: auto;
