@@ -148,10 +148,11 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		text-align: right;
 	}
 </style>-->
-<?php foreach ($latest_order->result() as $item): ?>
+<?php foreach ($latest_order->result() as $item): 
+	$table_id = $item->tableId; ?>
 <div id="main">
 	<p class="center">www.galacafe.ca<br>galacafemanager@gmail.com<br>(GST 829982370RT0001)</p>
-	<p style="margin-top: 10px;">Table No: <strong><?php echo $item->tableId; ?></strong><br>Order ID: <?php echo $item->orderId; ?><em><?php echo $item->orderTime; ?></em></p>
+	<p style="margin-top: 10px;">Table No: <strong><?php if ($table_id != 0) { echo $item->tableId;} else {echo '外卖'; echo $item->orderAlias;} ?></strong><br>Order ID: <?php echo $item->orderId; ?><em><?php echo $item->orderTime; ?></em></p>
 	<?php if ($item->userTel != null || $item->userName != null) { ?>
 		<p>Client: <?php echo $item->userName; ?><em><?php echo $item->userTel; ?></em></p>
 	<?php } ?>

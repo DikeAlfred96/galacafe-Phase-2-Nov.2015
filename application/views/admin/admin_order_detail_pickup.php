@@ -20,11 +20,12 @@ date_default_timezone_set('America/Vancouver');
     <div id="orderdetail">
 	    <div id="take_out">
 		    <div id="table_0_pending">
-			    <h5>网上订单</h5>
+			    <h5>网上订单 <?php if ($table_0_pending->num_rows > 0) { ?><span id="total_pending"><?php echo $table_0_pending->num_rows(); ?></span><?php } ?></h5>
 	    		<?php
 	    			$i=1;
 	    			foreach ($table_0_pending->result() as $t_zero_pending):
 		    		$currentId_pending = $t_zero_pending->orderId;
+		    		$alias = $t_zero_pending->orderAlias;
 		    		$user_tel = $t_zero_pending->userTel;
 		    		$user_name = $t_zero_pending->userName;
 		    		$order_remarks = $t_zero_pending->orderRemarks; ?>
@@ -34,6 +35,7 @@ date_default_timezone_set('America/Vancouver');
 			    		<p class="user_detail"><span class="user_name"><?php echo $t_zero_pending->userName; ?></span><span class="user_tel"><?php echo $t_zero_pending->userTel; ?></span><?php if ($order_remarks != '') { ?><br><span class="remarks"><?php echo $t_zero_pending->orderRemarks; ?></span><?php } ?></p>
 			    		<input type="hidden" id="orderId_<?php echo $i; ?>" value="<?php echo $currentId_pending; ?>">
 			    		<input type="hidden" id="tableId_<?php echo $i; ?>" value="外卖">
+					    <input type="hidden" value="<?php echo $alias; ?>" id="orderAlias_<?php echo $i; ?>">
 			    		<?php if ($user_tel != '') { ?><input type="hidden" id="userTel_<?php echo $i; ?>" value="<?php echo $user_tel; ?>"><?php } ?>
 			    		<?php if ($user_name != '') { ?><input type="hidden" id="userName_<?php echo $i; ?>" value="<?php echo $user_name; ?>"><?php } ?>
 			    		<?php if ($order_remarks != '') { ?><input type="hidden" id="orderRemark_<?php echo $i; ?>" value="<?php echo $order_remarks ?>"><?php } ?>
@@ -105,7 +107,7 @@ date_default_timezone_set('America/Vancouver');
 	    		} ?>
 	    		<div class="single_takeout">
 	    			<?php $currentId = $t_zero->orderId; ?>
-	    			<p class="<?php echo $unfinish; ?>">订单号: <?php echo $currentId; ?><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
+	    			<p class="<?php echo $unfinish; ?>">订单号: <?php echo $currentId; ?><span class="alias"><?php echo $t_zero->orderAlias; ?></span><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
 	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}';";
 		    		$result_takeout = $this->db->query($sql_takeout); 
 		    		foreach ($result_takeout->result() as $item_out): 
@@ -303,12 +305,9 @@ date_default_timezone_set('America/Vancouver');
 	}); */
 	function printDiv(index) {
 		var orderId = document.getElementById('orderId_'+index).value;
-		var tableId = document.getElementById('tableId_'+index).value;
-		if (tableId == 0) {
-			tableId = '外卖';
-		} else {
-			tableId = tableId;
-		}
+		var table = document.getElementById('tableId_'+index).value;
+		var aliasId = document.getElementById('orderAlias_'+index).value;
+			tableId = '外卖' + aliasId;
 		var orderTime = document.getElementById('orderTime_'+index).value;
 		var orderSubtotal = document.getElementById('orderSubtotal_'+index).value;
 		var orderTotal = document.getElementById('orderTotal_'+index).value;

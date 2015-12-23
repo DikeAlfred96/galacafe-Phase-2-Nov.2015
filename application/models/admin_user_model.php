@@ -35,7 +35,7 @@ class Admin_user_model extends CI_Model {
 	    if($this->input->post('user_name') != '') { $user_name = $this->input->post('user_name');
 	    } else { $user_name = ''; }
 	    
-	    if($this->input->post('link_table') == 'default') { $order_link = ''; } else { $order_link = $this->input->post('link_table'); }
+	    if ($this->input->post('link_table') == 'default') { $order_link = ''; } else { $order_link = $this->input->post('link_table'); }
 	    $table_id = $this->input->post('table_id');
 		/* if (in_array($table_id, array('1','2','3','4','5','6','7','8'), true)) {
 		    $sql_dish_stat = array('dishStatus' => 1);
@@ -66,14 +66,19 @@ class Admin_user_model extends CI_Model {
 			'orderTotal' => round($subtotal * 1.05, 2),
 			'orderTime' => $current_time,
 			'orderStatus' => '1',
-			'orderRemarks' => '',
-			'ifPrinted' => '0'
+			'orderRemarks' => ''
 		);
 		$insert_order = $this->db->insert('orders', $new_order_insert_data);
 		
 		$order_sql = "SELECT orderId FROM orders WHERE orderTime = '{$current_time}' ORDER BY orderId DESC LIMIT 1;";
 		$order_query = $this->db->query($order_sql);
 		$current_order_id = $order_query->row()->orderId;
+
+		$alias = chr( 65 + $current_order_id % 26);
+		$sql_order = array('orderAlias' => $alias);
+		$this->db->where('orderId', $current_order_id);
+		$this->db->update('orders', $sql_order);
+
 		for ($i=1; $i<=25; $i++) {
 			if ($this->input->post('dish_subtotal_'.$i) != '') {
 				$new_order_items_insert_data = array(
@@ -95,14 +100,14 @@ class Admin_user_model extends CI_Model {
     }
     
     function admin_print_order() {
-	    $latest_order = "SELECT orderId, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks, ifPrinted FROM orders WHERE orderStatus = '1' ORDER BY orderTime DESC LIMIT 1";
+	    $latest_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderStatus = '1' ORDER BY orderTime DESC LIMIT 1";
 	    $latest_order_query = $this->db->query($latest_order);
 	    return $latest_order_query;
     }
     
     function fetch_order_history_today() {
 	    $current_time = date('Y-m-d');
-		$sql_order = "SELECT orderId, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks, ifPrinted FROM orders WHERE orderTime LIKE '{$current_time}%' ORDER BY orderTime DESC";
+		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderTime LIKE '{$current_time}%' ORDER BY orderTime DESC";
 		$result_order = $this->db->query($sql_order);
 
 		return $result_order;
@@ -110,7 +115,7 @@ class Admin_user_model extends CI_Model {
 	
 	function fetch_order_history_yesterday() {
 		$yesterday = date('Y-m-d', time() - 60 * 60 * 24);
-		$sql_order = "SELECT orderId, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks, ifPrinted FROM orders WHERE orderTime LIKE '{$yesterday}%' ORDER BY orderTime DESC";
+		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderTime LIKE '{$yesterday}%' ORDER BY orderTime DESC";
 		$result_order = $this->db->query($sql_order);
 
 		return $result_order;
@@ -118,14 +123,14 @@ class Admin_user_model extends CI_Model {
 	
 	function fetch_order_history_older() {
 		$older = date('Y-m-d', time() - 60 * 60 * 24 * 2);
-		$sql_order = "SELECT orderId, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks, ifPrinted FROM orders WHERE orderTime <= '{$older}%' ORDER BY orderTime DESC LIMIT 255";
+		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderTime <= '{$older}%' ORDER BY orderTime DESC LIMIT 255";
 		$result_order = $this->db->query($sql_order);
 
 		return $result_order;
 	}
 	
 	function order_status_table_0() {
-		$sql = "SELECT orderId, tableId, orderStatus, orderTime, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '1' OR orderStatus = '2' OR orderStatus = '3' ORDER BY orderStatus ASC, orderId DESC, orderTime DESC LIMIT 7";
+		$sql = "SELECT orderId, orderAlias, tableId, orderStatus, orderTime, orderRemarks FROM orders WHERE tableId = '0' AND orderStatus = '1' OR orderStatus = '2' OR orderStatus = '3' ORDER BY orderStatus ASC, orderId DESC, orderTime DESC LIMIT 7";
 		$result = $this->db->query($sql);
 		
 		return $result;
@@ -139,7 +144,7 @@ class Admin_user_model extends CI_Model {
 	} */
 	
 	function order_status_table_0_pending() {
-		$sql = "SELECT orderId, tableId, userName, userTel, orderStatus, orderTime, orderRemarks, orderTotal, orderSubtotal, orderTax FROM orders WHERE tableId = '0' AND orderStatus = '0' ORDER BY orderTime, orderStatus DESC";
+		$sql = "SELECT orderId, orderAlias, tableId, userName, userTel, orderStatus, orderTime, orderRemarks, orderTotal, orderSubtotal, orderTax FROM orders WHERE tableId = '0' AND orderStatus = '0' ORDER BY orderTime, orderStatus DESC";
 		$result = $this->db->query($sql);
 		
 		return $result;

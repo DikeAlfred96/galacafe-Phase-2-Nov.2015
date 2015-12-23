@@ -143,7 +143,11 @@ class Control_panel extends CI_Controller {
 	
 	function admin_approve_order() {
 		$order_id = $_POST['order_id'];
-		$sql_order = array('orderStatus' => 1);
+		$alias = chr( 65 + $order_id % 26);
+		$sql_order = array(
+			'orderStatus' => 1,
+			'orderAlias' => $alias
+		);
 		$this->db->where('orderId', $order_id);
 		$this->db->update('orders', $sql_order);
 		

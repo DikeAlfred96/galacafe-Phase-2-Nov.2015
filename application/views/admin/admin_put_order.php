@@ -154,6 +154,14 @@ date_default_timezone_set('America/Vancouver');
 	    }
 	});
 	<?php } ?>
+
+	$('#table_id').keyup(function() {
+		if ($(this).val() == '0') {
+			$('#basic_info select').show();
+		} else {
+			$('#basic_info select').hide();
+		}
+	});
 		
 	$('form').bind("keypress", function(e) {
 		if (e.keyCode == 13) {               

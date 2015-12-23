@@ -26,7 +26,7 @@ date_default_timezone_set('America/Vancouver');
 				<?php foreach (${"dish_status_".$cid}->result() as $items):
 					$currentName = $items->dishChiName; 
 					$dishTotal = $items->dishTotal;
-					$sql_dish_qty = "SELECT dishQuantity, dishChiName, dishStatus, tableId, orderTime, catId FROM view_kitchen WHERE dishStatus=0 AND catId='{$cid}' AND dishChiName='{$currentName}' ORDER BY orderTime DESC, dishQuantity DESC";
+					$sql_dish_qty = "SELECT dishQuantity, dishChiName, dishStatus, tableId, orderAlias, orderTime, catId FROM view_kitchen WHERE dishStatus=0 AND catId='{$cid}' AND dishChiName='{$currentName}' ORDER BY orderTime DESC, dishQuantity DESC";
 					$result_dish_qty = $this->db->query($sql_dish_qty); ?>
 					<div class="single_dish">
 						<div class="left_dish">
@@ -34,9 +34,12 @@ date_default_timezone_set('America/Vancouver');
 							<span class="totalnum"><?php echo $dishTotal; ?></span>
 						</div>
 						<div class="right_dish">
-					<?php foreach ($result_dish_qty->result() as $dishes): ?>
+					<?php foreach ($result_dish_qty->result() as $dishes): 
+						$table = $dishes->tableId;
+						$alias = $dishes->orderAlias;
+					?>
 						<div class="unit">
-							<span class="table"><?php echo $dishes->tableId; ?></span>
+							<span class="table"><?php if ($table != 0) {echo $table;} else {echo $alias;} ?></span>
 							<span class="qty"><?php echo $dishes->dishQuantity; ?></span>
 						</div>
 					<?php endforeach; ?>

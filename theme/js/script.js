@@ -8,6 +8,11 @@ $(function() {
 	}
 	if (document.location.href.indexOf('control_panel') > -1) { // Hide Admin Header...
 		$('nav.main_nav').hide();
+		if (document.location.href.indexOf('view_kitchen') > -1) { // Hide logo for kitchen specifically...
+			$('#header').hide();
+		} else {
+			$('#header').show();
+		}
 	} else {
 		$('nav.main_nav').show();
 	}

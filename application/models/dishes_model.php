@@ -75,8 +75,7 @@ class Dishes_model extends CI_Model {
 			'orderTotal' => round($this->cart->format_number($this->cart->total()) * 1.05, 2),
 			'orderTime' => date('Y-m-d H:i:s'),
 			'orderStatus' => '0',
-			'orderRemarks' => $additional_info,
-			'ifPrinted' => '0'
+			'orderRemarks' => $additional_info
 		);
 		
 		$insert_order = $this->db->insert('orders', $new_order_insert_data);
