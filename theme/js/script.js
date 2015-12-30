@@ -1,7 +1,7 @@
 $(function() {
 
 	// Show more input on ordering tab.
-	for (var i=5; i<=24; i++) {
+	for (var i=2; i<=24; i++) {
 		$('.dishes_row #dish_id_'+i).focus(function() {
 			$(this).parent().next().first().show();
 		});
@@ -19,6 +19,9 @@ $(function() {
 	
 	// Admin - Order section reset form...
 	$('#reset_order').click(function() {
+		$('.dishes_row_3').hide();
+		$('.dishes_row_4').hide();
+		$('.dishes_row_5').hide();
 		$('.dishes_row_6').hide();
 		$('.dishes_row_7').hide();
 		$('.dishes_row_8').hide();

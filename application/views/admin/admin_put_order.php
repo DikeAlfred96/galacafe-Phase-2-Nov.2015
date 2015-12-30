@@ -27,7 +27,7 @@ date_default_timezone_set('America/Vancouver');
 					'name' => 'table_id',
 					'id' => 'table_id',
 					'class' => 'form-control put_order_input_a',
-					'maxlength' => "2"
+					'maxlength' => "1"
 				));
 				$options = array(
 				    'default' => '链接',
@@ -50,7 +50,21 @@ date_default_timezone_set('America/Vancouver');
 				    'I' => 'I',
 				    'J' => 'J',
 				    'K' => 'K',
-				    'L' => 'L'
+				    'L' => 'L',
+				    'M' => 'M',
+				    'N' => 'N',
+				    'O' => 'O',
+				    'P' => 'P',
+				    'Q' => 'Q',
+				    'R' => 'R',
+				    'S' => 'S',
+				    'T' => 'T',
+				    'U' => 'U',
+				    'V' => 'V',
+				    'W' => 'W',
+				    'X' => 'X',
+				    'Y' => 'Y',
+				    'Z' => 'Z'
 				);
 				echo form_dropdown('link_table', $options, 'default');
 				echo form_label('顾客姓名','user_name');
@@ -121,9 +135,9 @@ date_default_timezone_set('America/Vancouver');
 <script type="text/javascript">
 	function validate() {
 		var x = document.order_form.table_id.value;
-		var regex = /^[0-9]+$/;
+		var regex = /^[0-8]+$/;
 	    if ((document.order_form.table_id.value == "") || !(x.match(regex))) {
-		    alert("桌号不可为空/只能包含数字");
+		    alert("桌号不可为空/只能包含数字, 桌号仅限0-8");
 	        return false;
 	    } else if ((document.order_form.dish_id_1.value == "") || document.order_form.dishes_id_1.value == "") {
 			alert("订单至少要有一个有效餐点");
@@ -138,7 +152,7 @@ date_default_timezone_set('America/Vancouver');
 	    minChars: 1,
 	    source: function(term, suggest){
 	        term = term.toLowerCase();
-	        var choices = [['A1 川北凉粉', 'cblf'], ['A2 白水牛舌', 'bsns'], ['A3A 拍黄瓜', 'phg'], ['A3B 北京凉拌菜', 'bjlbc'], ['A4 油泼紫椰菜', 'ypzyc'], ['A5 炸蚕豆', 'zcd'], ['A6 芥末木耳', 'jmme'], ['A7A 酱牛肉', 'jnr'], ['A7B 酱猪蹄', 'jzt'], ['A8A 泡椒凤爪', 'pjfz'], ['A8B 香糟鸡爪', 'xzjz'], ['A8B 辣鸭脖', 'lyb'], ['A10 凉拌肚丝', 'lbds'], ['A11A 炸鸡翅(辣)', 'zjcl'], ['A11B 炸鸡翅(不辣)', 'zjcbl'], ['A12 炸素丸子', 'zswz'], ['A13 小葱拌豆腐', 'xcbdf'], ['A14 炸鱼', 'zy'], ['B1 大盘鸡', 'dpj'], ['B2 清炖狮子头', 'qdszt'], ['B3 麻婆豆腐', 'mpdf'], ['B4 清蒸平鱼', 'qzpy'], ['B5 红烧茄子', 'hsqz'], ['B6 铁锅炖鱼', 'tgdy'], ['B7 小碗蒸酥肉', 'xwzsr'], ['B8 糖醋鱼片', 'tcyp'], ['B9 炝炒圆白菜', 'qcybc'], ['B10 醋溜土豆片', 'cltdp'], ['B11A 羊蝎子(清汤)', 'yxzqt'], ['B11B 羊蝎子(辣汤)', 'yxzlt'], ['B12 口水鸡', 'ksj'], ['B13 小碗牛肉', 'xwnr'], ['B14A 爆肚', 'bd'], ['B14B 爆肥牛', 'bfn'], ['B14C 爆羊肉', 'byr'], ['B14D 爆百叶', 'bby'], ['B14E 爆豆腐', 'bdf'], ['B14F 爆白菜', 'bbc'], ['B14G 爆粉丝', 'bfs'], ['B14H 爆土豆', 'btd'], ['B14I 爆冻豆腐', 'bddf'], ['B15A 香辣虾', 'xlx'], ['B15B 香辣鸡翅', 'xljc']];
+	        var choices = [['A1 川北凉粉', 'cblf'], ['A2 白水牛舌', 'bsns'], ['A3A 拍黄瓜', 'phg'], ['A3B 北京凉拌菜', 'bjlbc'], ['A4 油泼紫椰菜', 'ypzyc'], ['A5 炸蚕豆', 'zcd'], ['A6 芥末木耳', 'jmme'], ['A7A 酱牛肉', 'jnr'], ['A7B 酱猪蹄', 'jzt'], ['A8A 泡椒凤爪', 'pjfz'], ['A8B 香糟鸡爪', 'xzjz'], ['A8B 辣鸭脖', 'lyb'], ['A10 凉拌肚丝', 'lbds'], ['A11A 老醋花生', 'zjcl'], ['A11B 炸鸡翅(不辣)', 'zjcbl'], ['A12 炸素丸子', 'zswz'], ['A13 小葱拌豆腐', 'xcbdf'], ['A14 炸鱼', 'zy'], ['B1 大盘鸡', 'dpj'], ['B2 清炖狮子头', 'qdszt'], ['B3 麻婆豆腐', 'mpdf'], ['B4 清蒸平鱼', 'qzpy'], ['B5 红烧茄子', 'hsqz'], ['B6 铁锅炖鱼', 'tgdy'], ['B7 小碗蒸酥肉', 'xwzsr'], ['B8 糖醋鱼片', 'tcyp'], ['B9 炝炒圆白菜', 'qcybc'], ['B10 醋溜土豆片', 'cltdp'], ['B11A 羊蝎子(清汤)', 'yxzqt'], ['B11B 羊蝎子(辣汤)', 'yxzlt'], ['B12 口水鸡', 'ksj'], ['B13 小碗牛肉', 'xwnr'], ['B14A 爆肚', 'bd'], ['B14B 爆肥牛', 'bfn'], ['B14C 爆羊肉', 'byr'], ['B14D 爆百叶', 'bby'], ['B14E 爆豆腐', 'bdf'], ['B14F 爆白菜', 'bbc'], ['B14G 爆粉丝', 'bfs'], ['B14H 爆土豆', 'btd'], ['B14I 爆冻豆腐', 'bddf'], ['B15A 香辣虾', 'xlx'], ['B15B 香辣鸡翅', 'xljc'], ['B15C 水煮鱼', 'szy']];
 	        var suggestions = [];
 	        for (i=0;i<choices.length;i++)
 	            if (~(choices[i][0]+' '+choices[i][1]).toLowerCase().indexOf(term)) suggestions.push(choices[i]);

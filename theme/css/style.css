@@ -387,6 +387,9 @@
 #put_order #dishes_order .dishes_row {
 	padding-bottom: 15px;
 }
+#put_order #dishes_order .dishes_row_3,
+#put_order #dishes_order .dishes_row_4,
+#put_order #dishes_order .dishes_row_5,
 #put_order #dishes_order .dishes_row_6,
 #put_order #dishes_order .dishes_row_7,
 #put_order #dishes_order .dishes_row_8,
@@ -493,7 +496,7 @@
 	width: 100%;
 }
 #back_end_control_panel #orderdetail {
-	background: #eee;
+	background: #000;
 	width: 1800px;
 	overflow-x: scroll;
 }
@@ -509,7 +512,7 @@
 #back_end_control_panel #orderdetail .single_dish .dish_qty_adj {
 	width: 25px;
 	margin-right: 1px;
-	border: 1px solid #f0f0f0;
+	border: 1px solid #777;
 	padding: 0;
 }
 #back_end_control_panel #orderdetail .single_dish:hover {
@@ -557,14 +560,15 @@
 	padding: 10px 5px;
 }
 #back_end_control_panel #orderdetail #take_out {
-	width: 200px;
+	width: 206px;
 	display: inline-block;
 }
 #back_end_control_panel #orderdetail #eat_in {
-	
+	min-height: 600px;
+	max-height: 800px;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending {
-	background: #fff369;
+	background: #000; /* fff369 */
 	border: 1px solid #d5c737;
 	padding: 10px;
 	margin-bottom: 10px;
@@ -584,26 +588,30 @@
 	display: inline-block;
 	padding: 0 10px;
 	min-height: 600px;
-	background: #fff;
-	width: 1500px;
+	background: #000;
+	width: 1550px;
 	max-height: 800px;
     overflow: scroll;
 }
 #back_end_control_panel #orderdetail #table_0 .kitchen_process {
-	background: #dbedfb;
+	background: #000;
 }
 #back_end_control_panel #orderdetail #table_0 h5,
 #back_end_control_panel #orderdetail #table_0_pending h5 {
 	font-weight: bold;
 	margin-bottom: 10px;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #aaa;
 	padding-bottom: 10px;
+	color: #fff;
 }
 #back_end_control_panel #orderdetail #table_0 .single_takeout {
-	width: 200px;
+	width: 206px;
+	padding: 3px;
+	border: 1px solid #000;
 	margin: 0 3px 10px 3px;
 	display: inline-block;
 	vertical-align: top;
+	background: #fff;
 }
 #back_end_control_panel #orderdetail #table_0 .single_takeout p.red {
 	color: #ff0000;
@@ -636,6 +644,8 @@
 	display: inline-block;
 	border: 1px solid #777;
 	margin-bottom: 3px;
+	background: #fff369;
+	padding: 3px;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p {
 	margin-bottom: 1px;
@@ -709,10 +719,12 @@
 #back_end_control_panel #orderdetail #eat_in .table_6,
 #back_end_control_panel #orderdetail #eat_in .table_7,
 #back_end_control_panel #orderdetail #eat_in .table_8 {
-	width: 200px;
+	width: 206px;
 	display: inline-block;
 	vertical-align: top;
 	margin-right: 10px;
+	padding: 3px;
+	background: #fff;
 }
 #back_end_control_panel #orderdetail #eat_in h5 {
 	font-weight: bold;
@@ -802,6 +814,7 @@
 	width: 78px; /* used to be 75px */
 	display: inline-block;
 	text-align: right;
+	margin-bottom: 2px;
 }
 #back_end_control_panel #kitchen .single_dish .qty {
 	background: #f0f0f0;
