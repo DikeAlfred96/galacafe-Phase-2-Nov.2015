@@ -8,13 +8,15 @@ $(function() {
 	}
 	if (document.location.href.indexOf('control_panel') > -1) { // Hide Admin Header...
 		$('nav.main_nav').hide();
-		if (document.location.href.indexOf('view_kitchen') > -1) { // Hide logo for kitchen specifically...
-			$('#header').hide();
+		$('#header').hide();
+		if (document.location.href.indexOf('view_kitchen') > -1) { // Hide Admin Header...
+			$('body').addClass('black');
 		} else {
-			$('#header').show();
+			$('body').removeClass('black');
 		}
 	} else {
 		$('nav.main_nav').show();
+		$('#header').show();
 	}
 	
 	// Admin - Order section reset form...
@@ -50,7 +52,7 @@ $(function() {
 	
 	// Admin - Order form fetch dish data from database...
 	$('.dishes_row .dish_input').each(function(intIndex) {
-		$(this).keyup(function() {
+		$(this).blur(function() {
 			var dish_id = $(this).val();
 			var qty = $(this).parent().children('.quantities').val();
 			$.ajax({
@@ -173,7 +175,7 @@ $("a.empty").on("click", "a", function(){
 // User - Add to cart
 $(document).ready(function() { 
 	/*place jQuery actions here*/ 
-	var link = "/galacafe-Phase-2-Nov.2015/"; // Url to your application (including index.php/) MODIFY!!!
+	var link = "/"; // Url to your application (including index.php/) MODIFY!!!
 
 	$(".dishes_wrap ul.category_wrap .single_dish form").submit(function() {
 		// Get the product ID and the quantity 

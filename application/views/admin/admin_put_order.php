@@ -6,20 +6,18 @@ date_default_timezone_set('America/Vancouver');
 <div id="back_end_control_panel">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs">
-	    <li class="active"><a href="<?php echo base_url(); ?>control_panel">餐厅下单</a></li>
-	    <li><a href="<?php echo base_url(); ?>control_panel/view_orderhistory">订单历史</a></li>
-	    <li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_pickup">外卖订单</a></li>
-    	<li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_eatin">堂食订单</a></li>
-	    <li><a href="<?php echo base_url(); ?>control_panel/view_kitchen">后堂汇总</a></li>
-	    <li><a href="<?php echo base_url(); ?>control_panel/view_dishesmodify">菜肴操作</a></li>
-	    <li><a href="<?php echo base_url(); ?>control_panel/view_analytics">报告</a></li>
+	    <li class="active"><a href="<?php echo base_url(); ?>control_panel">下单</a></li>
+	    <li><a href="<?php echo base_url(); ?>control_panel/view_orderhistory">历史</a></li>
+	    <li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_pickup">外卖</a></li>
+    	<li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_eatin">堂食</a></li>
+	    <li><a href="<?php echo base_url(); ?>control_panel/view_kitchen">后堂</a></li>
 	</ul>
 	
 	<!-- Tab panes -->
 	<div class="tab-content">
 		<div id="put_order">
 			<?php
-				echo ('<form action="control_panel/admin_put_order" name="order_form" method="post" accept-charset="utf-8" id="admin_order_form" onsubmit="return validate();">');
+				echo ('<form action="control_panel/admin_put_order" name="order_form" method="post" accept-charset="utf-8" id="admin_order_form" onsubmit="return validate();" >');
 				
 				echo form_fieldset('', array('id'=>'basic_info')); // Section I
 				echo form_label('桌号','table_id');
@@ -67,13 +65,13 @@ date_default_timezone_set('America/Vancouver');
 				    'Z' => 'Z'
 				);
 				echo form_dropdown('link_table', $options, 'default');
-				echo form_label('顾客姓名','user_name');
+				echo form_label('姓名','user_name');
 				echo form_input(array(
 					'name' => 'user_name',
 					'id' => 'user_name',
 					'class' => 'form-control put_order_input_a'
 				));
-				echo form_label('顾客电话','user_tel');
+				echo form_label('电话','user_tel');
 				echo form_input(array(
 					'name' => 'user_tel',
 					'id' => 'user_tel',
@@ -81,13 +79,13 @@ date_default_timezone_set('America/Vancouver');
 				));
 				echo form_fieldset_close();
 				
-				echo form_fieldset('', array('id'=>'dishes_order_title')); // Section II - Title
+				/* echo form_fieldset('', array('id'=>'dishes_order_title')); // Section II - Title
 				echo form_label('餐点代码','', array('class' => 'put_order_input_b'));
 				echo form_label('菜名','', array('class' => 'put_order_input_b'));
 				echo form_label('单价','', array('class' => 'put_order_input_b'));
 				echo form_label('数量','', array('class' => 'put_order_input_b'));
 				echo form_label('小计','', array('class' => 'put_order_input_b'));
-				echo form_fieldset_close();
+				echo form_fieldset_close(); */
 				
 				echo form_fieldset('', array('id'=>'dishes_order')); // Section II
 				for ($i = 1; $i <= 25; $i++) {
@@ -106,7 +104,7 @@ date_default_timezone_set('America/Vancouver');
 					'value' => '1',
 					'onClick' => 'this.select();'
 				));
-				echo form_label('$','', array('class' => 'put_order_input_b reset_d sub_total_price_'.$i));
+				/* echo form_label('$','', array('class' => 'put_order_input_b reset_d sub_total_price_'.$i)); */
 				echo '<input type="hidden" class="put_order_input_b dish_input_subtotal item_sub_'.$i.'" name="dish_subtotal_'.$i.'" id="dish_subtotal_'.$i.'" value="">';
 				echo '<input type="hidden" class="put_order_input_b dish_input_id item_id_'.$i.'" name="dishes_id_'.$i.'" id="dishes_id_'.$i.'" value="">';
 				echo '</div>';
@@ -117,12 +115,12 @@ date_default_timezone_set('America/Vancouver');
 				echo form_submit(array(
 					'class' => 'btn btn-primary btn-lg',
 					'name' => 'submit_order',
-					'value' => '提交订单'
+					'value' => '提交'
 				));
 				echo form_reset(array(
 					'class' => 'btn btn-danger btn-lg',
 					'name' => 'reset_order',
-					'value' => '重置订单',
+					'value' => '重置',
 					'id' => 'reset_order'
 				));
 				echo form_fieldset_close();
@@ -182,5 +180,12 @@ date_default_timezone_set('America/Vancouver');
 			e.preventDefault();
 			return false;
 		}
+	});
+
+	$("form").submit(function() {
+	    $(this).submit(function() {
+	        return false;
+	    });
+	    return true;
 	});
 </script>

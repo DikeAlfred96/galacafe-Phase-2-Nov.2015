@@ -6,13 +6,11 @@ date_default_timezone_set('America/Vancouver');
 <div id="back_end_control_panel">
 	<!-- Nav tabs -->
   <ul class="nav nav-tabs">
-    <li><a href="<?php echo base_url(); ?>control_panel">餐厅下单</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_orderhistory">订单历史</a></li>
-    <li class="active"><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_pickup">外卖订单</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_eatin">堂食订单</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_kitchen">后堂汇总</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_dishesmodify">菜肴操作</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_analytics">报告</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel">下单</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel/view_orderhistory">历史</a></li>
+    <li class="active"><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_pickup">外卖</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_eatin">堂食</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel/view_kitchen">后堂</a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -108,7 +106,7 @@ date_default_timezone_set('America/Vancouver');
 	    		<div class="single_takeout">
 	    			<?php $currentId = $t_zero->orderId; ?>
 	    			<p class="<?php echo $unfinish; ?>">订单号: <?php echo $currentId; ?><span class="alias"><?php echo $t_zero->orderAlias; ?></span><span class="finish_order">全部完成<input type="hidden" value="<?php echo $currentId; ?>" class="order_id"></span></p>
-	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}';";
+	    			<?php $sql_takeout = "SELECT dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId='{$currentId}' AND tableId = '0';";
 		    		$result_takeout = $this->db->query($sql_takeout); 
 		    		foreach ($result_takeout->result() as $item_out): 
 		    		$status = $item_out->dishStatus; ?>
@@ -244,7 +242,7 @@ date_default_timezone_set('America/Vancouver');
 		    data: {},
 		    type: 'post',
 		    success: function(data) {
-				$("div#take_out").html($(data).find('div#take_out').html());
+				$("div#orderdetail").html($(data).find('div#orderdetail').html());
 		    }
 		});
 	}

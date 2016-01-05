@@ -187,7 +187,10 @@ class Control_panel extends CI_Controller {
 		$sql_status_change = "SELECT dishStatus FROM order_items WHERE orderId = '{$orderId}' AND dishStatus = '0'";
 		$result_status_change = $this->db->query($sql_status_change);
 		if ($result_status_change->num_rows() == 0) {
-			$sql_order = array('orderStatus' => 3);
+			$sql_order = array(
+				'orderStatus' => 3,
+				'orderFinishTime' => date('Y-m-d H:i:s')
+			);
 			$this->db->where('orderId', $orderId);
 			$this->db->update('orders', $sql_order);
 		} else {
@@ -225,7 +228,10 @@ class Control_panel extends CI_Controller {
 		$sql_status_change = "SELECT dishStatus FROM order_items WHERE orderId = '{$orderId}' AND dishStatus = '0'";
 		$result_status_change = $this->db->query($sql_status_change);
 		if ($result_status_change->num_rows() == 0) {
-			$sql_order = array('orderStatus' => 3);
+			$sql_order = array(
+				'orderStatus' => 3,
+				'orderFinishTime' => date('Y-m-d H:i:s')
+			);
 			$this->db->where('orderId', $orderId);
 			$this->db->update('orders', $sql_order);
 		} else {
@@ -258,7 +264,10 @@ class Control_panel extends CI_Controller {
 		$sql_status_change = "SELECT dishStatus FROM order_items WHERE orderId = '{$orderId}' AND dishStatus = '0'";
 		$result_status_change = $this->db->query($sql_status_change);
 		if ($result_status_change->num_rows() == 0) {
-			$sql_order = array('orderStatus' => 3);
+			$sql_order = array(
+				'orderStatus' => 3,
+				'orderFinishTime' => date('Y-m-d H:i:s')
+			);
 			$this->db->where('orderId', $orderId);
 			$this->db->update('orders', $sql_order);
 		} else {
@@ -283,8 +292,8 @@ class Control_panel extends CI_Controller {
 
 		$sql_order = array(
 			'orderStatus' => 3,
-			'orderFinishTime' => date('Y-m-d H:i:s'
-		));
+			'orderFinishTime' => date('Y-m-d H:i:s')
+		);
 		$this->db->where('orderId', $orderId);
 		$this->db->update('orders', $sql_order);
 		
@@ -304,7 +313,10 @@ class Control_panel extends CI_Controller {
 		$this->db->where('orderId', $orderId);
 		$this->db->update('view_order_items', $sql_dish_all);
 		
-		$sql_order = array('orderStatus' => 3);
+		$sql_order = array(
+			'orderStatus' => 3,
+			'orderFinishTime' => date('Y-m-d H:i:s')
+		);
 		$this->db->where('orderId', $orderId);
 		$this->db->update('orders', $sql_order);
 

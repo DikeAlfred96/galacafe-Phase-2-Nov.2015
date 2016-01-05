@@ -104,6 +104,13 @@
 	text-align: center;
 	padding: 20px 0;
 }
+#footer .footer_link_s {
+	font-size: 14px;
+}
+#footer .footer_link_s a {
+	color: #777;
+	text-decoration: underline;
+}
 /* ====== Index Page（Add Dishes Page） ====== */
 /*  -------------  Main Dishes  -------------  */
 .dishes_wrap {
@@ -344,19 +351,25 @@
 	margin-bottom: 10px;
 }
 #back_end_control_panel ul.nav li {
-	width: 14.28%;
+	width: 20%;
 	text-align: center;
 	background: #fafafa;
 }
 /*  ---------- Put Order Page ----------  */
 #put_order {
-	margin-top: 10px;
+	padding-top: 10px;
 	min-height: 400px;
+	min-width: 350px;
 	padding-bottom: 20px;
+	background: #000;
+	color: #fff;
 }
 #put_order #basic_info {
-	width: 600px;
-	margin: 0 auto 10px;
+	margin-bottom: 10px;
+}
+#put_order #basic_info input#table_id {
+	width: 30px;
+	padding: 6px 10px;
 }
 #put_order #basic_info label {
 	margin: 0 10px;
@@ -373,16 +386,21 @@
 	padding: 10px 0;
 }
 #put_order .put_order_input_a {
-	max-width: 100px;
+	max-width: 80px;
 	display: inline-block;
 	margin: 0 auto;
 }
 #put_order .put_order_input_b {
-	min-width: 80px;
+	width: 80px;
 	margin: 0 auto;
 	display: inline-block;
 	text-align: center;
-	width: 20%;
+}
+#put_order .put_order_input_b.dish_input {
+	width: 100px;
+}
+#put_order .put_order_input_b.quantities {
+	width: 40px;
 }
 #put_order #dishes_order .dishes_row {
 	padding-bottom: 15px;
@@ -414,6 +432,9 @@
 }
 #put_order #dishes_order_submit {
 	text-align: center;
+	position: fixed;
+	bottom: 10%;
+	right: 10%;
 }
 #put_order #dishes_order_submit input[type="submit"] {
 	margin-right: 20px;
@@ -451,11 +472,11 @@
 }
 #back_end_control_panel #orderhistory {
 	width: 100%;
-	overflow: auto;
+	/* overflow: auto; */
 }
-#back_end_control_panel #orderhistory div.tab-pane {
+/* #back_end_control_panel #orderhistory div.tab-pane {
 	overflow: scroll;
-}
+} */
 #back_end_control_panel #orderhistory table {
 	width: 100%;
 	min-width: 800px;
@@ -492,13 +513,14 @@
 }
 /*  ---------- Order Details page ----------  */
 #back_end_control_panel .tab-content {
-	overflow-x: scroll;
-	width: 100%;
+	/* overflow-x: scroll; */
+	/* width: 100%; */
 }
 #back_end_control_panel #orderdetail {
 	background: #000;
-	width: 1800px;
-	overflow-x: scroll;
+	/* width: 1800px;
+	overflow-x: scroll; */
+	width: 2000px;
 }
 #back_end_control_panel #orderdetail .single_takeout_dish,
 #back_end_control_panel #orderdetail .single_dish {
@@ -522,7 +544,7 @@
 	padding: 2px 0;
 }
 #back_end_control_panel #orderdetail .single_dish {
-	padding: 5px 0;
+	padding: 2px 0;
 }
 #back_end_control_panel #orderdetail .single_takeout_dish .dish_qty,
 #back_end_control_panel #orderdetail .single_dish .dish_qty,
@@ -558,6 +580,13 @@
 	display: inline-block;
 	vertical-align: top;
 	padding: 10px 5px;
+	font-size: 12px !important;
+	background: #000;
+}
+#back_end_control_panel #orderdetail #take_out a,
+#back_end_control_panel #orderdetail #table_0 a,
+#back_end_control_panel #orderdetail #eat_in a {
+	font-weight: bold;
 }
 #back_end_control_panel #orderdetail #take_out {
 	width: 206px;
@@ -566,6 +595,7 @@
 #back_end_control_panel #orderdetail #eat_in {
 	min-height: 600px;
 	max-height: 800px;
+	width: 1800px;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending {
 	background: #000; /* fff369 */
@@ -573,7 +603,7 @@
 	padding: 10px;
 	margin-bottom: 10px;
 	max-height: 800px;
-	overflow: scroll;
+	/* overflow: scroll; */
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending #total_pending {
 	float: right;
@@ -591,7 +621,8 @@
 	background: #000;
 	width: 1550px;
 	max-height: 800px;
-    overflow: scroll;
+    /* overflow: scroll; */
+    font-size: 12px !important;
 }
 #back_end_control_panel #orderdetail #table_0 .kitchen_process {
 	background: #000;
@@ -608,7 +639,7 @@
 	width: 206px;
 	padding: 3px;
 	border: 1px solid #000;
-	margin: 0 3px 10px 3px;
+	margin: 0 0 10px 0;
 	display: inline-block;
 	vertical-align: top;
 	background: #fff;
@@ -722,7 +753,7 @@
 	width: 206px;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 10px;
+	margin-right: 1px;
 	padding: 3px;
 	background: #fff;
 }
@@ -768,6 +799,9 @@
 	background: #00ee00;
 }
 /*  ---------- Kitchen Status page ----------  */
+body.black {
+	background: #111 !important;
+}
 #back_end_control_panel #kitchen {
 	background: #111;
 	min-height: 600px;
@@ -775,8 +809,11 @@
 	min-width: 1600px;
 	display: block;
 }
+#back_end_control_panel #kitchen h5 {
+	font-size: 20px;
+}
 #back_end_control_panel #kitchen .catagory {
-	width: 24%;
+	width: 16.3%;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -786,32 +823,37 @@
 #back_end_control_panel #kitchen .single_dish {
 	width: 100%;
 	display: inline-block;
-	font-size: 20pt;
+	font-size: 20px;
 	padding: 2px 0px;
-	border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background: #333;
+}
+#back_end_control_panel #kitchen .single_dish:last-child {
+	border-bottom: 1px solid #ccc;
 }
 #back_end_control_panel #kitchen .single_dish .left_dish,
 #back_end_control_panel #kitchen .single_dish .right_dish {
 	vertical-align: middle;
-	line-height: 36px;
+	line-height: 30px;
 }
 #back_end_control_panel #kitchen .single_dish .left_dish {
-	width: 177px;
+	width: 130px; /* 177px */
 	display: inline-block;
 }
 
 #back_end_control_panel #kitchen .single_dish .left_dish .totalnum {
 	float: right;
-	color: #ffff00;
-	font-size: 36px;
+	font-size: 24px;
+	font-weight: bold;
+	color: #00ff00;
 }
 #back_end_control_panel #kitchen .single_dish .right_dish {
 	display: inline-block;
-	width: 240px;
+	width: 170px;
 }
 #back_end_control_panel #kitchen .single_dish .right_dish .unit { /* width modified *** */
-	width: 78px; /* used to be 75px */
+	width: 51px; /* used to be 78px */
 	display: inline-block;
 	text-align: right;
 	margin-bottom: 2px;
@@ -819,8 +861,8 @@
 #back_end_control_panel #kitchen .single_dish .qty {
 	background: #f0f0f0;
 	color: #000;
-	padding: 0 10px;
-	width: 49.5px;
+	/* padding: 0 10px; */
+	width: 29.5px;
 	display: inline-block;
 	text-align: center;
 }

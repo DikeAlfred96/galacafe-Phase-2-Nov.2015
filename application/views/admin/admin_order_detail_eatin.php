@@ -6,13 +6,11 @@ date_default_timezone_set('America/Vancouver');
 <div id="back_end_control_panel">
 	<!-- Nav tabs -->
   <ul class="nav nav-tabs">
-    <li><a href="<?php echo base_url(); ?>control_panel">餐厅下单</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_orderhistory">订单历史</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_pickup">外卖订单</a></li>
-    <li class="active"><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_eatin">堂食订单</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_kitchen">后堂汇总</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_dishesmodify">菜肴操作</a></li>
-    <li><a href="<?php echo base_url(); ?>control_panel/view_analytics">报告</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel">下单</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel/view_orderhistory">历史</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_pickup">外卖</a></li>
+    <li class="active"><a href="<?php echo base_url(); ?>control_panel/view_orderdetail_eatin">堂食</a></li>
+    <li><a href="<?php echo base_url(); ?>control_panel/view_kitchen">后堂</a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -53,7 +51,7 @@ if ($result->num_rows() > 1) {
 					</li>
 	<?php endforeach; 
 } else {
-					$sql_2 = "SELECT orderId, orderStatus FROM orders WHERE tableId = '{$tid}' ORDER BY orderId DESC LIMIT 2";
+					$sql_2 = "SELECT orderId, orderStatus FROM orders WHERE tableId = '{$tid}' ORDER BY orderStatus ASC, orderId DESC LIMIT 2";
 					$result_2 = $this->db->query($sql_2); 
 					$b = 0;
 		foreach ($result_2->result() as $item_2):
@@ -98,7 +96,7 @@ if ($result->num_rows() > 1) {
 		    		</div>
 	<?php endforeach;
 } else {
-						$sql_e2 = "SELECT orderId FROM orders WHERE tableId = '{$tid}' ORDER BY orderId DESC LIMIT 2";
+						$sql_e2 = "SELECT orderId FROM orders WHERE tableId = '{$tid}' ORDER BY orderStatus ASC, orderId DESC LIMIT 2";
 						$result_e2 = $this->db->query($sql_e2);
 						$d = 0;
 	foreach ($result_e2->result() as $item_e2):
@@ -269,6 +267,19 @@ if ($result->num_rows() > 1) {
 	</div>
 </div>
 <script>
+	function fetchEatin() {
+		$.ajax({
+		    url: 'view_orderdetail_eatin',
+		    data: {},
+		    type: 'post',
+		    success: function(data) {
+				$("div#eat_in").html($(data).find('div#eat_in').html());
+		    }
+		});
+	}
+	fetchEatin();
+	setInterval('fetchEatin()',10000); // After 10 sec re-fetch data
+
 	function myrefresh() {
 		window.location.reload();
 	}
