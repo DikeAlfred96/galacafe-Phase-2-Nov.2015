@@ -496,6 +496,14 @@
 	border-top: 5px solid transparent;
 	padding-bottom: 5px;
 }
+#back_end_control_panel #orderhistory table .details_today,
+#back_end_control_panel #orderhistory table .details_yesterday,
+#back_end_control_panel #orderhistory table .details_older {
+	display: none;
+}
+#back_end_control_panel #orderhistory table .details_older.show {
+	display: table-row !important;
+}
 #back_end_control_panel #orderhistory table .details th {
 	background: #fff;
 	border-top: 5px double #333;
@@ -505,7 +513,7 @@
 	background: #f0f0f0;
 }
 #back_end_control_panel #orderhistory table td {
-	width: 16.66%;
+	width: 12.5%;
 	padding: 5px 0;
 }
 #back_end_control_panel #orderhistory table tr.odd {

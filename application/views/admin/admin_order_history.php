@@ -25,16 +25,17 @@ date_default_timezone_set('America/Vancouver');
 			<div class="tab-content">
 		    	<div role="tabpanel" class="tab-pane active" id="today">
 			    	<table class="table-today">
-				    	<thead>
+				    	<!-- <thead>
 				    		<tr>
-					    		<th>订单编号</th>
-				    			<th>下单时间</th>
-				    			<th>订单总额(含税)</th>
-				    			<th>订单详情</th>
-				    			<th>订单状态</th>
-				    			<th>打印订单</th>
+				    			<th>打印</th>
+				    			<th>桌号</th>
+					    		<th>编号</th>
+				    			<th>下单</th>
+				    			<th>总额(含税)</th>
+				    			<th></th>
+				    			<th>状态</th>
 				    		</tr>
-				    	</thead>
+				    	</thead> -->
 				    	<?php if ($today_history) {
 					    	$i=1; $x=1; ?>
 				    	<tbody>
@@ -63,12 +64,12 @@ date_default_timezone_set('America/Vancouver');
 					    		<input type="hidden" value="<?php echo $order_subtotal; ?>" class="orderSubtotal_<?php echo $i; ?>">
 					    		<input type="hidden" value="<?php echo $order_tax ?>" class="orderTax_<?php echo $i; ?>">
 					    		
+					    		<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'today')"></td>
 				    			<td><?php echo $item->orderId; ?></td>
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
 				    			<td class="orderTotal_<?php echo $i; ?>"><?php echo $item->orderTotal; ?></td>
 				    			<td><button class="admin_show_details_today show_details_<?php echo $i; ?>">查看</button></td>
 				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '2') { ?>等待取餐<?php } else if ($order_status == '3') { ?>已完成<?php } else if ($order_status == '4') { ?>已取消<?php } else { ?>订单错误<?php } ?></td>
-				    			<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'today')"></td>
 				    		</tr>
 				    		<tr class="details_today extra_<?php echo $i; ?>">
 					    		<th class="one_third">ID</th>
@@ -96,16 +97,17 @@ date_default_timezone_set('America/Vancouver');
 		    	</div>
 		    	<div role="tabpanel" class="tab-pane" id="yesterday">
 			    	<table class="table-yesterday">
-				    	<thead>
+				    	<!-- <thead>
 				    		<tr>
-					    		<th>订单编号</th>
-				    			<th>下单时间</th>
-				    			<th>订单总额(含税)</th>
-				    			<th>订单详情</th>
-				    			<th>订单状态</th>
-				    			<th>打印订单</th>
+				    			<th>打印</th>
+				    			<th>桌号</th>
+					    		<th>编号</th>
+				    			<th>下单</th>
+				    			<th>总额(含税)</th>
+				    			<th></th>
+				    			<th>状态</th>
 				    		</tr>
-				    	</thead>
+				    	</thead> -->
 				    	<?php if ($one_day_history) {
 					    	$i=1; $x=1; ?>
 				    	<tbody>
@@ -134,12 +136,12 @@ date_default_timezone_set('America/Vancouver');
 					    		<input type="hidden" value="<?php echo $order_subtotal; ?>" class="orderSubtotal_<?php echo $i; ?>">
 					    		<input type="hidden" value="<?php echo $order_tax ?>" class="orderTax_<?php echo $i; ?>">
 					    		
+					    		<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'yesterday')"></td>
 				    			<td><?php echo $item->orderId; ?></td>
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
 				    			<td class="orderTotal_<?php echo $i; ?>"><?php echo $item->orderTotal; ?></td>
 				    			<td><button class="admin_show_details_yesterday show_details_<?php echo $i; ?>">查看</button></td>
 				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '2') { ?>等待取餐<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
-				    			<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'yesterday')"></td>
 				    		</tr>
 				    		<tr class="details_yesterday extra_<?php echo $i; ?>">
 					    		<th class="one_third">ID</th>
@@ -167,16 +169,17 @@ date_default_timezone_set('America/Vancouver');
 		    	</div>
 		    	<div role="tabpanel" class="tab-pane" id="older">
 			    	<table class="table-older">
-				    	<thead>
+				    	<!-- <thead>
 				    		<tr>
-					    		<th>订单编号</th>
-				    			<th>下单时间</th>
-				    			<th>订单总额(含税)</th>
-				    			<th>订单详情</th>
-				    			<th>订单状态</th>
-				    			<th>打印订单</th>
+				    			<th>打印</th>
+				    			<th>桌号</th>
+					    		<th>编号</th>
+				    			<th>下单</th>
+				    			<th>总额(含税)</th>
+				    			<th></th>
+				    			<th>状态</th>
 				    		</tr>
-				    	</thead>
+				    	</thead> -->
 				    	<?php if ($older_history) {
 					    	$i=1; $x=1; ?>
 				    	<tbody>
@@ -205,12 +208,14 @@ date_default_timezone_set('America/Vancouver');
 					    		<input type="hidden" value="<?php echo $order_subtotal; ?>" class="orderSubtotal_<?php echo $i; ?>">
 					    		<input type="hidden" value="<?php echo $order_tax ?>" class="orderTax_<?php echo $i; ?>">
 					    		
+					    		<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'older')"></td>
+					    		<td><?php if ($table_id == '0') { echo $alias; } else { echo $table_id; } ?></td>
 				    			<td><?php echo $item->orderId; ?></td>
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
+				    			<td class="orderFinishTime_<?php echo $i; ?>"><?php echo $item->orderFinishTime; ?></td>
 				    			<td class="orderTotal_<?php echo $i; ?>"><?php echo $item->orderTotal; ?></td>
 				    			<td><button class="admin_show_details_older show_details_<?php echo $i; ?>">查看</button></td>
 				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
-				    			<td><input type="button" value="打印" class="print_order print_details_<?php echo $i; ?>" onclick="printDiv('<?php echo $i; ?>', 'older')"></td>
 				    		</tr>
 				    		<tr class="details_older extra_<?php echo $i; ?>">
 					    		<th class="one_third">ID</th>

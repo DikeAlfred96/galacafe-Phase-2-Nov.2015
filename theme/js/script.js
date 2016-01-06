@@ -137,27 +137,40 @@ $(function() {
 	});
 	
 	// Admin - Show detail for each order history
-	$('.details_today').hide();
+	// $('.details_today').hide();
 	$('.admin_show_details_today').each(function(index) {
 		$(this).click(function() {
-			$('.details_today').hide();
-			$('tr.details_today.extra_'+(index+1)).show();
+			// $('.details_today').hide();
+			if ($('tr.details_today.extra_'+(index+1)).hasClass('show')) {
+				$('tr.details_today.extra_'+(index+1)).removeClass('show');
+			} else {
+				$('tr.details_today.extra_'+(index+1)).addClass('show');
+			}
 		});
 	});
 	
-	$('.details_yesterday').hide();
+	// $('.details_yesterday').hide();
 	$('.admin_show_details_yesterday').each(function(index) {
 		$(this).click(function() {
-			$('.details_yesterday').hide();
-			$('tr.details_yesterday.extra_'+(index+1)).show();
+			// $('.details_yesterday').hide();
+			if ($('tr.details_yesterday.extra_'+(index+1)).hasClass('show')) {
+				$('tr.details_yesterday.extra_'+(index+1)).removeClass('show');
+			} else {
+				$('tr.details_yesterday.extra_'+(index+1)).addClass('show');
+			}
 		});
 	});
 	
-	$('.details_older').hide();
+	// $('.details_older').hide();
 	$('.admin_show_details_older').each(function(index) {
 		$(this).click(function() {
-			$('.details_older').hide();
-			$('tr.details_older.extra_'+(index+1)).show();
+			// $('.details_older').hide();
+			if ($('tr.details_older.extra_'+(index+1)).hasClass('show')) {
+				$('tr.details_older.extra_'+(index+1)).removeClass('show');
+			} else {
+				$('tr.details_older.extra_'+(index+1)).addClass('show');
+			}
+
 		});
 	});
 });

@@ -107,7 +107,7 @@ class Admin_user_model extends CI_Model {
     
     function fetch_order_history_today() {
 	    $current_time = date('Y-m-d');
-		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderTime LIKE '{$current_time}%' ORDER BY orderTime DESC";
+		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderFinishTime, orderStatus, orderRemarks FROM orders WHERE orderTime LIKE '{$current_time}%' ORDER BY orderTime DESC";
 		$result_order = $this->db->query($sql_order);
 
 		return $result_order;
@@ -115,7 +115,7 @@ class Admin_user_model extends CI_Model {
 	
 	function fetch_order_history_yesterday() {
 		$yesterday = date('Y-m-d', time() - 60 * 60 * 24);
-		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderTime LIKE '{$yesterday}%' ORDER BY orderTime DESC";
+		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderFinishTime, orderStatus, orderRemarks FROM orders WHERE orderTime LIKE '{$yesterday}%' ORDER BY orderTime DESC";
 		$result_order = $this->db->query($sql_order);
 
 		return $result_order;
@@ -123,7 +123,7 @@ class Admin_user_model extends CI_Model {
 	
 	function fetch_order_history_older() {
 		$older = date('Y-m-d', time() - 60 * 60 * 24 * 2);
-		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderStatus, orderRemarks FROM orders WHERE orderTime <= '{$older}%' ORDER BY orderTime DESC LIMIT 255";
+		$sql_order = "SELECT orderId, orderAlias, tableId, userTel, userName, orderSubtotal, orderTax, orderTotal, orderTime, orderFinishTime, orderStatus, orderRemarks FROM orders WHERE orderTime <= '{$older}%' ORDER BY orderTime DESC LIMIT 255";
 		$result_order = $this->db->query($sql_order);
 
 		return $result_order;
