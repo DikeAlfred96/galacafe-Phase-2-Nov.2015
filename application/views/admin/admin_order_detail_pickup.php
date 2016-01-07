@@ -30,7 +30,7 @@ date_default_timezone_set('America/Vancouver');
 	    		<div class="single_pending">
 		    		<form action="admin_approve_order" method="post" class="pending_form">
 			    		<p>订单号: <?php echo $currentId_pending; ?><input type="submit" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
-			    		<p class="user_detail"><span class="user_name"><?php echo $t_zero_pending->userName; ?></span><span class="user_tel"><?php echo $t_zero_pending->userTel; ?></span><?php if ($order_remarks != '') { ?><br><span class="remarks"><?php echo $t_zero_pending->orderRemarks; ?></span><?php } ?></p>
+			    		<?php if ($user_tel != '' || $user_name != '' || $order_remarks != '') { ?><p class="user_detail"><span class="user_name"><?php echo $user_name; ?></span><span class="user_tel"><?php echo $user_tel; ?></span><?php if ($order_remarks != '') { ?><br><span class="remarks"><?php echo $order_remarks; ?></span><?php } ?></p><?php } ?>
 			    		<input type="hidden" id="orderId_<?php echo $i; ?>" value="<?php echo $currentId_pending; ?>">
 			    		<input type="hidden" id="tableId_<?php echo $i; ?>" value="外卖">
 					    <input type="hidden" value="<?php echo $alias; ?>" id="orderAlias_<?php echo $i; ?>">
@@ -47,7 +47,7 @@ date_default_timezone_set('America/Vancouver');
 		    		foreach ($result_pending->result() as $item_pending):
 		    		$status = $item_pending->dishStatus; ?>
 		    		<p class="extra_<?php echo $i; ?> single_pending_dish single_pending <?php if ($status != '1') {}else{echo 'done';} ?>">
-			    		<span class="dish_alpha one"><?php echo $item_pending->dishAlphaId; ?></span><span class="dish_name two"><?php echo $item_pending->dishChiName; ?><br><span class="eng_name two"><?php echo $item_pending->dishEngName; ?></span></span><span class="dish_qty three"><?php echo $item_pending->dishQuantity; ?></span><span class="dish_price four"><?php echo '$ '.$item_pending->dishPrice; ?></span><input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>"><a href="#" class="erase_dish">X<input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>"></a>
+			    		<span class="dish_alpha one"><?php echo $item_pending->dishAlphaId; ?></span><span class="dish_name two"><?php echo $item_pending->dishChiName; ?></span><span class="dish_qty three"><?php echo $item_pending->dishQuantity; ?></span><span class="dish_price four"><?php echo '$ '.round(($item_pending->dishPrice)*($item_pending->dishQuantity), 2); ?></span><input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>"><a href="#" class="erase_dish">X<input class="serial" type="hidden" value="<?php echo $item_pending->serialId; ?>"></a><br><span class="eng_name full"><?php echo $item_pending->dishEngName; ?></span>
 			    	</p>
 		    		<?php endforeach; ?>
 				</div>
@@ -305,13 +305,13 @@ date_default_timezone_set('America/Vancouver');
 		var orderId = document.getElementById('orderId_'+index).value;
 		var table = document.getElementById('tableId_'+index).value;
 		var aliasId = document.getElementById('orderAlias_'+index).value;
-			tableId = '外卖' + aliasId;
+			tableId = '<span class="table_id">外卖</span>' + aliasId;
 		var orderTime = document.getElementById('orderTime_'+index).value;
 		var orderSubtotal = document.getElementById('orderSubtotal_'+index).value;
 		var orderTotal = document.getElementById('orderTotal_'+index).value;
 		var orderTax = document.getElementById('orderTax_'+index).value;
 	    var print_count = document.getElementsByClassName('extra_'+index);
-	    var printContents = '<style>body{font-family: "Arial", sans-serif;} div#main{position:relative; width: 320px;} p.center{text-align:center; margin-bottom: 0; padding-bottom: 5px;} p em{width:150px; position:absolute; right:0;} #table{width:320px; text-align:center; margin-top:10px; border-top:2px solid #333; padding-bottom: 4px;} #table .details_older.tr{font-weight: bold; margin-top: 2px;} #table .tr .onefourth, #table .tr .onethird{display:inline-block;} span.one,span.two,span.three,span.four {vertical-align: middle;font-family: "黑体", Arial, sans-serif; font-size: 15px; display: inline-block;} span.one{width:45px;} span.two{width:191px;} span.three{width:28px;} span.four{width:46px;} #table .tr.low{line-height:10px;} div#table a.erase_dish{display:none;} p.footer{font-size: 16px; line-height:18px;} p.footer.special{text-align:right; font-size: 16px;} p.footer.first{border-top:3px solid #333; padding-top:10px;} p.footer{width:320px; margin: 0; position: relative; padding-right:5px;} p.footer.small{font-size:14px;} p.footer.large{font-size:22px; font-weight:bold;} p.footer em{font-size: 16px; font-weight: normal; position: absolute; right: 0; width: 100px; text-align: right; padding-right: 5px;}</style>';
+	    var printContents = '<style>body{font-family: "Arial", sans-serif;} div#main{position:relative; width: 320px;} p.center{text-align:center; margin-bottom: 0; padding-bottom: 5px;} p em{width:150px; position:absolute; right:0;}p strong{font-size:16px;}p .table_id{font-size: 14px;} #table{width:320px; text-align:center; margin-top:10px; border-top:2px solid #333; padding-bottom: 4px;} #table .details_older.tr{font-weight: bold; margin-top: 2px;} #table .tr .onefourth, #table .tr .onethird{display:inline-block;} span.one,span.two,span.three,span.four {vertical-align: middle;font-family: "黑体", Arial, sans-serif; font-size: 15px; display: inline-block; width: 25%;} span.full{width: 100%;} #table .tr.low{line-height:10px;} div#table a.erase_dish{display:none;} p.footer{font-size: 16px; line-height:18px;} p.footer.special{text-align:right; font-size: 16px;} p.footer.first{border-top:3px solid #333; padding-top:10px;} p.footer{width:320px; margin: 0; position: relative; padding-right:5px;} p.footer.small{font-size:14px;} p.footer.large{font-size:22px; font-weight:bold;} p.footer em{font-size: 16px; font-weight: normal; position: absolute; right: 0; width: 100px; text-align: right; padding-right: 5px;}</style>';
 	    printContents += '<div id="main"><p class="center">www.galacafe.ca<br>';
 	    printContents += 'galacafemanager@gmail.com<br>';
 	    printContents += '(GST 829982370RT0001)</p>';

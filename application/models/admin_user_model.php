@@ -74,7 +74,7 @@ class Admin_user_model extends CI_Model {
 		$order_query = $this->db->query($order_sql);
 		$current_order_id = $order_query->row()->orderId;
 
-		$alias = chr( 65 + $current_order_id % 26);
+		$alias = chr( 65 + $current_order_id % 22);
 		$sql_order = array('orderAlias' => $alias);
 		$this->db->where('orderId', $current_order_id);
 		$this->db->update('orders', $sql_order);

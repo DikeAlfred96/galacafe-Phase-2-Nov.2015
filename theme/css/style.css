@@ -378,6 +378,15 @@
 	margin-left: 10px;
 	display: none;
 }
+#put_order #basic_info select,
+#put_order #basic_info option,
+#put_order #total_sum {
+	color: #000 !important;
+}
+#put_order #total_sum {
+	display: inline-block;
+	margin: 0 10px;
+}
 #put_order #dishes_order {
 	padding-top: 10px;
 	border-top: 1px solid #ccc;
@@ -436,9 +445,9 @@
 	bottom: 10%;
 	right: 10%;
 }
-#put_order #dishes_order_submit input[type="submit"] {
+/* #put_order #dishes_order_submit input[type="submit"] {
 	margin-right: 20px;
-}
+} */
 #put_order .error {
 	color: #ff0000;
 }
@@ -501,6 +510,8 @@
 #back_end_control_panel #orderhistory table .details_older {
 	display: none;
 }
+#back_end_control_panel #orderhistory table .details_today.show,
+#back_end_control_panel #orderhistory table .details_yesterday.show,
 #back_end_control_panel #orderhistory table .details_older.show {
 	display: table-row !important;
 }
@@ -577,6 +588,7 @@
 #back_end_control_panel #orderdetail .single_dish .dish_qty {
 	/* margin-left: 5px; */
 	width: 52px;
+	font-size: 14px;
 }
 #back_end_control_panel #orderdetail .single_dish .dish_qty .total {
 	font-weight: bold;
@@ -684,7 +696,8 @@
 	border: 1px solid #777;
 	margin-bottom: 3px;
 	background: #fff369;
-	padding: 3px;
+	padding: 0;
+	/* padding: 3px; */
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending form p {
 	margin-bottom: 1px;
@@ -720,7 +733,8 @@
 	text-decoration: underline;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish {
-	margin: 1px 0;
+	margin: 0;
+	/* margin: 1px 0; */
 	border: 1px solid transparent;
 }
 #back_end_control_panel #orderdetail #take_out #table_0_pending .single_pending p.single_pending_dish span.dish_qty,
@@ -851,7 +865,6 @@ body.black {
 }
 
 #back_end_control_panel #kitchen .single_dish .left_dish .totalnum {
-	float: right;
 	font-size: 24px;
 	font-weight: bold;
 	color: #00ff00;

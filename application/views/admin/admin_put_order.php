@@ -27,6 +27,18 @@ date_default_timezone_set('America/Vancouver');
 					'class' => 'form-control put_order_input_a',
 					'maxlength' => "1"
 				));
+				echo form_label('姓名','user_name');
+				echo form_input(array(
+					'name' => 'user_name',
+					'id' => 'user_name',
+					'class' => 'form-control put_order_input_a'
+				));
+				echo form_label('电话','user_tel');
+				echo form_input(array(
+					'name' => 'user_tel',
+					'id' => 'user_tel',
+					'class' => 'form-control put_order_input_a'
+				));
 				$options = array(
 				    'default' => '链接',
 				    '1' => '1',
@@ -65,18 +77,6 @@ date_default_timezone_set('America/Vancouver');
 				    'Z' => 'Z'
 				);
 				echo form_dropdown('link_table', $options, 'default');
-				echo form_label('姓名','user_name');
-				echo form_input(array(
-					'name' => 'user_name',
-					'id' => 'user_name',
-					'class' => 'form-control put_order_input_a'
-				));
-				echo form_label('电话','user_tel');
-				echo form_input(array(
-					'name' => 'user_tel',
-					'id' => 'user_tel',
-					'class' => 'form-control put_order_input_a'
-				));
 				echo form_fieldset_close();
 				
 				/* echo form_fieldset('', array('id'=>'dishes_order_title')); // Section II - Title
@@ -116,8 +116,9 @@ date_default_timezone_set('America/Vancouver');
 					'class' => 'btn btn-primary btn-lg',
 					'name' => 'submit_order',
 					'value' => '提交'
-				));
-				echo form_reset(array(
+				)); ?>
+				<p id="total_sum">$ <span id="sum_math"></span></p>
+				<?php echo form_reset(array(
 					'class' => 'btn btn-danger btn-lg',
 					'name' => 'reset_order',
 					'value' => '重置',
@@ -144,7 +145,10 @@ date_default_timezone_set('America/Vancouver');
 		    return true;
 	    }
 	} // Form content validation!!!
-	<?php for ($did=1; $did<=25; $did++) { ?>
+	<?php for ($did=1; $did<=25; $did++) { 
+		// $sql = "SELECT dishAlphaId, dishChiName, dishInitial FROM dishes;";
+		// $result = $this->db->query($sql); 
+		// foreach ($result_fetch->result() as $items): ?>
 	new autoComplete({
 	    selector: '#dish_id_<?php echo $did; ?>',
 	    minChars: 1,

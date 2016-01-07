@@ -278,7 +278,7 @@ if ($result->num_rows() > 1) {
 		});
 	}
 	fetchEatin();
-	setInterval('fetchEatin()',10000); // After 10 sec re-fetch data
+	setInterval('fetchEatin()',15000); // After 10 sec re-fetch data
 
 	function myrefresh() {
 		window.location.reload();

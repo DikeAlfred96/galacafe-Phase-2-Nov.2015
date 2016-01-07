@@ -19,6 +19,12 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		margin-bottom: 0;
 		padding-bottom: 5px;
 	}
+	p strong {
+		font-size: 18px;
+	}
+	p .table_id {
+		font-size: 14px;
+	}
 	p em {
 		width: 150px;
 		position: absolute;
@@ -152,7 +158,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	$table_id = $item->tableId; ?>
 <div id="main">
 	<p class="center">www.galacafe.ca<br>galacafemanager@gmail.com<br>(GST 829982370RT0001)</p>
-	<p style="margin-top: 10px;">Table No: <strong><?php if ($table_id != 0) { echo $item->tableId;} else {echo '外卖'; echo $item->orderAlias;} ?></strong><br>Order ID: <?php echo $item->orderId; ?><em><?php echo $item->orderTime; ?></em></p>
+	<p style="margin-top: 10px;">Table No: <strong><?php if ($table_id != 0) { echo $item->tableId;} else {echo '<span class="table_id">外卖</span>'; echo $item->orderAlias;} ?></strong><br>Order ID: <?php echo $item->orderId; ?><em><?php echo $item->orderTime; ?></em></p>
 	<?php if ($item->userTel != null || $item->userName != null) { ?>
 		<p>Client: <?php echo $item->userName; ?><em><?php echo $item->userTel; ?></em></p>
 	<?php } ?>
@@ -171,9 +177,12 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 			<tr><td class="low">--</td><td class="low">--</td><td class="low">--</td><td class="low">--</td></tr>
 			<tr>
 				<td><?php echo $items->dishAlphaId; ?></td>
-				<td><?php echo $items->dishChiName; ?><br><?php echo $items->dishEngName; ?></td>
+				<td><?php echo $items->dishChiName; ?></td>
 				<td><?php echo $items->dishQuantity; ?></td>
-				<td><?php echo $items->dishPrice; ?></td>
+				<td><?php echo round(($items->dishPrice)*($items->dishQuantity), 2); ?></td>
+			</tr>
+			<tr>
+				<td colspan="4"><?php echo $items->dishEngName; ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>
