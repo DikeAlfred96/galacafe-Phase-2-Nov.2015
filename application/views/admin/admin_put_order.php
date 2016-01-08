@@ -145,27 +145,28 @@ date_default_timezone_set('America/Vancouver');
 		    return true;
 	    }
 	} // Form content validation!!!
-	<?php for ($did=1; $did<=25; $did++) { 
-		// $sql = "SELECT dishAlphaId, dishChiName, dishInitial FROM dishes;";
-		// $result = $this->db->query($sql); 
-		// foreach ($result_fetch->result() as $items): ?>
+	<?php $sql = "SELECT dishAlphaId, dishChiName, dishInitial FROM dishes;";
+		$result = $this->db->query($sql);
+		$num = $result->num_rows();
+		for ($did=1; $did<=25; $did++) {
+		$i = 1; ?>
 	new autoComplete({
 	    selector: '#dish_id_<?php echo $did; ?>',
 	    minChars: 1,
-	    source: function(term, suggest){
+	    source: function(term, suggest) {
 	        term = term.toLowerCase();
-	        var choices = [['A1 川北凉粉', 'cblf'], ['A2 白水牛舌', 'bsns'], ['A3A 拍黄瓜', 'phg'], ['A3B 北京凉拌菜', 'bjlbc'], ['A4 油泼紫椰菜', 'ypzyc'], ['A5 炸蚕豆', 'zcd'], ['A6 芥末木耳', 'jmme'], ['A7A 酱牛肉', 'jnr'], ['A7B 酱猪蹄', 'jzt'], ['A8A 泡椒凤爪', 'pjfz'], ['A8B 香糟鸡爪', 'xzjz'], ['A8B 辣鸭脖', 'lyb'], ['A10 凉拌肚丝', 'lbds'], ['A11A 老醋花生', 'zjcl'], ['A11B 炸鸡翅(不辣)', 'zjcbl'], ['A12 炸素丸子', 'zswz'], ['A13 小葱拌豆腐', 'xcbdf'], ['A14 炸鱼', 'zy'], ['B1 大盘鸡', 'dpj'], ['B2 清炖狮子头', 'qdszt'], ['B3 麻婆豆腐', 'mpdf'], ['B4 清蒸平鱼', 'qzpy'], ['B5 红烧茄子', 'hsqz'], ['B6 铁锅炖鱼', 'tgdy'], ['B7 小碗蒸酥肉', 'xwzsr'], ['B8 糖醋鱼片', 'tcyp'], ['B9 炝炒圆白菜', 'qcybc'], ['B10 醋溜土豆片', 'cltdp'], ['B11A 羊蝎子(清汤)', 'yxzqt'], ['B11B 羊蝎子(辣汤)', 'yxzlt'], ['B12 口水鸡', 'ksj'], ['B13 小碗牛肉', 'xwnr'], ['B14A 爆肚', 'bd'], ['B14B 爆肥牛', 'bfn'], ['B14C 爆羊肉', 'byr'], ['B14D 爆百叶', 'bby'], ['B14E 爆豆腐', 'bdf'], ['B14F 爆白菜', 'bbc'], ['B14G 爆粉丝', 'bfs'], ['B14H 爆土豆', 'btd'], ['B14I 爆冻豆腐', 'bddf'], ['B15A 香辣虾', 'xlx'], ['B15B 香辣鸡翅', 'xljc'], ['B15C 水煮鱼', 'szy']];
+	        var choices = [<?php foreach ($result->result() as $items): if ($i !== $num) { ?>['<?php echo $items->dishAlphaId; ?> <?php echo $items->dishChiName; ?>', '<?php echo $items->dishInitial; ?>'], <?php } else { ?>['<?php echo $items->dishAlphaId; ?> <?php echo $items->dishChiName; ?>', '<?php echo $items->dishInitial; ?>']<?php } $i++; endforeach; ?> ];
 	        var suggestions = [];
 	        for (i=0;i<choices.length;i++)
 	            if (~(choices[i][0]+' '+choices[i][1]).toLowerCase().indexOf(term)) suggestions.push(choices[i]);
 	        suggest(suggestions);
 	    },
-	    renderItem: function (item, search){
+	    renderItem: function (item, search) {
 	        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
 	        return '<div class="autocomplete-suggestion" data-langname="'+item[0]+'" data-lang="'+item[1]+'" data-val="'+search+'">'+item[0].replace(re, "<b>$1</b>")+'</div>';
 	    },
-	    onSelect: function(e, term, item){
+	    onSelect: function(e, term, item) {
 			document.getElementById('dish_id_<?php echo $did; ?>').value = item.getAttribute('data-langname').split(" ")[0];
 	    }
 	});
@@ -191,5 +192,9 @@ date_default_timezone_set('America/Vancouver');
 	        return false;
 	    });
 	    return true;
+	});
+
+	$('.put_order_input_b').keyup(function() {
+		$("input[name^='dish_subtotal_']").sum("keyup", "#sum_math");
 	});
 </script>

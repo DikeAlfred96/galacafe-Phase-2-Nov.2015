@@ -385,7 +385,11 @@
 }
 #put_order #total_sum {
 	display: inline-block;
-	margin: 0 10px;
+	margin: 0 5px;
+	color: #ff0000 !important;
+	font-weight: bold;
+	padding: 5px;
+	background: #000;
 }
 #put_order #dishes_order {
 	padding-top: 10px;
@@ -817,6 +821,9 @@
 	color: #333;
 	margin-right: 0;
 }
+#back_end_control_panel #orderdetail #eat_in .tab-content > .tab-pane {
+	display: block;
+}
 #back_end_control_panel #orderdetail .single_dish.done {
 	background: #00ee00;
 }
@@ -878,6 +885,9 @@ body.black {
 	display: inline-block;
 	text-align: right;
 	margin-bottom: 2px;
+}
+#back_end_control_panel #kitchen .single_dish .right_dish .table {
+	color: #ffee00;
 }
 #back_end_control_panel #kitchen .single_dish .qty {
 	background: #f0f0f0;

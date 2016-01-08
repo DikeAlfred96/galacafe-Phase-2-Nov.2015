@@ -20,10 +20,10 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		padding-bottom: 5px;
 	}
 	p strong {
-		font-size: 18px;
+		font-size: 24px;
 	}
 	p .table_id {
-		font-size: 14px;
+		font-size: 16px;
 	}
 	p em {
 		width: 150px;

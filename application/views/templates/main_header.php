@@ -15,6 +15,7 @@
 	<!-- jQuery Plug-in -->
 	<script src="<?php echo base_url(); ?>theme/js/jquery-11.0.js"></script>
 	<script src="<?php echo base_url(); ?>theme/js/auto-complete.js"></script>
+	<script src="<?php echo base_url(); ?>theme/js/jquery.calculation.js"></script>
 </head>
 <body>
 	<div class="main_wrapper">
