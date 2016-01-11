@@ -78,7 +78,7 @@ if ($result->num_rows() > 1) {
 					if ($c == 0) { $active = 'active'; } else { $active = ''; }
 					$current_id_2 = $item->orderId; ?>
 					<div role="tabpanel" class="tab-pane <?php echo $active; ?>" id="order_<?php echo $current_id_2; ?>">
-					<?php $sql_e = "SELECT tableId, orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_unfinished_order_item WHERE tableId = '{$tid}' AND orderId = '{$current_id_2}' ORDER BY dishStatus ASC;";
+					<?php $sql_e = "SELECT tableId, orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_unfinished_order_item WHERE tableId = '{$tid}' AND orderId = '{$current_id_2}' ORDER BY dishStatus ASC, dishAlphaId ASC;";
 					$c++;
 					$result_e = $this->db->query($sql_e);
 		foreach ($result_e->result() as $item_e):
@@ -104,7 +104,7 @@ if ($result->num_rows() > 1) {
 							if ($d == 0) { $active = 'active'; } else { $active = ''; }
 							$current_id_2 = $item_e2->orderId; ?>
 							<div role="tabpanel" class="tab-pane <?php echo $active; ?>" id="order_<?php echo $current_id_2; ?>">
-							<?php $sql_e2_item = "SELECT tableId, orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId = '{$current_id_2}' ORDER BY dishStatus ASC;";
+							<?php $sql_e2_item = "SELECT tableId, orderId, dishId, serialId, dishQuantity, dishQtyAdj, dishStatus, dishChiName, dishAlphaId FROM view_order_items WHERE orderId = '{$current_id_2}' ORDER BY dishStatus ASC, dishAlphaId ASC;";
 							$d++;
 							$result_e2_item = $this->db->query($sql_e2_item);
 		foreach ($result_e2_item->result() as $item_e2_i): 

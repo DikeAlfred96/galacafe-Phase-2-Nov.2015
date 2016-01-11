@@ -70,11 +70,7 @@ date_default_timezone_set('America/Vancouver');
 				    'S' => 'S',
 				    'T' => 'T',
 				    'U' => 'U',
-				    'V' => 'V',
-				    'W' => 'W',
-				    'X' => 'X',
-				    'Y' => 'Y',
-				    'Z' => 'Z'
+				    'V' => 'V'
 				);
 				echo form_dropdown('link_table', $options, 'default');
 				echo form_fieldset_close();
@@ -135,10 +131,18 @@ date_default_timezone_set('America/Vancouver');
 	function validate() {
 		var x = document.order_form.table_id.value;
 		var regex = /^[0-8]+$/;
+		$(document.getElementsByClassName("quantities")).each(function() {
+			if ($.trim(this.value) < 1 || !($.trim(this.value).match(regex))) {
+				alert('菜品数量必须大于1');
+				return false;
+			} else {
+				return true;
+			}
+		});
 	    if ((document.order_form.table_id.value == "") || !(x.match(regex))) {
 		    alert("桌号不可为空/只能包含数字, 桌号仅限0-8");
 	        return false;
-	    } else if ((document.order_form.dish_id_1.value == "") || document.order_form.dishes_id_1.value == "") {
+	    } else if (document.order_form.dish_id_1.value == "" || document.order_form.dishes_id_1.value == "") {
 			alert("订单至少要有一个有效餐点");
 	        return false;
 	    } else {

@@ -1,4 +1,4 @@
-/* Main Css Stylesheet for Gala Cafe Online Ordering System - Created by Alfred
+﻿/* Main Css Stylesheet for Gala Cafe Online Ordering System - Created by Alfred
 	=== July 2015 ===
 */
 
@@ -385,10 +385,11 @@
 }
 #put_order #total_sum {
 	display: inline-block;
-	margin: 0 5px;
-	color: #ff0000 !important;
+
+ font-size: 20px;	margin: 0 5px;
+	color: #ffffff !important;
 	font-weight: bold;
-	padding: 5px;
+	padding: 8px 5px;
 	background: #000;
 }
 #put_order #dishes_order {
@@ -406,8 +407,7 @@
 #put_order .put_order_input_b {
 	width: 80px;
 	margin: 0 auto;
-	display: inline-block;
-	text-align: center;
+	display: inline-block;	text-align: center;
 }
 #put_order .put_order_input_b.dish_input {
 	width: 100px;
@@ -606,7 +606,7 @@
 	padding: 10px 5px;
 	font-size: 12px !important;
 	background: #000;
-}
+}#back_end_control_panel #orderdetail #take_out {margin-top: 45px;}
 #back_end_control_panel #orderdetail #take_out a,
 #back_end_control_panel #orderdetail #table_0 a,
 #back_end_control_panel #orderdetail #eat_in a {
@@ -822,7 +822,7 @@
 	margin-right: 0;
 }
 #back_end_control_panel #orderdetail #eat_in .tab-content > .tab-pane {
-	display: block;
+	display: block; border-bottom: 3px solid #000;
 }
 #back_end_control_panel #orderdetail .single_dish.done {
 	background: #00ee00;
@@ -887,7 +887,7 @@ body.black {
 	margin-bottom: 2px;
 }
 #back_end_control_panel #kitchen .single_dish .right_dish .table {
-	color: #ffee00;
+	color: #ffee00; font-family: 'serif', arial; font-weight: bold;
 }
 #back_end_control_panel #kitchen .single_dish .qty {
 	background: #f0f0f0;
