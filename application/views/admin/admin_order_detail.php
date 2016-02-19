@@ -219,7 +219,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		    printContents += 'galacafemanager@gmail.com<br>';
 		    printContents += '(GST 829982370RT0001)</p>';
 		    printContents += '<p style="margin-top: 10px;">Table No: <strong>' + tableId + '</strong><br>';
-		    printContents += 'Order ID: ' + orderId + '<em>' + orderTime + '</em></p>';
+		    // printContents += 'Order ID: ' + orderId + '<em>' + orderTime + '</em></p>';
 		    if (document.getElementById('userTel_'+index) != null) {
 				var userTel = document.getElementById('userTel_'+index).value;
 			}

@@ -21,33 +21,7 @@ $(function() {
 	
 	// Admin - Order section reset form...
 	$('#reset_order').click(function() {
-		$('.dishes_row_3').hide();
-		$('.dishes_row_4').hide();
-		$('.dishes_row_5').hide();
-		$('.dishes_row_6').hide();
-		$('.dishes_row_7').hide();
-		$('.dishes_row_8').hide();
-		$('.dishes_row_9').hide();
-		$('.dishes_row_10').hide();
-		$('.dishes_row_11').hide();
-		$('.dishes_row_12').hide();
-		$('.dishes_row_13').hide();
-		$('.dishes_row_14').hide();
-		$('.dishes_row_15').hide();
-		$('.dishes_row_16').hide();
-		$('.dishes_row_17').hide();
-		$('.dishes_row_18').hide();
-		$('.dishes_row_19').hide();
-		$('.dishes_row_20').hide();
-		$('.dishes_row_21').hide();
-		$('.dishes_row_22').hide();
-		$('.dishes_row_23').hide();
-		$('.dishes_row_24').hide();
-		$('.dishes_row_25').hide();
-		$('.reset_d').html('$');
-		$('.reset').html('');
-		$('.dish_input_subtotal').val('');
-		$('.dish_input_id').val('');
+		window.location.reload();
 	});
 	
 	// Admin - Order form fetch dish data from database...
@@ -188,7 +162,7 @@ $("a.empty").on("click", "a", function(){
 // User - Add to cart
 $(document).ready(function() { 
 	/*place jQuery actions here*/ 
-	var link = "/"; // Url to your application (including index.php/) MODIFY!!!
+	var link = "/"; // Url to your application (including index.php/) MODIFY!!! galacafe-Phase-2-Nov.2015/
 
 	$(".dishes_wrap ul.category_wrap .single_dish form").submit(function() {
 		// Get the product ID and the quantity 

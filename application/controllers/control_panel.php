@@ -66,6 +66,7 @@ class Control_panel extends CI_Controller {
 	}
 	
 	function view_dishesmodify() {
+		$data['fetch_dishes'] = $this->admin_user_model->fetch_dishes_modify();
 		$data['main_content'] = 'admin/admin_dish_modify';
 		$this->load->view('includes/template', $data);
 	}

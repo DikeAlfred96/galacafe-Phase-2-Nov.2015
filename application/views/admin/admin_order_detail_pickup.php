@@ -152,12 +152,12 @@ date_default_timezone_set('America/Vancouver');
 		        },
 		        type: "POST",
 		        success: function(data) {
-		        	partialRefresh();
-			        /* if ($(save_status).hasClass('done')) {
+			        if ($(save_status).hasClass('done')) { // optional comment out for online test with no delay. (LAUNCH CHANGE)
 				        $(save_status).removeClass('done');
 					} else {
 						$(save_status).addClass(data);
-					} */
+					}
+					setTimeout('partialRefresh()', 3000);
 		        }
 		    });
 		});

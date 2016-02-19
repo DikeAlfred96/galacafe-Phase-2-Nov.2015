@@ -17,7 +17,7 @@ date_default_timezone_set('America/Vancouver');
 	<div class="tab-content">
 		<div id="put_order">
 			<?php
-				echo ('<form action="control_panel/admin_put_order" name="order_form" method="post" accept-charset="utf-8" id="admin_order_form" onsubmit="return validate();" >');
+				echo ('<form action="control_panel/admin_put_order" name="order_form" method="post" accept-charset="utf-8" id="admin_order_form" onsubmit="return validate();">');
 				
 				echo form_fieldset('', array('id'=>'basic_info')); // Section I
 				echo form_label('桌号','table_id');
@@ -25,7 +25,8 @@ date_default_timezone_set('America/Vancouver');
 					'name' => 'table_id',
 					'id' => 'table_id',
 					'class' => 'form-control put_order_input_a',
-					'maxlength' => "1"
+					'maxlength' => "1",
+					'onClick' => 'this.select();'
 				));
 				echo form_label('姓名','user_name');
 				echo form_input(array(
@@ -89,7 +90,8 @@ date_default_timezone_set('America/Vancouver');
 				echo form_input(array(
 					'name' => 'dish_id_'.$i,
 					'id' => 'dish_id_'.$i,
-					'class' => 'form-control put_order_input_b dish_input'
+					'class' => 'form-control put_order_input_b dish_input',
+					'onClick' => 'this.select();'
 				));
 				echo form_label('','', array('class' => 'put_order_input_b reset item_name_'.$i));
 				echo form_label('$','', array('class' => 'put_order_input_b reset_d item_price_'.$i));
@@ -131,23 +133,19 @@ date_default_timezone_set('America/Vancouver');
 	function validate() {
 		var x = document.order_form.table_id.value;
 		var regex = /^[0-8]+$/;
-		$(document.getElementsByClassName("quantities")).each(function() {
-			if ($.trim(this.value) < 1 || !($.trim(this.value).match(regex))) {
-				alert('菜品数量必须大于1');
-				return false;
-			} else {
-				return true;
-			}
-		});
+		var regex_qty = /^[0-9]+$/;
 	    if ((document.order_form.table_id.value == "") || !(x.match(regex))) {
 		    alert("桌号不可为空/只能包含数字, 桌号仅限0-8");
 	        return false;
 	    } else if (document.order_form.dish_id_1.value == "" || document.order_form.dishes_id_1.value == "") {
 			alert("订单至少要有一个有效餐点");
 	        return false;
-	    } else {
-		    return true;
-	    }
+	    } else <?php for ($rid=1; $rid<=25; $rid++) { ?>if ($.trim($(".quantities:eq(<?php echo $rid-1 ?>)").val()) < 1 || !($(".quantities:eq(<?php echo $rid-1 ?>)").val()).match(regex_qty)) {
+	    		alert('所有有效菜品数量必须大于1');
+	    		return false;
+	    } else <?php } ?> {
+	    	return true;
+		}
 	} // Form content validation!!!
 	<?php $sql = "SELECT dishAlphaId, dishChiName, dishInitial FROM dishes;";
 		$result = $this->db->query($sql);

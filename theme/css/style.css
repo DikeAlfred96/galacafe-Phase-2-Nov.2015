@@ -117,6 +117,8 @@
 	width: 100%;
 	vertical-align: top;
 	display: block;
+	max-width: 800px;
+	margin: 0 auto;
 }
 .dishes_wrap ul.nav.nav-tabs {
 	background: #333;
@@ -135,6 +137,39 @@
 .dishes_wrap ul.nav.nav-tabs li a:active {
 	border-radius: 0;
 	color: #000;
+}
+/* Special layout for dishes */
+.dishes_wrap #appetizer {
+	position: relative;
+	/* background: url('../images/user/cat_back_1.jpg') left top no-repeat;
+	background-size: 100%; */
+	min-height: 1065px;
+}
+.dishes_wrap #appetizer img {
+	position: absolute;
+	top: 0;
+	z-index: 1;
+}
+.dishes_wrap #appetizer .category_wrap {
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+/* ================================================================== */
+/* ==================== Customize Layout Start ====================== */
+/* ================================================================== */
+.dishes_wrap #appetizer .category_wrap .single_dish:nth-child(1) {
+	position: absolute;
+	right: 0;
+}
+/* ================================================================ */
+/* ==================== Customize Layout End ====================== */
+/* ================================================================ */
+
+.dishes_wrap #appetizer img {
+	max-width: 800px;
+	width: 100%;
 }
 .dishes_wrap .category_wrap {
 	padding-left: 0;
@@ -455,6 +490,10 @@
 #put_order .error {
 	color: #ff0000;
 }
+.autocomplete-suggestions {
+	min-width: 200px;
+}
+
 /*  ---------- Order History page ----------  */
 #back_end_control_panel #orderhistory ul.nav li {
 	background: #fff;
@@ -831,20 +870,31 @@
 body.black {
 	background: #111 !important;
 }
-#back_end_control_panel #kitchen {
+#back_end_control_panel .tab-content {
+	/* overflow: scroll; */
+}
+#back_end_control_panel .tab-content #kitchen {
 	background: #111;
-	min-height: 600px;
+	min-height: 900px;
 	color: #fff;
-	min-width: 1600px;
+	width: 2800px;
 	display: block;
 }
 #back_end_control_panel #kitchen h5 {
 	font-size: 20px;
 }
 #back_end_control_panel #kitchen .catagory {
-	width: 16.3%;
+	width: 320px; /* 16.3% */
 	display: inline-block;
 	vertical-align: top;
+}
+#back_end_control_panel #kitchen .catagory:nth-child(7) {
+	position: relative;
+	right: 323px;
+}
+#back_end_control_panel #kitchen .catagory:nth-child(8) {
+	position: relative;
+	right: 323px;
 }
 #back_end_control_panel #kitchen .single_dish:nth-child(2) {
 	border-top: 1px solid #aaa !important;
@@ -867,7 +917,7 @@ body.black {
 	line-height: 30px;
 }
 #back_end_control_panel #kitchen .single_dish .left_dish {
-	width: 130px; /* 177px */
+	width: 140px; /* 177px */
 	display: inline-block;
 }
 
@@ -898,4 +948,12 @@ body.black {
 	text-align: center;
 }
 
+/*  ---------- Dish Modify ----------  */
+#back_end_control_panel #dishesmodify {
 
+}
+#back_end_control_panel #dishesmodify .single_dish .inline {
+	display: inline-block;
+	width: 8%;
+	overflow: hidden;
+}

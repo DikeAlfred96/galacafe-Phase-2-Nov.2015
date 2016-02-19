@@ -158,7 +158,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	$table_id = $item->tableId; ?>
 <div id="main">
 	<p class="center">www.galacafe.ca<br>galacafemanager@gmail.com<br>(GST 829982370RT0001)</p>
-	<p style="margin-top: 10px;">Table No: <strong><?php if ($table_id != 0) { echo $item->tableId;} else {echo '<span class="table_id">外卖</span>'; echo $item->orderAlias;} ?></strong><br>Order ID: <?php echo $item->orderId; ?><em><?php echo $item->orderTime; ?></em></p>
+	<p style="margin-top: 10px;">Table No: <strong><?php if ($table_id != 0) { echo $item->tableId;} else {echo '<span class="table_id">外卖</span>'; echo $item->orderAlias;} ?></strong><?php //<br>Order ID: <?php echo $item->orderId; ?><?php //<em><?php echo $item->orderTime; ?><!--</em>--></p>
 	<?php if ($item->userTel != null || $item->userName != null) { ?>
 		<p>Client: <?php echo $item->userName; ?><em><?php echo $item->userTel; ?></em></p>
 	<?php } ?>
@@ -196,6 +196,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 <script>
 	$(document).ready(function() {
 		window.print();
-		document.location.href = "<?php echo base_url(); ?>control_panel";
+		// document.location.href = "<?php echo base_url(); ?>control_panel";
+		setTimeout(function() {document.location.href = "<?php echo base_url(); ?>control_panel";}, 100);
 	});
 </script>

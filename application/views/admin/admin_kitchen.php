@@ -17,7 +17,7 @@ date_default_timezone_set('America/Vancouver');
 	  <!-- Tab panes -->
 	  <div class="tab-content">
 	    <div id="kitchen">
-		    <?php $category = array('凉菜','主菜','串/烤','主食','甜品','套餐','','');
+		    <?php $category = array('1','2','3','4','5','6','7','8');
 			    for ($cid=1; $cid<=8; $cid++) { ?>
 		    <div class="catagory">
 				<h5><?php echo $category[$cid-1]; ?></h5>
@@ -49,4 +49,8 @@ date_default_timezone_set('America/Vancouver');
 	    </div>
 	  </div>
 	</div>
+	<script type="text/javascript">
+		var height = $('#kitchen .catagory:nth-child(6)').outerHeight();
+		$('#kitchen .catagory:nth-child(7)').css("top", height+30);
+	</script>
 </div>

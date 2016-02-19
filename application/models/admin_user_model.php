@@ -261,6 +261,13 @@ class Admin_user_model extends CI_Model {
 		
 		return $result_dishes;
 	}
+
+	function fetch_dishes_modify() {
+		$sql = "SELECT * FROM dishes;";
+		$result = $this->db->query($sql);
+
+		return $result;
+	}
 }
 
 ?>

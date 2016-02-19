@@ -273,7 +273,7 @@ date_default_timezone_set('America/Vancouver'); ?>
 		    printContents += 'galacafemanager@gmail.com<br>';
 		    printContents += '(GST 829982370RT0001)</p>';
 		    printContents += '<p style="margin-top: 10px;">Table No: <strong>' + tableId + '</strong><br>';
-		    printContents += 'Order ID: ' + orderId + '<em>' + orderTime + '</em></p>';
+		    // printContents += 'Order ID: ' + orderId + '<em>' + orderTime + '</em></p>';
 		    if (document.getElementById(section).getElementsByClassName('userTel_'+index)[0] != null) {
 		  		var userTel = document.getElementById(section).getElementsByClassName('userTel_'+index)[0].value;
 		  	}
