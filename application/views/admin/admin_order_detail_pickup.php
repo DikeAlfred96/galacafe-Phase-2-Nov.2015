@@ -26,11 +26,18 @@ date_default_timezone_set('America/Vancouver');
 		    		$alias = $t_zero_pending->orderAlias;
 		    		$user_tel = $t_zero_pending->userTel;
 		    		$user_name = $t_zero_pending->userName;
+		    		$order_deliver_method = $t_zero_pending->orderDeliverMethod;
+		    		$order_address = $t_zero_pending->orderAddress;
 		    		$order_remarks = $t_zero_pending->orderRemarks; ?>
 	    		<div class="single_pending">
 		    		<form action="admin_approve_order" method="post" class="pending_form">
-			    		<p>订单号: <?php echo $currentId_pending; ?><input type="submit" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
+			    		<p><?php if ($order_deliver_method == 'Pick') { ?><span class="order_method pick">自取</span><?php } else { ?><span class="order_method delivery">送餐</span><?php } ?></span>订单号: <?php echo $currentId_pending; ?><input type="submit" value="通过" class="order_approve" onclick="printDiv('<?php echo $i; ?>');"><a href="#" class="cancel_order">取消<input type="hidden" value="<?php echo $currentId_pending; ?>" class="order_id" name="order_id"></a></p>
 			    		<?php if ($user_tel != '' || $user_name != '' || $order_remarks != '') { ?><p class="user_detail"><span class="user_name"><?php echo $user_name; ?></span><span class="user_tel"><?php echo $user_tel; ?></span><?php if ($order_remarks != '') { ?><br><span class="remarks"><?php echo $order_remarks; ?></span><?php } ?></p><?php } ?>
+			    		<?php if ($order_deliver_method == 'Delivery') { ?>
+			    		<p class="user_address"><strong>地址: </strong><?php echo $order_address; ?></p>
+			    		<input type="hidden" id="address_<?php echo $i; ?>" value="<?php echo $order_address; ?>">
+			    		<?php } ?>
+			    		<input type="hidden" id="shipMethod_<?php echo $i; ?>" value="<?php echo $order_deliver_method; ?>">
 			    		<input type="hidden" id="orderId_<?php echo $i; ?>" value="<?php echo $currentId_pending; ?>">
 			    		<input type="hidden" id="tableId_<?php echo $i; ?>" value="外卖">
 					    <input type="hidden" value="<?php echo $alias; ?>" id="orderAlias_<?php echo $i; ?>">
@@ -305,7 +312,14 @@ date_default_timezone_set('America/Vancouver');
 		var orderId = document.getElementById('orderId_'+index).value;
 		var table = document.getElementById('tableId_'+index).value;
 		var aliasId = document.getElementById('orderAlias_'+index).value;
-			tableId = '<span class="table_id">外卖</span>' + aliasId;
+		var tableId = '';
+		if (document.getElementById('shipMethod_'+index).value == 'Delivery') {
+			var tableId = '<span class="table_id">外卖-送餐</span>' + aliasId;
+		} else if (document.getElementById('shipMethod_'+index).value == 'Pick') {
+			var tableId = '<span class="table_id">外卖-自取</span>' + aliasId;
+		}
+		alert(index);
+		alert(tableId);
 		var orderTime = document.getElementById('orderTime_'+index).value;
 		var orderSubtotal = document.getElementById('orderSubtotal_'+index).value;
 		var orderTotal = document.getElementById('orderTotal_'+index).value;
@@ -328,6 +342,10 @@ date_default_timezone_set('America/Vancouver');
 	  	}
 	  	if (userName || userTel || orderRemark) {
 		  	printContents += '<p>Client: ' + userName + '<em>' + userTel + '</em><br>Notes: ' + orderRemark + '</p>';
+	  	}
+	  	if (document.getElementById('address_'+index) != null) {
+	  		var address = document.getElementById('address_'+index).value;
+	  		printContents += '<p>Address: ' + address + '</p>';
 	  	}
 	    printContents += '<div id="table">';
 	    printContents += '<div class="details_older tr"><span class="one">ID</span><span class="two">Name</span><span class="three">Qty</span><span class="four">Price</span></div>';

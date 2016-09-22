@@ -24,7 +24,8 @@ date_default_timezone_set('America/Vancouver');
 				<?php foreach (${"dish_status_".$cid}->result() as $items):
 					$currentName = $items->dishChiName; 
 					$dishTotal = $items->dishTotal;
-					$sql_dish_qty = "SELECT dishQuantity, dishChiName, dishStatus, tableId, orderAlias, orderTime, catId FROM view_kitchen WHERE dishStatus=0 AND catId='{$cid}' AND dishChiName='{$currentName}' ORDER BY orderTime DESC, dishQuantity DESC";
+					$sql_dish_qty = "SELECT dishQuantity, dishChiName, dishStatus, tableId, orderAlias, orderTime, catId, dishAlphaId FROM view_kitchen WHERE dishStatus=0 AND catId='{$cid}' AND dishChiName='{$currentName}' ORDER BY dishAlphaId DESC, dishQuantity DESC;";
+					// $sql_dish_qty = "SELECT dishQuantity, dishChiName, dishStatus, tableId, orderAlias, orderTime, catId FROM view_kitchen WHERE dishStatus=0 AND catId='{$cid}' AND dishChiName='{$currentName}' ORDER BY orderTime DESC, dishQuantity DESC;";
 					$result_dish_qty = $this->db->query($sql_dish_qty); ?>
 					<div class="single_dish">
 						<div class="left_dish">

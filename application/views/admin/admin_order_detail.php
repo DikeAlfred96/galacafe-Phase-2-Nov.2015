@@ -151,18 +151,14 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 			var save_status = $(this);
 			var order_id = $(this).children('.order_id').val();
 			$(this).click(function() {
-				if (confirm('确认完成订单？')) {
-					$.ajax({
-				        url: 'order_status_change',
-				        data: {"data" : order_id},
-				        type: "POST",
-				        success: function(data) {
-							location.reload();
-				        }
-				    });
-				} else {
-					return false;
-				}
+				$.ajax({
+			        url: 'order_status_change',
+			        data: {"data" : order_id},
+			        type: "POST",
+			        success: function(data) {
+						location.reload();
+			        }
+			    });
 			});
 		});
 		

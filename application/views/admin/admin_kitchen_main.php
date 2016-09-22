@@ -16,6 +16,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	  <div class="tab-content">
 	    <div id="kitchen">
 		</div>
+	  </div>
 	</div>
 </div>
 <script src="<?php echo base_url(); ?>theme/js/jquery-11.0.js"></script>
@@ -27,6 +28,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		    type: 'post',
 		    success: function(data) {
 				$("div.wrapper").html($(data).find('.wrapper').html());
+				$('ul.nav.nav-tabs').hide();
 		    }
 		});
 	}
@@ -39,4 +41,3 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	setInterval('myrefresh()',600000); // refresh page every 10 min */
 	
 </script>
-</html>

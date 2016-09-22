@@ -64,6 +64,28 @@ class Control_panel extends CI_Controller {
 		$data['main_content'] = 'admin/admin_kitchen_main';
 		$this->load->view('includes/template', $data);
 	}
+
+	function view_bbq_iframe() {
+		$data['fetch_dish'] = $this->admin_user_model->kitchen_fetch_dish_status_cat_6();
+		$data['main_content'] = 'admin/admin_bbq';
+		$this->load->view('includes/template', $data);
+	}
+
+	function view_bbq_only() {
+		$data['main_content'] = 'admin/admin_bbq_main';
+		$this->load->view('includes/template', $data);
+	}
+
+	function view_fried_iframe() {
+		$data['fetch_dish'] = $this->admin_user_model->kitchen_fetch_dish_status_cat_5();
+		$data['main_content'] = 'admin/admin_fried';
+		$this->load->view('includes/template', $data);
+	}
+
+	function view_fried_only() {
+		$data['main_content'] = 'admin/admin_fried_main';
+		$this->load->view('includes/template', $data);
+	}
 	
 	function view_dishesmodify() {
 		$data['fetch_dishes'] = $this->admin_user_model->fetch_dishes_modify();

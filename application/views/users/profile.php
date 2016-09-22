@@ -68,6 +68,8 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	</div>
 </div>
 
+<script src="<?php echo base_url(); ?>theme/js/bootstrap.min.js"></script>
+
 
 
 

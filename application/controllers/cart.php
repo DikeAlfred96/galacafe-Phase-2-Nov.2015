@@ -21,25 +21,27 @@ class Cart extends CI_Controller {
         $exists = false;             //lets say that the new item we're adding is not in the cart
         $rowid = '';
 
-        foreach($cart as $item) {
-            if($item['id'] == $id) {    //if the item we're adding is in cart add up those two quantities
+        foreach ($cart as $item) {
+            if ($item['id'] == $id) {    //if the item we're adding is in cart add up those two quantities
                 $exists = true;
                 $rowid = $item['rowid'];
                 $qty = $item['qty'] + $qty;
             }       
         }
 
-        if($exists) {
+        if ($exists) {
             $this->dishes_model->update_dishes($rowid, $qty);
-	        echo 'true'; // If javascript is enabled, return true, so the cart gets updated
+	        echo $qty; // If javascript is enabled, return true, so the cart gets updated
         } else {
-            if($this->dishes_model->validate_add_cart_dishes() == TRUE) {         
+            if ($this->dishes_model->validate_add_cart_dishes() == TRUE) {       
 		        // Check if user has javascript enabled
-		        if($this->input->post('ajax') != '1') {
+		        if ($this->input->post('ajax') != '1') {
 		            redirect('/'); // If javascript is not enabled, reload the page with new data
 		        } else {
-		            echo 'true'; // If javascript is enabled, return true, so the cart gets updated
+		            echo $qty; // If javascript is enabled, return true, so the cart gets updated
 		        }
+		    } else {
+		    	echo '0';
 		    }
         }
 	}
@@ -55,17 +57,40 @@ class Cart extends CI_Controller {
 
 	function empty_cart() {
 	    $this->cart->destroy(); // Destroy all cart data
-	    redirect('/'); // Refresh te page
+	    // redirect('/'); // Refresh te page
 	}
 
-	function remove_dish($rowid) {
+	function remove_dish() {
+		$rowid = $_POST['rowid'];
+		$id = $_POST['id'];
+
 		$this->cart->update(array(
 			'rowid' => $rowid,
 			'qty' => 0
 		));
-		
-		redirect('/');
+		$this->load->view('cart');
+		// redirect('/');
 	}
+
+	function update_dish() {
+		$rowid = $_POST['rowid'];
+		$update_qty = $_POST['update_qty'];
+
+		$this->cart->update(array(
+			'rowid' => $rowid,
+			'qty' => $update_qty
+		));
+		$this->load->view('cart');
+		// redirect('/');
+	}
+
+	/*function remove_dish($rowid) {
+		$this->cart->update(array(
+			'rowid' => $rowid,
+			'qty' => 0
+		));
+		redirect('/');
+	}*/
 
 	function submit_order() {
 		if($this->session->userdata('is_logged_in') == TRUE) {
@@ -81,8 +106,7 @@ class Cart extends CI_Controller {
 		$this->form_validation->set_rules('phone_number', '电话/手机', 'trim|required|xss_clean|numeric|min_length[10]|max_length[10]|callback_phone_exists');
 	    $this->form_validation->set_rules('user_name', '姓名', 'trim|required|xss_clean|max_length[32]');
 	    
-	    if($this->form_validation->run() == FALSE)
-		{
+	    if ($this->form_validation->run() == FALSE) {
 			if($this->session->userdata('is_logged_in') == TRUE) {
 				$data['user_name'] = $this->session->userdata('nickname');
 				$data['phone_number'] = $this->session->userdata('phonenumber');

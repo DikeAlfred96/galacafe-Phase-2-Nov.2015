@@ -133,6 +133,34 @@ date_default_timezone_set('America/Vancouver');
 	function validate() {
 		var x = document.order_form.table_id.value;
 		var regex = /^[0-8]+$/;
+		var regex_full = /^[0-9]+$/;
+		var option = false;
+		var message = '';
+		var valid = '';
+	    if ((document.order_form.table_id.value == "") || !(x.match(regex))) {
+		    alert("桌号不可为空/只能包含数字, 桌号仅限0-8");
+	    } else if (document.order_form.dish_id_1.value == "" || document.order_form.dishes_id_1.value == "") {
+			alert("订单至少要有一个有效餐点");
+	    } else {
+	    	$("#dishes_order .dishes_row .quantities").each(function() {
+	    		if ($.trim(this.value) < 1 || !($.trim(this.value).match(regex_full))) {
+	    			message = '菜品数量必须大于1';
+	    			valid =+ 'false';
+	    		}
+	    	});
+	    	if (valid == "") {
+	    		option = true;
+	    	}
+	    	if (message != "") {
+	    		alert(message);
+	    	}
+		}
+		// alert(option);
+		return option;
+	} // Form content validation!!!
+	/* function validate() {
+		var x = document.order_form.table_id.value;
+		var regex = /^[0-8]+$/;
 		var regex_qty = /^[0-9]+$/;
 	    if ((document.order_form.table_id.value == "") || !(x.match(regex))) {
 		    alert("桌号不可为空/只能包含数字, 桌号仅限0-8");
@@ -146,7 +174,7 @@ date_default_timezone_set('America/Vancouver');
 	    } else <?php } ?> {
 	    	return true;
 		}
-	} // Form content validation!!!
+	} */ // Form content validation!!!
 	<?php $sql = "SELECT dishAlphaId, dishChiName, dishInitial FROM dishes;";
 		$result = $this->db->query($sql);
 		$num = $result->num_rows();
@@ -187,13 +215,6 @@ date_default_timezone_set('America/Vancouver');
 			e.preventDefault();
 			return false;
 		}
-	});
-
-	$("form").submit(function() {
-	    $(this).submit(function() {
-	        return false;
-	    });
-	    return true;
 	});
 
 	$('.put_order_input_b').keyup(function() {

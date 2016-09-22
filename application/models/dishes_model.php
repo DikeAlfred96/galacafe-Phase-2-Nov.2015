@@ -15,7 +15,7 @@ class Dishes_model extends CI_Model {
 	// Function to retrieve an array with all product information
     function retrieve_dishes()
     {
-        $query = $this->db->get('dishes'); // Select the table products
+        $query = $this->db->query('SELECT * FROM dishes ORDER BY dishAlphaId ASC;'); // Select the table products
         return $query->result_array(); // Return the results in a array.
     }
     
@@ -29,19 +29,23 @@ class Dishes_model extends CI_Model {
 	    $query = $this->db->get('dishes', 1); // Select the products where a match is found and limit the query by 1
 	     
 	    // Check if a row has matched our product id
-	    if($query->num_rows > 0) { // We have a match!
-	        foreach ($query->result() as $row) { // Create an array with product information
-	            $data = array(
-	                'id'      => 	$id,
-	                'qty'     => 	$cty,
-	                'price'   => 	$row->dishPrice,
-	                'name'    => 	$row->dishChiName
-	            );
-	            // Add the data to the cart using the insert function that is available because we loaded the cart library
-	            $this->cart->insert($data);
-	            
-	            return TRUE; // Finally return TRUE
-	        }
+	    if ($query->num_rows > 0) { // We have a match!
+	        if ($cty > 0) { // Prevent -1 appears. When total goes back to 0 return false and not add dish.
+		        foreach ($query->result() as $row) { // Create an array with product information
+		            $data = array(
+		                'id'      => 	$id,
+		                'qty'     => 	$cty,
+		                'price'   => 	$row->dishPrice,
+		                'name'    => 	$row->dishChiName
+		            );
+		            // Add the data to the cart using the insert function that is available because we loaded the cart library
+		            $this->cart->insert($data);
+		            
+		            return TRUE; // Finally return TRUE
+		        }
+		    } else {
+		    	return FALSE;
+		    }
 	    } else { // Nothing found! Return FALSE!
 	        return FALSE;
 	    }
@@ -59,12 +63,15 @@ class Dishes_model extends CI_Model {
 	    header("Content-type:text/html;charset=utf-8");
 	    
 	    // orders table build
-	    if($this->input->post('phone_number') != '') { $phone_number = $this->input->post('phone_number');
+	    if ($this->input->post('phone_number') != '') { $phone_number = $this->input->post('phone_number');
 	    } else { $phone_number = ''; }
-	    if($this->input->post('user_name') != '') { $user_name = $this->input->post('user_name');
+	    if ($this->input->post('user_name') != '') { $user_name = $this->input->post('user_name');
 	    } else { $user_name = ''; }
-	    if($this->input->post('additional_info') != '') { $additional_info = $this->input->post('additional_info');
+	    if ($this->input->post('additional_info') != '') { $additional_info = $this->input->post('additional_info');
 	    } else { $additional_info = ''; }
+	    if ($this->input->post('delivery_address') != '') { $delivery_address = $this->input->post('delivery_address');
+	    } else { $delivery_address = ''; }
+	    if ($this->input->post('delivery_method') == 'pick_up') { $delivery_method = 'Pick'; } else { $delivery_method = 'Delivery'; }
 	    
 	    $new_order_insert_data = array( // Insert all the info to orders table in database
 			'tableId' => '0',
@@ -75,7 +82,9 @@ class Dishes_model extends CI_Model {
 			'orderTotal' => round($this->cart->format_number($this->cart->total()) * 1.05, 2),
 			'orderTime' => date('Y-m-d H:i:s'),
 			'orderStatus' => '0',
-			'orderRemarks' => $additional_info
+			'orderRemarks' => $additional_info,
+			'orderDeliverMethod' => $delivery_method,
+			'orderAddress' => $delivery_address
 		);
 		
 		$insert_order = $this->db->insert('orders', $new_order_insert_data);
