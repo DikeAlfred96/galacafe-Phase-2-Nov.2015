@@ -72,7 +72,7 @@ date_default_timezone_set('America/Vancouver'); ?>
 				    			<td><?php echo $item->orderId; ?></td><td class="orderTotal_<?php echo $i; ?>">$<?php echo $item->orderTotal; ?></td>
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
 				    			<td class="orderFinishTime_<?php echo $i; ?>"><?php echo $item->orderFinishTime; ?></td>
-				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
+				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else if ($order_status == '4') { ?>已取消<?php } else { ?>订单错误<?php } ?></td>
 				    		</tr>
 				    		<tr class="details_today extra_<?php echo $i; ?>">
 					    		<th class="one_third">ID</th>
@@ -153,7 +153,7 @@ date_default_timezone_set('America/Vancouver'); ?>
 				    			<td><?php echo $item->orderId; ?></td><td class="orderTotal_<?php echo $i; ?>">$<?php echo $item->orderTotal; ?></td>
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
 				    			<td class="orderFinishTime_<?php echo $i; ?>"><?php echo $item->orderFinishTime; ?></td>
-								<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
+								<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else if ($order_status == '4') { ?>已取消<?php } else { ?>订单错误<?php } ?></td>
 				    		</tr>
 				    		<tr class="details_yesterday extra_<?php echo $i; ?>">
 					    		<th class="one_third">ID</th>
@@ -234,7 +234,7 @@ date_default_timezone_set('America/Vancouver'); ?>
 					    		<td><?php echo $item->orderId; ?></td><td class="orderTotal_<?php echo $i; ?>">$<?php echo $item->orderTotal; ?></td>
 				    			<td class="orderTime_<?php echo $i; ?>"><?php echo $item->orderTime; ?></td>
 				    			<td class="orderFinishTime_<?php echo $i; ?>"><?php echo $item->orderFinishTime; ?></td>
-				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else { ?>订单错误<?php } ?></td>
+				    			<td><?php if ($order_status == '0') { ?>审核中<?php } else if ($order_status == '1') { ?>已下单<?php } else if ($order_status == '3') { ?>已完成<?php } else if ($order_status == '4') { ?>已取消<?php } else { ?>订单错误<?php } ?></td>
 				    		</tr>
 				    		<tr class="details_older extra_<?php echo $i; ?>">
 					    		<th class="one_third">ID</th>

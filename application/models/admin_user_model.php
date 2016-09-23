@@ -207,56 +207,56 @@ class Admin_user_model extends CI_Model {
 	}
 	
 	function kitchen_fetch_dish_status_cat_1() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=1 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=1 AND orderStatus != 4 ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_2() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=2 ORDER BY dishAlphaId ASC, dishTotal DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=2 AND orderStatus != 4  ORDER BY dishAlphaId ASC, dishTotal DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_3() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=3 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=3 AND orderStatus != 4  ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_4() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=4 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=4 AND orderStatus != 4  ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_5() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=5 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=5 AND orderStatus != 4  ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_6() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=6 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=6 AND orderStatus != 4  ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_7() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=7 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=7 AND orderStatus != 4  ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;
 	}
 	
 	function kitchen_fetch_dish_status_cat_8() {
-		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=8 ORDER BY dishTotal DESC, dishAlphaId DESC;";
+		$sql_dishes = "SELECT dishTotal, dishChiName, orderTime, dishId, dishAlphaId FROM view_kitchen_sum WHERE catId=8 AND orderStatus != 4  ORDER BY dishTotal DESC, dishAlphaId DESC;";
 		$result_dishes = $this->db->query($sql_dishes);
 		
 		return $result_dishes;

@@ -47,9 +47,9 @@
 								</p>
 							</td>
 				            <td>
-				            	<strong>总额
+				            <?php /* 	<strong>总额
 				            		<small>（未包含送货）</small>
-				            	</strong>
+				            	</strong> */ ?>
 				            </td>
 				            <td>&dollar;<?php echo $this->cart->format_number($this->cart->total() * 1.05); ?></td>
 				            <td><span class="btn" id="empty">X</span></td>

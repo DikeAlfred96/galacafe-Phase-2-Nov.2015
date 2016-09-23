@@ -277,8 +277,10 @@ $(document).ready(function() {
 	$(".order_qty span").each(function() {
 		if ($(this).html().trim() != '0') {
 			$(this).parent().parent().addClass('active');
+			$(this).parent().parent().next().addClass('show');
 		}
 	});
+
 	// User - Add to cart
 
 	/* place jQuery actions here */
@@ -293,6 +295,19 @@ $(document).ready(function() {
 		var qty = $(this).find('input[name=quantity]').val();
 		var dish_qty = $(this).parent().find('.order_qty span');
 
+		// Addon dishes support!
+		var has_addon_class = $(this).parent().attr('class').split(' ')[0];
+
+		if ($(this).parent().next().hasClass(has_addon_class)) {
+			if (qty > 0) {
+				$(this).parent().next().addClass('show');
+			} else if (parseInt(dish_qty.html()) < 2 && qty < 0) {
+				$(this).parent().next().removeClass('show');
+				$(this).parent().next().next().removeClass('show');
+			}
+		}
+
+		// --- Normal add/sub dishes function. ---
 		if (qty > 0) {
 			dish_qty.html(parseInt(dish_qty.html()) + 1);
 		} else {

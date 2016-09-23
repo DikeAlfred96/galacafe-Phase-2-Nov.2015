@@ -9,7 +9,7 @@
 		</div>
 	</div> <!-- END main_wrapper -->
 	<!-- JS Files -->
-	<?php // <script src="<?php echo base_url(); theme/js/bootstrap.min.js"></script> ?>
+	<script src="<?php echo base_url(); ?>theme/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url(); ?>theme/js/script.js"></script>
 </body>
 </html>

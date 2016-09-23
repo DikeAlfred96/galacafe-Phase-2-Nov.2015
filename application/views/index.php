@@ -81,7 +81,7 @@
 						        <?php echo form_close();?>
 						    </div>
 				    	<?php } else { ?>
-						    <li class="single_dish single_dish_js <?php if ($d['imagePath'] == NULL) { echo 'no-pic'; }?>">
+						    <li class="<?php echo $d['dishAlphaId']; ?>_code single_dish single_dish_js <?php if ($d['imagePath'] == NULL) { echo 'no-pic'; }?>">
 						    	<img src="<?php if ($d['imagePath'] != NULL) { echo base_url(); echo 'theme/images/user/'; echo $d['imagePath']; } else {echo base_url(); echo 'theme/images/user/no-pic.png'; } ?>" alt="<?php echo $d['imagePath']; ?>" />
 						    	<h3><?php echo $d['dishFullChiName']; ?><small>&dollar;<?php echo $d['dishPrice']; ?></small></h3>
 						    	<h6><?php echo $d['dishEngName']; ?></h6>
@@ -126,7 +126,7 @@
 </div>
 <script type="text/javascript">
 	
-		$(document).find('.main_nav').html('');
+	// $(document).find('.main_nav').html('');
 	// User - Group add on dishes!!!
 
 	var num_addon = $("div[name^='dish_code_']");
@@ -145,5 +145,12 @@
 			}
 		});
 	});
+
+	$('.pre_addon_wrap').each(function() {
+		var className = $(this).prev().attr('class').split(' ')[0];
+		$(this).addClass(className);
+	});
+
+
 
 </script>

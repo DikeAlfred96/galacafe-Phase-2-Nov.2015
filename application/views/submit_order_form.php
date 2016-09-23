@@ -17,6 +17,13 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	        </tr>
 	    </thead>
 	    <tbody>
+	    	<tr>
+	    		<td>赠品:柠檬茶</td>
+	    		<td>1</td>
+	    		<td><strike>$5.99</strike></td>
+	    		<td>$0.00</td>
+	    	</tr>
+
 	        <?php $i = 1; ?>
 	        <?php foreach($this->cart->contents() as $items): ?>
 	        
@@ -57,6 +64,12 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 	            <td><strong>总额</strong></td>
 	            <td>&dollar;<?php echo $this->cart->format_number($this->cart->total() * 1.05); ?></td>
 	            <td></td>
+	        </tr>
+	        <tr class="total">
+	        	<td></td>
+	        	<td></td>
+	        	<td></td>
+	        	<td><small>(不含送餐费及小费)</small></td>
 	        </tr>
 	    </tbody>
 	</table>
